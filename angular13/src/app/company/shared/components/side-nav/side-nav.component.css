@@ -1,0 +1,64 @@
+.sidebar-nav ul li a {
+    font-size: 26px;
+    text-decoration: none;
+    display: block;
+    padding: 6px 10px;
+    transition: 0.5s;
+    background-color: #e7c83e;
+}
+
+.sidebar-nav ul li a:hover {
+    /* background-color: rgb(255, 197, 7); */
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgb(255, 197, 7), 0 0 5px #000000;
+}
+
+.sidebar-nav .offcanvas {
+    width: 220px;
+    border: none;
+    /*backgroud of sidebar*/
+    background-color: rgb(255, 197, 7);
+}
+
+.sidebar-nav .offcanvas ul li a span {
+    font-size: 18px;
+    position: relative;
+    top: -4px;
+    transition: 0.5s;
+    /* background-color: #794f9c85; */
+}
+
+.sidebar-nav .offcanvas.show ul li a:hover span {
+    padding-left: 10px;
+    /* background-color: #1db908; */
+}
+
+.sidebar-nav .dropdown-toggle::after {
+    position: relative;
+    top: 3px;
+    text-shadow: 0 0 3px #ffe600, 0 0 5px #000000;
+}
+
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+    margin-right: 5px;
+}
+
+li {
+    text-size-adjust: 50px;
+    text-shadow: 0 0 3px #ffe600, 0 0 5px #000000;
+    color: rgb(255, 255, 255);
+    /* background-color: #abad00; */
+}
+
+h1 {
+    text-shadow: 0 0 3px rgb(255, 197, 7), 0 0 5px #000000;
+    color: rgb(0, 0, 0);
+}
+
+#logo {
+    box-shadow: 0 0 3px #ffe600, 0 0 5px #000000;
+    width: 100px;
+    height: 100px;
+}

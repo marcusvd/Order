@@ -1,0 +1,75 @@
+<mat-sidenav-container class="sidenav">
+    <mat-sidenav mode="side" opened #sidenav role="navigation">
+        <a [routerLink]="['/clientlist']" id="client" style="color: rgb(40, 177, 58); font-size:35px">
+          <!--(click)="open() -->
+          <div id="client">
+              <mat-icon style="color: rgb(40, 177, 58); font-size:65px;padding-right:65px;">supervisor_account</mat-icon>
+              Clientes
+          </div>
+          <div>
+          </div>
+      </a>
+        <nav>
+            <ul>
+                <li>
+                    <a [routerLink]="['/dashdevices/1']">
+                        <mat-icon>device_hub</mat-icon>
+                        Infra-estrutura
+                    </a>
+                </li>
+
+                <!-- <li>
+                <a [routerLink]="">
+                    <mat-icon> check_box</mat-icon>
+                    &nbsp;O.S
+                </a>
+            </li> -->
+                <li>
+                    <a [routerLink]="">
+                        <mat-icon> check_box</mat-icon>
+                        Chamados
+                    </a>
+                </li>
+                <li>
+                    <a [routerLink]="">
+                        <mat-icon> check_box</mat-icon>
+                        Tercerizados
+                    </a>
+                </li>
+
+                <li>
+                    <a [routerLink]="">
+                        <mat-icon id="support"> support_agent</mat-icon>
+                        Suporte
+                    </a>
+                </li>
+
+            </ul>
+
+
+        </nav>
+
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <div><button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button></div>
+            <app-navbar></app-navbar>
+            <!--  -->
+            <!-- One another way to align  -->
+            <!-- <div fxFlex fxLayout fxLayoutAlign="flex-end"> -->
+            <div fxFlex></div>
+
+            <div>
+                <a [routerLink]="['/routePath']" routerLinkActive="router-link-active"> Login</a>
+            </div>
+        </mat-toolbar>
+        <main>
+
+            <router-outlet></router-outlet>
+
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>

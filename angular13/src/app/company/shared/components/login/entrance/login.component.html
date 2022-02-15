@@ -1,0 +1,49 @@
+<div style="border:2px solid black; padding:55px; text-shadow: 0 0 3px #ff9900, 0 0 5px #000000; box-shadow: 0 0 3px #ff9900, 0 0 5px #000000;">
+
+
+
+    <div style="text-align: center;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <img src="../../../../../assets/maedit.png" class="p-1" style="width: 250px; height:250px; box-shadow: 0 0 3px #ff9900, 0 0 5px #000000;">
+            </div>
+        </div>
+        <div class="justify-content-center" style="text-align:center;">
+            <h1 style="text-align:center;">MINAS AR</h1>
+            <small>Compresssores</small>
+            <div class="pt-3"></div>
+        </div>
+        <div>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="container">
+                    <div class="row">
+
+                        <input class="form-control" type="text" placeholder="Nome de Usuário" formControlName="email" [(ngModel)]="userdto.email">
+                        <div class="pt-3"></div>
+
+                        <input class="form-control" type="password" placeholder="Senha" formControlName="password" [(ngModel)]="userdto.password">
+
+                    </div>
+                </div>
+
+                <p *ngIf="error" class="error">
+                    {{ error }}
+                </p>
+                <div class="pt-3"></div>
+                <div class="button">
+                    <button class="btn btn-warning" type="submit" (click)="toLogin()">Entrar</button>
+                </div>
+                <div>
+                    <small style="color:red;">{{loginInfo}}</small>
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+
+
+
+
+</div>

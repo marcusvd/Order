@@ -1,0 +1,106 @@
+<div class="container-fluid;" id="general_container">
+    <div class="row">
+        <div class="col" style="margin: 20px; color: transparent;" id="myForm">
+            <div>
+                <h1 style="text-align: center; margin-top: 20px;">CATEGORIA / SUB</h1>
+            </div>
+            <div>
+                <div>
+                    <!-- <div class="p-5"></div> -->
+                    <form [formGroup]="_CatService.formCategoryInsert" class="form-group" class="col-12">
+
+
+                        <div id="hr"></div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="col-12">
+                                        <label>Nome:</label>
+                                        <input class="form-control" type="text" formControlName="name" [ngClass]="{'is-invalid': _CatService._ValidatorsSrv.touchedErrors('name', _CatService.formCategoryInsert)}">
+                                        <div class="invalid-feedback">
+                                            {{_CatService._ValidatorsSrv.required2(this._CatService.formCategoryInsert, 'name', 'Nome', 3, 250)}}
+                                            <!-- OLD VERSION  {{_CatService._ValidatorsSrv.required(this._CatService.formInsert,'name', 'Preenchimento, mínimo de pelo menos 3 caracteres', 'Preenchimento não pode ultrapassar 50 caracteres.', 'Nome é de preenchimento obrigatório')}} -->
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="p-1"></div>
+                        <div class="container">
+
+                            <div class="row" formArrayName="subcategories">
+
+                                <label>Sub Categoria</label>
+                                <div *ngFor="let sub of _CatService.RetSubCatArrays.controls; let i=index">
+                                    <div [formGroupName]="i">
+
+                                        <!-- <div style="color: rgb(255, 197, 7);">{{(i + 1)+'º' + ' ' + 'NOME'}}</div> -->
+
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-10">
+                                                    <br>
+                                                    <input type="text" #Val class="form-control" [id]="i" name="subs" placeholder="{{(i + 1)+'º' + ' ' + 'Subcategoria'}}" formControlName="name" (blur)="_CatService.OnBlur(Val)">
+                                                    <!-- [ngClass]="{'is-invalid': _CatService._ValidatorsSrv.touchedErrors('name', _CatService.subCatsFormGroup)}" -->
+
+
+                                                    <div *ngIf="!_CatService.OnBlur(Val)" style="color: white; border-radius: 100%; text-align: center; box-shadow:3px 1px black 0.1;">
+                                                        <div *ngIf="!_CatService.OnLoad(Val)" style="color: white; border-radius: 100%; text-align: center; box-shadow:3px 1px black 0.1;">
+
+                                                            {{'Subcategoria deve ter o minimo de 3 caracteres'}}
+
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div *ngIf="_CatService.msg 0" style="color: white; border-radius: 100%; text-align: center; box-shadow:3px 1px black 0.1;">
+                                                            {{'Subcategoria deve ter o máximo de 50 caracteres'}}
+
+                                                        </div> -->
+                                                </div>
+
+                                                <div class="col-2">
+                                                    <button class="btn btn-danger" style="color: white; border-radius: 100%; text-align: center; box-shadow:3px 1px black 0.1;" (click)="_CatService.removeSub(i)">Remover </button>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <br>
+                            <div id="hr"></div>
+                        </div>
+                        <div class="p-3">
+                            <button [disabled]="!_CatService.formCategoryInsert.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="_CatService.save()">Cadastrar</button>
+                            <div>
+                                <button class="btn btn-warning" style="color: white; border-radius: 100%; text-align: center; box-shadow:3px 1px black 0.1; float: left;" (click)="_CatService.checkField()">Adicionar </button>
+                            </div>
+
+                            <br>
+                            <br>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div>
+    <!-- {{_CatService.formCategoryInsert.value | json}}} -->
+</div>

@@ -1,0 +1,8 @@
+#general {
+    text-size-adjust: 50px;
+    text-shadow: 0 0 3px #ff9900, 0 0 5px #000000;
+    color: rgb(0, 0, 0);
+    box-shadow: 0 0 3px #ff9900, 0 0 5px #000000;
+    border: 1px solid black;
+    padding: 5%;
+}
