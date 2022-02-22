@@ -43,8 +43,8 @@ namespace Application.Operations
         {
             var usrToRecord = new IdentityUser
             {
-                UserName = userDto.Email,
-                Email = userDto.Email,
+                UserName = userDto.UserName,
+                //Email = userDto.Email,
                 EmailConfirmed = true
             };
 
@@ -63,7 +63,7 @@ namespace Application.Operations
         public async Task<UserToken> Login([FromBody] UserDto userDto)
         {
             var login = await _signInManager.PasswordSignInAsync(
-                userDto.Email,
+                userDto.UserName,
                 userDto.Password,
                 isPersistent: false,
                 lockoutOnFailure: false
@@ -77,7 +77,7 @@ namespace Application.Operations
 
             var token = _ITokenApplication.GenerateToken(userDto);
             token.RefreshToken = _ITokenApplication.GenerateRefreshToken();
-            _ITokenApplication.SaveRefreshToken(userDto.Email, token.RefreshToken);
+            _ITokenApplication.SaveRefreshToken(userDto.UserName, token.RefreshToken);
 
             return token;
 

@@ -28,6 +28,7 @@
                         <hr>
                         <li><a><i class="bi bi-boxes"></i> <span class="item-text" [routerLink]="['/prodpagelist']"
                   data-bs-dismiss="offcanvas">Produtos</span></a></li>
+
                         <div class="pt-1"></div>
                         <li><a><i class="bi bi-tags"></i> <span class="item-text" [routerLink]="['/catadm']"
                   data-bs-dismiss="offcanvas">Categoria</span></a>
@@ -36,37 +37,46 @@
                         <li><a><i class="bi bi-rulers"></i> <span class="item-text" [routerLink]="['measureadm']"
                   data-bs-dismiss="offcanvas">Medidas</span></a>
                         </li>
-
+                        <div class="pt-1"></div>
+                        <li><a><i class="bi bi-pen"></i> <span class="item-text" [routerLink]="['/register']"
+                  data-bs-dismiss="offcanvas">Cadastros</span></a></li>
                     </ul>
                     <hr>
                 </div>
             </div>
 
-            <div class="btn-group">
-                <a class="dropdown-toggle text-white text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="usericon"><i class="bi bi-person-circle"></i></span>
-                    <span class="textnone">{{getUserName()}}</span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <!-- <li>
-                        <button class="dropdown-item" type="button"><i class="bi bi-lock-fill"></i> Change Password</button>
-                    </li>
-                    <li><button class="dropdown-item" type="button"><i class="bi bi-gear-fill"></i> Admin Setion</button></li>
-                    <li><button class="dropdown-item" type="button"><i class="bi bi-gear-wide-connected"></i> IMAP
-              Settings</button></li> -->
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><button class="dropdown-item" type="button" (click)="_LogServices.logout()"><i class="bi bi-box-arrow-right"></i> Sair</button></li>
-                </ul>
-            </div>
+        </div>
+
+
+
+        <div class="btn-group">
+
+
+
+            <a class="dropdown-toggle text-white text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="usericon"><i class="bi bi-person-circle"></i></span>
+                <span class="textnone">{{getUserName()}}</span>
+            </a>
+
+
+            <ul class="dropdown-menu dropdown-menu-end">
+                <!-- <li>
+                  <button class="dropdown-item" type="button"><i class="bi bi-lock-fill"></i> Change Password</button>
+              </li>
+              <li><button class="dropdown-item" type="button"><i class="bi bi-gear-fill"></i> Admin Setion</button></li>
+              <li><button class="dropdown-item" type="button"><i class="bi bi-gear-wide-connected"></i> IMAP
+        Settings</button></li> -->
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><button class="dropdown-item" type="button" (click)="_LogServices.logout()"><i
+          class="bi bi-box-arrow-right"></i> Sair</button></li>
+            </ul>
+
         </div>
     </nav>
 
-</div>
-
-<div class="container" style=" margin-left: 30px; margin-top: 70px; margin-bottom: 70px;">
-
-    <router-outlet></router-outlet>
 
 </div>
+
+<router-outlet></router-outlet>

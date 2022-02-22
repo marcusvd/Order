@@ -13,6 +13,9 @@ import { LoginModule } from 'src/app/company/shared/components/login/modules/log
 import { WelcomeComponent } from './company/welcome/welcome.component';
 import { JwtInterceptor } from './company/interceptors/jwt.interceptor';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RecordsModule } from './company/records/modules/records.module';
+
+
 
 
 
@@ -32,6 +35,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ProductModule,
     SharedModule,
     LoginModule,
+    RecordsModule,
 
   ],
  providers: [

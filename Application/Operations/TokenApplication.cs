@@ -39,7 +39,7 @@ namespace Application.Operations
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, usr.Email),
+                    new Claim(ClaimTypes.Name, usr.UserName),
                     new Claim("COMPAIXÃO", "CIÊNCIA"),
                     new Claim(ClaimTypes.Role, usr.Id.ToString())
                 }),
@@ -54,7 +54,7 @@ namespace Application.Operations
                 Authenticated = true,
                 Expiration = DateTime.UtcNow.AddHours(Hours),
                 Token = TokenHandler.WriteToken(token),
-                UserName = usr.Email
+                UserName = usr.UserName
             };
 
             return usrTkn;

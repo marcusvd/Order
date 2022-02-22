@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CategoryInsertComponent } from '../category-insert/category-insert.component';
+
 import { SharedModule } from '../../shared/module/shared.module';
 import { CategoryService } from '../services/category.service';
 //import { CategoryRoutingModule } from './category-routing.module';
@@ -12,7 +12,7 @@ import { AuthGuard } from '../../guards/auth.guard';
 
 @NgModule({
   declarations: [
-    CategoryInsertComponent,
+
     CategoryAdmComponent
   ],
   imports: [
@@ -23,7 +23,7 @@ import { AuthGuard } from '../../guards/auth.guard';
     //CategoryRoutingModule
   ],
   exports:[
-    CategoryInsertComponent,
+    // CategoryInsertComponent,
     CategoryAdmComponent
   ],
   providers:[CategoryService, AuthGuard]

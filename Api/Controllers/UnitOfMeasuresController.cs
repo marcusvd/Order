@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
     // (AuthenticationSchemes="Bearer")
-     [Authorize]
+    // [Authorize]
    // [Authorize(AuthenticationSchemes="Bearer")]
-    //[AllowAnonymous]
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class UnitOfMeasuresController : ControllerBase

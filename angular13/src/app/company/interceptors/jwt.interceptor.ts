@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable, take } from "rxjs";
 
 import { UserDto } from "../shared/components/login/dto/user-dto";
-import { LoginServices } from "../shared/components/login/services/login.service";
+import { LoginServices } from "../shared/components/login/services/login.services";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

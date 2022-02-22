@@ -1,0 +1,14 @@
+#frame {
+    border: 1px solid rgb(255, 197, 7);
+    border-top: none;
+}
+
+#caption {
+    border: 1px solid rgb(255, 197, 7);
+    text-align: center;
+}
+
+#imgusr {
+    /* border: 1px solid rgb(255, 197, 7);
+    text-shadow: 0 0 3px #ff9900, 0 0 5px #000000; */
+}

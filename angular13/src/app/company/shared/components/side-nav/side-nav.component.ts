@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ProductService } from 'src/app/company/product/services/product-service';
 import { UserDto } from 'src/app/company/shared/components/login/dto/user-dto';
-import { LoginServices } from 'src/app/company/shared/components/login/services/login.service';
+import { LoginServices } from 'src/app/company/shared/components/login/services/login.services';
 import { UsrToken } from '../../dto/usr-token';
 
 @Component({
@@ -21,7 +21,10 @@ export class SideNavComponent implements OnInit {
   getUserName(): string {
     let User = new UsrToken();
     User = JSON.parse(localStorage.getItem('usr'));
-    return  User?.userName.split('@')[0];
+    console.log(User?.userName)
+    console.log('ACHAR', User)
+    return  User?.userName;
+    // .split('@')[0]
 
   }
   isAuthenticated(): boolean {

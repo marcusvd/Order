@@ -8,8 +8,8 @@ using Pagination.Models;
 
 namespace Api.Controllers
 {
-    // [AllowAnonymous]
-    [Authorize]
+    [AllowAnonymous]
+   // [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase

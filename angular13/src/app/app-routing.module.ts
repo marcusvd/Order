@@ -9,11 +9,14 @@ import { MeasureAdmComponent } from './company/measure/measure-adm/measure-adm.c
 import { MeasureInsertComponent } from './company/measure/measure-insert/measure-insert.component';
 import { ProductInsertComponent } from './company/product/product-insert/product-insert.component';
 import { ProductPagelistComponent } from './company/product/product-pagelist/product-pagelist.component';
+import { RegisterComponent } from './company/shared/components/register/register.component';
 import { WelcomeComponent } from './company/welcome/welcome.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import {RecordsComponent} from 'src/app/company/records/records.component'
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'register', component: RecordsComponent},
   {path: 'notfound', component: NotFoundComponent},
   {path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard]},
   {path:'catinsert', component: CategoryInsertComponent, canActivate: [AuthGuard]},

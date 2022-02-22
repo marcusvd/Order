@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MeasureInsertComponent } from '../measure-insert/measure-insert.component';
+
 import { SharedModule } from '../../shared/module/shared.module';
 import { MeasureService } from '../services/measure.service';
 import { MeasureRoutingModule } from './measure-routing.module';
@@ -13,7 +13,7 @@ import { JwtInterceptor } from '../../interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
-    MeasureInsertComponent,
+
     MeasureAdmComponent,
   ],
   imports: [
@@ -24,7 +24,7 @@ import { JwtInterceptor } from '../../interceptors/jwt.interceptor';
     // MeasureRoutingModule
   ],
   exports:[
-    MeasureInsertComponent,
+
     MeasureAdmComponent,
   ],
   providers:[

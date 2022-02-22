@@ -32,7 +32,16 @@ namespace OStorage
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(
+                opt => {
+                    opt.Password.RequireDigit = false;
+                    opt.Password.RequireNonAlphanumeric = false;
+                    opt.Password.RequireLowercase = false;
+                    opt.Password.RequireUppercase =false;
+                    opt.Password.RequiredLength = 3;
+                }
+            )
+
             .AddEntityFrameworkStores<OSDbContext>()
             .AddDefaultTokenProviders();
             services.AddAuthentication(x =>

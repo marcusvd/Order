@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { take } from 'rxjs';
 import { UserDto } from './company/shared/components/login/dto/user-dto';
-import { LoginServices } from './company/shared/components/login/services/login.service';
+import { LoginServices } from './company/shared/components/login/services/login.services';
 
 @Component({
   selector: 'app-root',

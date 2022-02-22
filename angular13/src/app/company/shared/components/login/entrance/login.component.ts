@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertsToastr } from '../../../services/alerts-toastr';
 import { UserDto } from '../dto/user-dto';
-import { LoginServices } from '../services/login.service';
+import { LoginServices } from '../services/login.services';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   formMaker() {
     this.form = this._Fb.group({
-      email: ['', [Validators.required]],
+      username: ['', [Validators.required]],
       password: ['', []],
     });
   }
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           console.log('AQUI', )
           // this._LoginService._shoHide = true;
           // this.loginInfo = null;
-          this._AlertToastr.Notice(null, 0, usr.email);
+          this._AlertToastr.Notice(null, 0, usr.username);
         },
         (error: any) => {
           if (error.status == 401) {
