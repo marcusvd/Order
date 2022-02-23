@@ -15,10 +15,8 @@ export class AuthGuard implements CanActivate {
     let usrToken: UserDto = new UserDto();
     usrToken = JSON.parse(localStorage.getItem('usr'));
 
-    console.log(localStorage.getItem('usr'))
-
     if (usrToken?.authenticated) {
-      console.log(usrToken?.authenticated)
+
       return true;
     }
     else {

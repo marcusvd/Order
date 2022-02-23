@@ -21,11 +21,7 @@ export class SideNavComponent implements OnInit {
   getUserName(): string {
     let User = new UsrToken();
     User = JSON.parse(localStorage.getItem('usr'));
-    console.log(User?.userName)
-    console.log('ACHAR', User)
     return  User?.userName;
-    // .split('@')[0]
-
   }
   isAuthenticated(): boolean {
     let User = new UserDto();

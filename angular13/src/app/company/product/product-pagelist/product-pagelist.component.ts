@@ -20,9 +20,9 @@ export class ProductPagelistComponent implements OnInit {
 
 
 
-  currentPage;
   public pageChanged(e) {
     this.pagination.currentPg = e.page;
+    console.log(this.pagination.currentPg);
     this.loadProducts();
   }
 
@@ -30,33 +30,31 @@ export class ProductPagelistComponent implements OnInit {
   displayedColumns = ['name', 'price']
   constructor(
     public _ProductService: ProductService,
-    public _RouteData: ActivatedRoute
+    public _RouteData: ActivatedRoute,
+    private _ProductServices: ProductService
   ) { }
 
-  private loadProducts() {
+  private loadProductsOld() {
     this.pgResulted = { ... this._RouteData.snapshot.data['loaded'] };
-    // this.products = [];
+    this.pagination = this._RouteData.snapshot.data['loaded'].pagination;
     this.products = this._RouteData.snapshot.data['loaded'].result;
-    console.log(this._RouteData.snapshot.data['loaded'].result);
-
-
-    // this._RouteData.data.subscribe((item: PaginatedResult<ProductDto[]>) => {
-    //   this.products = loaded.result
-    //   console.log(loaded)
-    // });
-
-
-
-    // this.pagination = <Pagination>{ currentPg: 1, itemsPerPg: 3, amountItems: 1 };
-    // this._ProductService.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg).subscribe({
-    //   next: (paginatedResult: PaginatedResult<ProductDto[]>) => {
-    //     this.pagination = paginatedResult.pagination;
-    //     this.products ={...<ProductDto[]> (paginatedResult.result)};
-    //     // console.log('AQUI, AQUI', this.products)
-    //   }
-    // });
 
   }
+
+
+private loadProducts(){
+ // this.pagination = <Pagination>{ currentPg: 1, itemsPerPg: 3, amountItems: 1 };
+
+ this._ProductServices.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg)
+ .subscribe(item => {
+  this.pgResulted = item;
+  this.pagination= item.pagination;
+  this.products = item.result
+ });
+
+
+}
+
 
 
   ngOnInit(): void {

@@ -44,7 +44,8 @@ namespace Api.Controllers
                 if (returnFromDb == null) return null;
             
                   Response.AddPagination(returnFromDb.CurrentPg,
-                                         returnFromDb.PgSize,returnFromDb.TotalCount,
+                                         returnFromDb.PgSize,
+                                         returnFromDb.TotalCount,
                                          returnFromDb.TotalPgs,
                                          returnFromDb.HasNext,
                                          returnFromDb.HasPrevious);

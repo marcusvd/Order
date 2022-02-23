@@ -9,8 +9,6 @@ import { ProductInsertComponent } from 'src/app/company/product/product-insert/p
 import { MeasureInsertComponent } from 'src/app/company/measure/measure-insert/measure-insert.component';
 import { RegisterComponent } from 'src/app/company/shared/components/register/register.component';
 
-
-
 @NgModule({
   declarations: [
     RecordsComponent,
@@ -18,9 +16,6 @@ import { RegisterComponent } from 'src/app/company/shared/components/register/re
     ProductInsertComponent,
     MeasureInsertComponent,
     RegisterComponent
-
-
-
   ],
   imports: [
     CommonModule,

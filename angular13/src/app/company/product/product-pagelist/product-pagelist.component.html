@@ -11,10 +11,6 @@
                     <div style="font-size: 80px;">
 
 
-
-
-
-
                         <div class="row">
 
                             <div class="col-6 bi bi-boxes justify-content-center" style="font-size: 80px; color:rgb(0, 0, 0);">
@@ -86,7 +82,7 @@
                 </div>
                 <div class="p-5 "></div>
                 <div class="d-flex justify-content-center ">
-                    <pagination class="paginationstyle " [boundaryLinks]="true " [totalItems]="pagination.amountItems " [itemsPerPage]="5 " [(ngModel)]="pagination.currentPg " (pageChanged)="pageChanged($event) " pageBtnClass="btn " previousText="Anterior
+                    <pagination class="paginationstyle" [boundaryLinks]="true" [totalItems]=pagination.amountItems [itemsPerPage]=pagination.itemsPerPg [(ngModel)]=pagination.currentPg (pageChanged)="pageChanged($event) " pageBtnClass="btn" previousText="Anterior
                             " nextText="Proxímo " firstText="Primeiro " lastText="Último ">
                     </pagination>
                 </div>

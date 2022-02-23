@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
       this._LoginService.login(usr).subscribe(
         () => {
           this._Router.navigate(['/welcome']);
-          console.log('AQUI', )
           // this._LoginService._shoHide = true;
           // this.loginInfo = null;
           this._AlertToastr.Notice(null, 0, usr.username);
