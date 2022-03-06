@@ -13,24 +13,26 @@ import { RegisterComponent } from './company/shared/components/register/register
 import { WelcomeComponent } from './company/welcome/welcome.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {RecordsComponent} from 'src/app/company/records/records.component'
+import { Auth0Guard } from './company/guards/auth-0.guard';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RecordsComponent},
   {path: 'notfound', component: NotFoundComponent},
-  {path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard]},
-  {path:'catinsert', component: CategoryInsertComponent, canActivate: [AuthGuard]},
-  {path:'catadm', component: CategoryAdmComponent, canActivate: [AuthGuard]},
-  {path: 'measureinsert', component: MeasureInsertComponent, canActivate: [AuthGuard]},
-  {path: 'measureadm', component: MeasureAdmComponent, canActivate: [AuthGuard]},
-  {path:'prodpagelist', component:ProductPagelistComponent, resolve: {loaded: ProdutsResolver}, canActivate: [AuthGuard]},  //, canActivate: [AuthGuard]
-  {path:'prodinsert', component:ProductInsertComponent, canActivate: [AuthGuard]},
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: 'welcome', component: WelcomeComponent, canActivate: [Auth0Guard]},
+  {path:'catinsert', component: CategoryInsertComponent, canActivate: [Auth0Guard]},
+  {path:'catadm', component: CategoryAdmComponent, canActivate: [Auth0Guard]},
+  {path: 'measureinsert', component: MeasureInsertComponent, canActivate: [Auth0Guard]},
+  {path: 'measureadm', component: MeasureAdmComponent, canActivate: [Auth0Guard]},
+  {path:'prodpagelist', component:ProductPagelistComponent, resolve: {loaded: ProdutsResolver}, canActivate: [Auth0Guard]},
+  {path:'prodinsert', component:ProductInsertComponent, canActivate: [Auth0Guard]},
+  {path: '', redirectTo: 'welcome', pathMatch: 'full'},
   {path: '**', redirectTo: 'notfound', pathMatch: 'full'},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+
 })
 export class AppRoutingModule { }

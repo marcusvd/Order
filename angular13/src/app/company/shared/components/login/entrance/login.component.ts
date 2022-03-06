@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs';
 import { AlertsToastr } from '../../../services/alerts-toastr';
+import { AuthenticationService } from '../../../services/authentication.service';
 import { UserDto } from '../dto/user-dto';
 import { LoginServices } from '../services/login.services';
 
@@ -13,63 +15,61 @@ import { LoginServices } from '../services/login.services';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   constructor(
-    private _Fb: FormBuilder,
-    private _LoginService: LoginServices,
-    private _Router: Router,
-    private _AlertToastr: AlertsToastr
+    public _AuthenticationService: AuthenticationService,
+    private _AlertToastr: AlertsToastr,
+    private _Router: Router
   ) { }
 
-  userdto: UserDto = new UserDto();
+  userdto: UserDto;
   loginInfo: string;
 
-  formMaker() {
-    this.form = this._Fb.group({
-      username: ['', [Validators.required]],
-      password: ['', []],
-    });
-  }
+
   submit() {
-    if (this.form.valid) {
-      this.submitEM.emit(this.form.value);
+    if (this._AuthenticationService.form.valid) {
+      this.userdto = new UserDto();
+      this.userdto = { ...this._AuthenticationService.form.value }
+      this._AuthenticationService.login(this.userdto).pipe(take(1)).subscribe((usrDto: UserDto) => {
+        this.userdto = usrDto;
+        console.log(this.userdto)
+        this._AlertToastr.Notice(this.userdto.userName.toLocaleUpperCase(), 3, 'success');
+        this._Router.navigate(['/welcome']);
+      }
+      )
     }
   }
-  @Input() error: string | null;
 
-  @Output() submitEM = new EventEmitter();
-  toLogin() {
-    if (this.form.valid) {
-      const usr: UserDto = { ...this.form.value }
-      this._LoginService.login(usr).subscribe(
-        () => {
-          this._Router.navigate(['/welcome']);
-          // this._LoginService._shoHide = true;
-          // this.loginInfo = null;
-          this._AlertToastr.Notice(null, 0, usr.username);
-        },
-        (error: any) => {
-          if (error.status == 401) {
-            // this._LoginService._shoHide = false;
-            this.loginInfo = ('Usuário ou Senha Incorretos...');
-          }
-          else {
-            //console.error(error);
 
-          }
-        }
-      );
-    }
-    // console.log(this.form.value)
-  }
+
+
+
+  // toLogin() {
+  //   if (this.form.valid) {
+  //     const usr: UserDto = { ...this.form.value }
+  //     this._LoginService.login(usr).subscribe(
+  //       () => {
+  //         this._Router.navigate(['/welcome']);
+
+  //         this._AlertToastr.Notice(null, 0, usr.username);
+  //       },
+  //       (error: any) => {
+  //         if (error.status == 401) {
+  //           // this._LoginService._shoHide = false;
+  //           this.loginInfo = ('Usuário ou Senha Incorretos...');
+  //         }
+  //         else {
+  //           console.error(error);
+
+  //         }
+  //       }
+  //     );
+  //   }
+
+  // }
+
+
+
   ngOnInit(): void {
-    this.formMaker();
-
-
-
-    //  const token: UsrToken = JSON.parse(localStorage.getItem('usr'));
-
-    //console.log(this.currentUser);
-
-
+    this._AuthenticationService.formMaker();
   }
 
 }

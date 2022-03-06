@@ -20,13 +20,13 @@ export abstract class CrudService<T, ID> implements ICrudService<T, ID> {
   }
 
   add<T>(record: T):Observable<T> {
-   return this._Http.post<T>(this._BackEnd.toLocaleLowerCase(), record)
+   return this._Http.post<T>(this._BackEnd.toLocaleLowerCase(), record);
   }
   update<T>(record: T): Observable<T> {
     throw new Error("Method not implemented.");
   }
-  delete<T>(record: T): Observable<T> {
-    throw new Error("Method not implemented.");
+  delete<T>(record: any): Observable<any> {
+   return this._Http.delete<any>(`${this._BackEnd.toLocaleLowerCase()}/${record.id}`, record);
   }
   getAll<T>(): Observable<T[]> {
     return this._Http.get<T[]>(this.BackEnd);

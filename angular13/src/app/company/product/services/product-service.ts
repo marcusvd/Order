@@ -11,10 +11,11 @@ import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
-import { ProductModule } from "../modules/product.module";
+import { ProductModule } from "../product-pagelist/modules/product.module";
 import { ProductInsertComponent } from "../product-insert/product-insert.component";
 import { SubCategoryDto } from "../../category/dto/sub-category-dto";
-
+import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
+import { DeleteComponent } from "../../shared/components/delete/delete.component";
 
 @Injectable({ providedIn: 'root' })
 export class ProductService extends CrudService<ProductDto, number> {
@@ -23,11 +24,15 @@ export class ProductService extends CrudService<ProductDto, number> {
   public pgnation: Pagination;
   public products: ProductDto[];
 
+  //deleting
+  bsModalRef?: BsModalRef;
+
   constructor(
     override _Http: HttpClient,
     private _Fb: FormBuilder,
     public _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
+    private _BsModalService: BsModalService
   ) { super(_Http, Url._PRODUCTS) }
 
   formControl = new FormControl('unitofmeasureid');
@@ -38,7 +43,7 @@ export class ProductService extends CrudService<ProductDto, number> {
       categoryid: ['', []],
       manufacturer: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       quantity: ['', [Validators.required]],
-      capacity:['', []],
+      capacity: ['', []],
       price: ['', [Validators.required, Validators.minLength(1)]],
       cost: ['', [Validators.required, Validators.minLength(1)]],
       unitofmeasureid: ['', [Validators.required]],
@@ -90,6 +95,23 @@ export class ProductService extends CrudService<ProductDto, number> {
       );
   }
 
+
+  toDelete(record: ProductDto) {
+const closeInterceptor = () =>{
+
+};
+    const initState: ModalOptions = {
+      initialState: {
+        list: { record },
+        title: 'Exclusão definitiva de registro.',
+      },
+
+    };
+    this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
+    this.bsModalRef.content.closeBtnName = 'Close';
+
+
+  }
 
   save() {
     const toSave: ProductDto = { ...this.formProductInsert.value }

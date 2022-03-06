@@ -25,7 +25,7 @@ export class LoginServices extends CrudService<UserDto, number> {
   public currentUser$ = this.currentUsr.asObservable();
 
   login(user: UserDto) {
-    return this._Http.post<UserDto>(Url._ACCESSCONTROL + '/login', user).pipe(
+    return this._Http.post<UserDto>(`${Url._ACCESSCONTROL}/login`, user).pipe(
       take(1),
       map((response: UserDto) => {
         const user: UserDto = response;
@@ -38,11 +38,14 @@ export class LoginServices extends CrudService<UserDto, number> {
     localStorage.removeItem('usr');
     this.currentUsr.next(null);
     this.currentUsr.complete();
-
+    this._Route.navigate(['/login']);
   }
 
   public setCurrentUser(usr: UserDto): void {
+
     localStorage.setItem('usr', JSON.stringify(usr));
+
+
     this.currentUsr.next(usr);
   }
 

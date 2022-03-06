@@ -35,6 +35,9 @@ namespace Application.Operations
             byte[] Key = Encoding.UTF8.GetBytes(_IConfiguration["JWT:KEY"]);
             var TokenHandler = new JwtSecurityTokenHandler();
 
+            double Hours = Double.Parse(_IConfiguration["TOKEN:EXPIRESHOURS"]);
+            var ExpDate = DateTime.UtcNow.AddHours(Hours);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -43,16 +46,16 @@ namespace Application.Operations
                     new Claim("COMPAIXÃO", "CIÊNCIA"),
                     new Claim(ClaimTypes.Role, usr.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(8),
+                Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256),
             };
             SecurityToken token = TokenHandler.CreateToken(tokenDescriptor);
 
-            double Hours = Double.Parse(_IConfiguration["TOKEN:EXPIRESHOURS"]);
             var usrTkn = new UserToken()
             {
                 Authenticated = true,
-                Expiration = DateTime.UtcNow.AddHours(Hours),
+                //Expiration = ExpDate,
+                Expiration = DateTime.UtcNow.AddHours(1),
                 Token = TokenHandler.WriteToken(token),
                 UserName = usr.UserName
             };

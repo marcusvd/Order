@@ -4,15 +4,15 @@ import { Observable, take } from "rxjs";
 
 import { UserDto } from "../shared/components/login/dto/user-dto";
 import { LoginServices } from "../shared/components/login/services/login.services";
+import { AuthenticationService } from "../shared/services/authentication.service";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-  constructor(private _LoginServices: LoginServices) { }
+  constructor(private _AuthenticationService: AuthenticationService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let currentUser: UserDto;
-
-    this._LoginServices.currentUser$.pipe(take(1)).subscribe(user => {
+    this._AuthenticationService.currentUser.pipe(take(1)).subscribe(user => {
       currentUser = user
       if (currentUser) {
         req = req.clone({
@@ -23,8 +23,6 @@ export class JwtInterceptor implements HttpInterceptor {
         );
       }
     });
-
-
     return next.handle(req);
   }
 

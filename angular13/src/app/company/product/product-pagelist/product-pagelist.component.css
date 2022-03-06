@@ -1,64 +1,8 @@
-.nav-tabs {
-    background-color: rgb(255, 197, 7);
-    /* border-radius: 10px; */
-}
-
-.tab-content {
-    /* background-color: rgb(176, 133, 0); */
-    color: white;
-    padding: 5px;
-    /* border-radius: 10px; */
-    border: 1px solid rgb(255, 197, 7);
-}
-
-.nav-tabs>li>a {
-    border: medium none;
-}
-
-.nav-tabs>li>a:hover {
-    background-color: rgb(255, 193, 7) !important;
-    border: medium none;
-    border-radius: 0;
-    color: rgb(0, 0, 0);
-}
-
-.nav-item {
-    text-size-adjust: 50px;
-    /* text-shadow: 0 0 3px #ff9900, 0 0 5px #000000; */
-    color: rgb(255, 255, 255);
-}
-
-#profile-tab {
-    text-size-adjust: 50px;
-    /* text-shadow: 0 0 3px #ff9900, 0 0 5px #000000; */
-    color: rgb(255, 255, 255);
-}
-
-#myTabContent {
-    text-size-adjust: 50px;
-    /* text-shadow: 0 0 3px #ff9900, 0 0 5px #000000; */
-    color: rgb(0, 0, 0);
-}
-
-.paginationstyle::ng-deep .page-item.active .page-link {
-    z-index: 1;
-    color: #FFFFFF;
-    background-color: rgb(255, 153, 0) !important;
-    border-color: #ffbb00;
-}
-
-#general {
-    text-size-adjust: 50px;
-    text-shadow: 0 0 3px #ff9900, 0 0 5px #000000;
-    color: rgb(0, 0, 0);
-    box-shadow: 0 0 3px #ff9900, 0 0 5px #000000;
-    border: 1px solid black;
-    padding: 5%;
-}
-
-#contentDescriptionText {
-    /* text-size-adjust: 50px; */
-    /* text-shadow: 0 0 3px #ff9900, 0 0 5px #000000; */
-    color: rgb(0, 0, 0);
-    text-shadow: none;
-}
+ #glass {
+     background: rgba( 255, 197, 7, 0.5);
+     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37);
+     backdrop-filter: blur( 2.5px);
+     -webkit-backdrop-filter: blur( 2.5px);
+     border-radius: 10px;
+     border: 1px solid rgba( 255, 255, 255, 0.18);
+ }

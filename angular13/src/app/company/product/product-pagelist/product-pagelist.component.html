@@ -1,99 +1,67 @@
-<div id="general">
+<div class="container">
+    <div class="mt-3"></div>
+    <div class="row">
 
+        <section class="bg-warning">
+            <h1 class="text-center">
+                Produtos
+            </h1>
+        </section>
+        <div class="mb-3">
 
+        </div>
+        <section *ngFor="let prod of products">
+            <ul class="list-group">
+                <div class="row">
+                    <ol class="col-12 list-group-item " style="background-color: rgb(211, 162, 2);">
+                        <h3 style="color: white;">{{prod.name | uppercase}}</h3>
 
-    <div>
-        <tabset>
-            <tab heading="TODOS">
-                <div class="container">
-
-                    <br>
-                    <div style="font-size: 80px;">
+                    </ol>
+                    <!-- <ol class="col-2 list-group-item list-group-item-warning">
+                        <div class="col-2">{{prod.quantity}}</div>
+                    </ol> -->
+                    <div class="list-group-item-warning">
 
 
                         <div class="row">
 
-                            <div class="col-6 bi bi-boxes justify-content-center" style="font-size: 80px; color:rgb(0, 0, 0);">
-                                <div class="pt-5"></div>
+
+                            <div class="pt-2 col-9 align-self-end">
+                                <h6>Quantidade: <span class="badge bg-success ">{{prod.quantity}}</span></h6>
+                                <h6>Preço: <span class="badge bg-success ">{{prod.price | currency:'R$ ':true}}</span></h6>
                             </div>
 
-
-                            <div class="col-4 pt-5" style="font-size: 30px; ">
-                                Unidades de medidas
-                            </div>
-
-
+                            <section class="col-3 pt-2 pb-2 align-self-center">
+                                <button tooltip="Deletar {{prod.name}}" class="btn btn-outline-dark bi bi-trash" (click)="_ProductServices.toDelete(prod)"></button>
+                                <button tooltip="Editar {{prod.name}}" class="btn btn-outline-dark bi bi-pen"></button>
+                                <button tooltip="Detalhes {{prod.name}}" class="btn btn-outline-dark bi bi-info-square"></button>
+                            </section>
 
                         </div>
+
 
                     </div>
-                    <div class="row">
-                        <hr>
-                        <div class="col" style=" color: rgb(255, 193, 7); ">
-                            <div>
-                                <h1>NOME</h1>
-                            </div>
+                    <!-- <div class id="hr">
+                    </div> -->
+                    <!-- <dir class="btn-group">
+                        <button class="btn btn-outline-danger bi bi-trash3">sssssssssssssss</button>
 
-                        </div>
-                        <div class="col " style="color: rgb(255, 193, 7); ">
-                            <div>
-                                <h1>DESCRIÇÃO</h1>
-                            </div>
-                        </div>
-                        <div class="col " style="color: rgb(255, 193, 7); ">
-                            <div>
-                                <h1>AÇÕES</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row " *ngFor="let prod of this.products ">
-                        <hr style=" box-shadow: 0 0 3px #ff9900, 0 0 5px #000000; ">
-
-                        <div class="col-2 " style="color: rgb(0, 0, 0); text-shadow: 0 0 3px #ffc934, 0 0 5px #ffef0b; ">
-                            <h2> {{prod.name | uppercase}} </h2>
-                            <h6 style="color: rgb(255, 193, 7); text-shadow:none ">Disponível:</h6>
-                            <p style="color: rgb(0, 0, 0); text-shadow: none "> {{prod.quantity}} </p>
-                            <br>
-                        </div>
-                        <div class="col-3 " id="contentDescriptionText " style="margin-left: 150px; ">
-                            <div class="text-wrap ">
-                                {{prod.description}}
-                            </div>
-
-                        </div>
-                        <div class="col-2 pb-3 " style="margin-left: 200px; ">
-                            <div class="btn-group " dropdown>
-                                <button id="button-basic " dropdownToggle type="button " class="btn btn-warning dropdown-toggle " aria-controls="dropdown-basic " style="background-color: rgb(255, 193, 7); color: rgb(0, 0, 0); font-size: 15px; "><span
-                    class="caret "></span><i class="bi bi-list "></i>
-                </button>
-                                <div>
-                                    <ul id="dropdown-basic " *dropdownMenu class="dropdown-menu " role="menu " aria-labelledby="button-basic " style="background-color: rgb(255, 245, 160); color: white; width:50px; height: 50px; ">
-                                        <li role="menuitem "><a class="dropdown-item " formControlName="categoryId ">Editar</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="col-1 ">
-                            <button class="btn btn-primary " style="background-color:red; border-color: red; color: white; border-radius: 100%; "><i class="bi bi-x-lg "></i></button>
-                        </div> -->
-
-                    </div>
+                    </dir> -->
                 </div>
-                <div class="p-5 "></div>
-                <div class="d-flex justify-content-center ">
-                    <pagination class="paginationstyle" [boundaryLinks]="true" [totalItems]=pagination.amountItems [itemsPerPage]=pagination.itemsPerPg [(ngModel)]=pagination.currentPg (pageChanged)="pageChanged($event) " pageBtnClass="btn" previousText="Anterior
-                            " nextText="Proxímo " firstText="Primeiro " lastText="Último ">
-                    </pagination>
-                </div>
-            </tab>
-            <!-- <tab heading="CADASTRO ">
+            </ul>
+            <hr style=" background: rgb(255, 210, 60);
+            box-shadow: 5 8px 32px 6 rgba(0, 0, 0, 0.37);
+            border-radius: 10px;
+            border: 1px solid rgb(0, 0, 0);">
 
-            </tab> -->
-        </tabset>
+
+        </section>
+
     </div>
-
-
-
-
+    <div class="pb-4"></div>
+    <div>
+        <pagination class="justify-content-center paginationstyle" [boundaryLinks]="true" [totalItems]=pagination.amountItems [itemsPerPage]=pagination.itemsPerPg [(ngModel)]=pagination.currentPg (pageChanged)="pageChanged($event) " pageBtnClass="btn" previousText="Anterior
+                                " nextText="Proxímo " firstText="Primeiro " lastText="Último ">
+        </pagination>
+    </div>
 </div>

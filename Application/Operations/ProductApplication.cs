@@ -49,6 +49,7 @@ namespace Application.Operations
             try
             {
                 var fromDb = await _WORKER.PRO_REPO.GetAllProductAsync(Params);
+
                 if (fromDb == null) return null;
 
                 List<ProductDto> ViewDto = _MAP.Map<List<ProductDto>>(fromDb);
@@ -71,14 +72,31 @@ namespace Application.Operations
             }
         }
 
-        public Task<bool> DeleteAsync(int id, ProductDto Entiry)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            if (id == 0) throw new Exception("Is null.");
+
+            var fromDb = _WORKER.PRO_REPO.GetAById(_id => _id.Id == id);
+
+            if (fromDb == null) throw new Exception("Sorry, null.");
+
+            _WORKER.PRO_REPO.Delete(fromDb.Result);
+
+            await _WORKER.PRO_REPO.Save();
+
+            return true;
+
         }
 
-        public Task<ProductDto> EditAsync(int id, ProductDto Entiry)
+        public async Task<ProductDto> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var fromDb = await _WORKER.PRO_REPO.GetAById(_id => _id.Id == id);
+
+            var DtoView = _MAP.Map<ProductDto>(fromDb);
+
+            if (DtoView == null) throw new Exception("Entity null");
+            return DtoView;
+
         }
 
         public async Task<PageListDto> SearchPg<Type>(int pgNumber, int pgSize)
@@ -105,5 +123,7 @@ namespace Application.Operations
             int amount = _WORKER.PRO_REPO.GetAmountRecords();
             return amount;
         }
+
+
     }
 }

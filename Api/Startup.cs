@@ -51,13 +51,14 @@ namespace OStorage
             }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
+                x.SaveToken = false;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:KEY"])),
                     ValidateAudience = false,
-                    ValidateIssuer = false
+                    ValidateIssuer = false,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
             //DEPENDENCIES

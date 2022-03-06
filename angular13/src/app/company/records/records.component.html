@@ -4,13 +4,13 @@
         <tab heading="MEDIDAS" class="col-12">
             <measure-insert></measure-insert>
         </tab>
-        <tab heading="CATEGORIAS" class="col-12">
+        <tab heading="CATEGORIAS" class="col-12" (click)="navigate('catinsert')">
             <category-insert></category-insert>
         </tab>
-        <tab heading="PRODUTOS" class="col-12">
+        <tab heading="PRODUTOS" class="col-12" (click)="navigate('prodinsert')">
             <product-insert></product-insert>
         </tab>
-        <tab heading="USUÁRIOS" class="col-12">
+        <tab heading="USUÁRIOS" class="col-12" (click)="navigate('register')">
             <register></register>
         </tab>
 

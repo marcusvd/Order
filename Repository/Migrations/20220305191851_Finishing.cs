@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class magrela1 : Migration
+    public partial class Finishing : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

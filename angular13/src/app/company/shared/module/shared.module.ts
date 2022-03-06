@@ -5,13 +5,29 @@ import { NgxBootStrapModule } from './ngx-bootstrap.module';
 import { SharedRoutingModule } from './shared-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
+import { ToNumberPipe } from '../helpers/pipes/myCurrency';
+import { DeleteComponent } from '../components/delete/delete.component';
+import { DeleteService } from '../components/delete/services/delete.service';
+import { WelcomeComponent } from 'src/app/company/welcome/welcome.component';
+
+import { NotFoundComponent } from 'src/app/not-found/not-found.component';
+import { Auth0Guard } from '../../guards/auth-0.guard';
+
+
 @NgModule({
   declarations: [
-    SideNavComponent
+    SideNavComponent,
+    ToNumberPipe,
+    DeleteComponent,
+    WelcomeComponent,
+    NotFoundComponent,
+
   ],
   imports: [
     CommonModule,
     NgxBootStrapModule,
+
     SharedRoutingModule,
     ReactiveFormsModule,
     FormsModule,
@@ -22,8 +38,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   exports: [
     SideNavComponent,
     NgxBootStrapModule,
+    ToNumberPipe,
+    DeleteComponent,
+    WelcomeComponent,
+    NotFoundComponent,
 
   ],
-  providers: [],
+  providers: [DeleteService, Auth0Guard],
 })
 export class SharedModule { }

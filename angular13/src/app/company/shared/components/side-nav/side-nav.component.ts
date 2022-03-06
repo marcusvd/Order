@@ -6,6 +6,7 @@ import { ProductService } from 'src/app/company/product/services/product-service
 import { UserDto } from 'src/app/company/shared/components/login/dto/user-dto';
 import { LoginServices } from 'src/app/company/shared/components/login/services/login.services';
 import { UsrToken } from '../../dto/usr-token';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'side-nav',
@@ -15,41 +16,29 @@ import { UsrToken } from '../../dto/usr-token';
 })
 export class SideNavComponent implements OnInit {
 
-
-  // public _opened: boolean = true;
-
-  getUserName(): string {
-    let User = new UsrToken();
-    User = JSON.parse(localStorage.getItem('usr'));
-    return  User?.userName;
-  }
-  isAuthenticated(): boolean {
-    let User = new UserDto();
-    User = JSON.parse(localStorage.getItem('usr'));
-    return User?.authenticated;
-  }
-
   constructor(
-    private _Route: Router,
-    public _LogServices: LoginServices,
+    private _Router: Router,
+    public _AuthenticationService: AuthenticationService,
     //just test below
     public proSrv: ProductService,
-
-
   ) { }
 
-  // open() {
-  //   this._Route.navigate(['clientlist']);
-  // }
-  // showHide() {
-  //   return this._opened = !this._opened;
-  // }
 
+  quit(){
+    this._AuthenticationService.logout();
+    this._Router.navigate(['/login']);
+  }
+  // public _opened: boolean = true;
+  getUserName(): string {
+    return this._AuthenticationService.currentUserValue.userName;
+}
 
-  // toggle() {
-  //   this._opened = !this._opened;
-  // }
-
+   isAuthenticated(): boolean {
+    if (this._AuthenticationService.currentUserValue) {
+      return true;
+    }
+    return false;
+  }
 
   ngOnInit(): void {
 

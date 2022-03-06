@@ -4,8 +4,9 @@ import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PaginatedResult, Pagination } from '../../shared/dto/pagination';
 import { ProductDto } from '../dto/product-dto';
-import { ProductRoutingModule } from '../modules/product-routing.module';
+import { ProductRoutingModule } from './modules/product-routing.module';
 import { ProductService } from '../services/product-service';
+
 
 @Component({
   selector: 'app-product-pagelist',
@@ -31,16 +32,8 @@ export class ProductPagelistComponent implements OnInit {
   constructor(
     public _ProductService: ProductService,
     public _RouteData: ActivatedRoute,
-    private _ProductServices: ProductService
+    public _ProductServices: ProductService
   ) { }
-
-  private loadProductsOld() {
-    this.pgResulted = { ... this._RouteData.snapshot.data['loaded'] };
-    this.pagination = this._RouteData.snapshot.data['loaded'].pagination;
-    this.products = this._RouteData.snapshot.data['loaded'].result;
-
-  }
-
 
 private loadProducts(){
  // this.pagination = <Pagination>{ currentPg: 1, itemsPerPg: 3, amountItems: 1 };

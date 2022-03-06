@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">
+        <h1>DELETANDO PRODUTO CÓDIGO: {{_DeleteService.record.id}}</h1>
+    </h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="_BsModalRef.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <div class="container">
+        <div class="row">
+
+            <h2>Tem certeza que deseja apagar o registro de {{_DeleteService.record.name}}</h2>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-6">
+            <button class="btn btn-danger" (click)="_BsModalRef.hide()">Cancelar</button>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-warning" (click)="_BsModalRef.hide()" (click)="deleteRecord()">Apagar</button>
+        </div>
+    </div>
+</div>

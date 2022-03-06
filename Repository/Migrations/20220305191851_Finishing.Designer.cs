@@ -9,8 +9,8 @@ using Repository.Data;
 namespace Repository.Migrations
 {
     [DbContext(typeof(OSDbContext))]
-    [Migration("20220208213907_magrela-1")]
-    partial class magrela1
+    [Migration("20220305191851_Finishing")]
+    partial class Finishing
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

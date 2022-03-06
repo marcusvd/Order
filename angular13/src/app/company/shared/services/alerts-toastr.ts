@@ -17,7 +17,7 @@ export class AlertsToastr {
 
   public Notice(personalMessage?: string, actMsg?: number, actMsgType?: string, LayerErrorApp?: string) {
     if (actMsgType == 'success') {
-      this._Toast.success(personalMessage + ' ' + this.ActionsMessages[actMsg] + ' Sucesso!!!')
+      this._Toast.success('Sucesso!!! ' + personalMessage + ' ' + this.ActionsMessages[actMsg])
     }
     if (actMsgType == 'error') {
       this._Toast.error(this.Erro + ' ' + LayerErrorApp + ', ' + 'Por favor, entre em contato com o suporte técnico.' + ' ' + personalMessage)

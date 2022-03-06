@@ -8,8 +8,8 @@ using Pagination.Models;
 
 namespace Api.Controllers
 {
-    [AllowAnonymous]
-   // [Authorize]
+    // [AllowAnonymous]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
@@ -42,13 +42,13 @@ namespace Api.Controllers
             {
                 PageListDto returnFromDb = await _IPROD_APPLICATION.GetAllAsync(Params);
                 if (returnFromDb == null) return null;
-            
-                  Response.AddPagination(returnFromDb.CurrentPg,
-                                         returnFromDb.PgSize,
-                                         returnFromDb.TotalCount,
-                                         returnFromDb.TotalPgs,
-                                         returnFromDb.HasNext,
-                                         returnFromDb.HasPrevious);
+
+                Response.AddPagination(returnFromDb.CurrentPg,
+                                       returnFromDb.PgSize,
+                                       returnFromDb.TotalCount,
+                                       returnFromDb.TotalPgs,
+                                       returnFromDb.HasNext,
+                                       returnFromDb.HasPrevious);
                 return Ok(returnFromDb.Products);
 
             }
@@ -70,17 +70,18 @@ namespace Api.Controllers
             int amountRecords = _IPROD_APPLICATION.GetAmountRecords();
             int pgAmount = ((int)Math.Ceiling((double)amountRecords / record));
 
-            // search.TotalCount = amountRecords;
-            // search.PgSize = pgAmount;
-            // Response.Headers["x-amount-records"] = amountRecords.ToString();
-            // Response.Headers["x-amount-pgs"] = pgAmount.ToString();
-
-
-
             return Ok(search.Products);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveOne(int id)
+        {
+            if (id == 0) throw new Exception("id is not true.");
 
+            bool resultDel = await _IPROD_APPLICATION.DeleteAsync(id);
+            if (resultDel) return Ok(true);
+            return Ok(false);
+        }
 
 
     }

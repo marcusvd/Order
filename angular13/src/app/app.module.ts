@@ -6,14 +6,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CategoryModule } from './company/category/modules/category.module';
-import { ProductModule } from './company/product/modules/product.module';
+import { ProductModule } from './company/product/product-pagelist/modules/product.module';
 import { SharedModule } from './company/shared/module/shared.module';
 import { MeasureModule } from './company/measure/modules/measure.module';
 import { LoginModule } from 'src/app/company/shared/components/login/modules/login.module';
-import { WelcomeComponent } from './company/welcome/welcome.component';
-import { JwtInterceptor } from './company/interceptors/jwt.interceptor';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { JwtInterceptor } from 'src/app/company/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from 'src/app/company/interceptors/error.interceptor';
 import { RecordsModule } from './company/records/modules/records.module';
+import { AuthenticationService } from './company/shared/services/authentication.service';
+
 
 
 
@@ -22,8 +23,8 @@ import { RecordsModule } from './company/records/modules/records.module';
 @NgModule({
   declarations: [
     AppComponent,
-    WelcomeComponent,
-    NotFoundComponent,
+
+
   ],
   imports: [
     HttpClientModule,
@@ -38,9 +39,10 @@ import { RecordsModule } from './company/records/modules/records.module';
     RecordsModule,
 
   ],
- providers: [
-  {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-],
+  providers: [AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

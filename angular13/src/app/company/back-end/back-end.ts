@@ -1,5 +1,6 @@
 
-export const Url ={
+
+export const Url = {
   // _PRODUCTS: 'http://localhost/api/products',
   // _PRODUCTSPAGINATION: 'http://localhost/api/products/pagination',
   // _CATEGORIES: 'http://localhost/api/categories',

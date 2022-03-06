@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { take } from 'rxjs';
 import { UserDto } from './company/shared/components/login/dto/user-dto';
 import { LoginServices } from './company/shared/components/login/services/login.services';
-
+import { Url } from 'src/app/company/back-end/back-end'
+import { AuthenticationService } from './company/shared/services/authentication.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,36 +11,39 @@ import { LoginServices } from './company/shared/components/login/services/login.
 })
 export class AppComponent {
 
-  constructor(private _LoginSrv: LoginServices) { }
+  constructor(private _AuthenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.setCurrentUser();
-    // this._LoginSrv.currentUser$.pipe(take(1)).subscribe((usr: UserDto) => {
-    //   if(usr.authenticated)
-    //   {
-    //     this._LoginSrv._loginUserStr = usr.email;
-    //     console.log('aqui, aqui, aqui')
-    //   }
-    //   else{
-    //     this._LoginSrv._loginUserStr = 'Entrar';
-    //     console.log('aqui2, aqui2, aqui2')
-    //   }
+    //  this.setCurrentUser();
+
+  //   window.addEventListener('beforeunload', function (e) {
+  //     e.preventDefault();
+  //     e.returnValue = '';
+  //     this.alert('TESTE')
+  // });
 
 
-    // })
   }
 
   setCurrentUser(): void {
     let user: UserDto;
-    if (localStorage.getItem('usr')) {
-      user = JSON.parse(localStorage.getItem('usr') ?? '{}');
-    }
-    else {
-      user = null
-    }
+
+    localStorage.getItem('usr')
+
+    localStorage.getItem('usr')
+
     if (user)
-      this._LoginSrv.setCurrentUser(user);
+    //  this._LoginSrv.setCurrentUser(user);
+
+
+    {
+
+
+
+    }
   }
+
+
 
 
 
