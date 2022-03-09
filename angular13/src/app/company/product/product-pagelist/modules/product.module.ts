@@ -33,7 +33,10 @@ import { JwtInterceptor } from '@auth0/angular-jwt';
     NgxBootStrapModule,
     ProductPagelistComponent
   ],
-  providers: [ProductService]
+  providers: [ProductService,
+        // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+  ]
 
 
 })

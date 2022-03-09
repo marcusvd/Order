@@ -29,14 +29,15 @@ namespace Application.Operations
             _IConfiguration = IConfiguration;
         }
 
+
+
         public UserToken GenerateToken(UserDto usr)
         {
             //the class thas is really used to generate the token
             byte[] Key = Encoding.UTF8.GetBytes(_IConfiguration["JWT:KEY"]);
             var TokenHandler = new JwtSecurityTokenHandler();
 
-            double Hours = Double.Parse(_IConfiguration["TOKEN:EXPIRESHOURS"]);
-            var ExpDate = DateTime.UtcNow.AddHours(Hours);
+            var ExpDate = DateTime.Now.AddHours(Double.Parse(_IConfiguration["TOKEN:EXPIRESHOURS"]));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -46,22 +47,22 @@ namespace Application.Operations
                     new Claim("COMPAIXÃO", "CIÊNCIA"),
                     new Claim(ClaimTypes.Role, usr.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = ExpDate,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256),
             };
             SecurityToken token = TokenHandler.CreateToken(tokenDescriptor);
-
+            DateTime? F = tokenDescriptor.Expires;
             var usrTkn = new UserToken()
             {
                 Authenticated = true,
-                //Expiration = ExpDate,
-                Expiration = DateTime.UtcNow.AddHours(1),
+                Expiration = tokenDescriptor.Expires ?? DateTime.Now,
                 Token = TokenHandler.WriteToken(token),
                 UserName = usr.UserName
             };
 
             return usrTkn;
         }
+/*
         public string GenerateToken(IEnumerable<Claim> claims)
         {
             var TokenHandler = new JwtSecurityTokenHandler();
@@ -113,5 +114,6 @@ namespace Application.Operations
         {
             _refreshTokens.Add(new RefreshTokenDto() { User = usrName, Token = refreshToken });
         }
+        */
     }
 }

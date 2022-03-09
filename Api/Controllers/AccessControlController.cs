@@ -66,7 +66,7 @@ namespace OStorage.Controllers
         }
 
 
-
+/*
         [HttpPost("refresh")]
         public IActionResult Refresh(string token, string refreshToken)
         {
@@ -91,6 +91,6 @@ namespace OStorage.Controllers
 
             return Ok(TokenAndRefrseh);
         }
-
+*/
     }
 }

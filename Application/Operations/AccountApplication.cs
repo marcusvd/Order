@@ -76,8 +76,8 @@ namespace Application.Operations
             }
 
             var token = _ITokenApplication.GenerateToken(userDto);
-            token.RefreshToken = _ITokenApplication.GenerateRefreshToken();
-            _ITokenApplication.SaveRefreshToken(userDto.UserName, token.RefreshToken);
+         //  token.RefreshToken = _ITokenApplication.GenerateRefreshToken();
+           // _ITokenApplication.SaveRefreshToken(userDto.UserName, token.RefreshToken);
 
             return token;
 

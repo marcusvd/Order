@@ -20,10 +20,20 @@ export class JwtInterceptor implements HttpInterceptor {
             Authorization: `Bearer ${currentUser.token}`
           }
         }
-        );
+        ), error => {
+
+          if (error.status === 401) {
+            this._AuthenticationService.logout();
+            location.reload();
+          }
+        };
       }
     });
     return next.handle(req);
   }
+
+
+
+
 
 }

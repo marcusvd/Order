@@ -11,16 +11,13 @@ import { AuthenticationService } from './company/shared/services/authentication.
 })
 export class AppComponent {
 
-  constructor(private _AuthenticationService: AuthenticationService) { }
+  constructor(private _AuthenticationService: AuthenticationService) {
+
+  }
 
   ngOnInit(): void {
-    //  this.setCurrentUser();
 
-  //   window.addEventListener('beforeunload', function (e) {
-  //     e.preventDefault();
-  //     e.returnValue = '';
-  //     this.alert('TESTE')
-  // });
+
 
 
   }

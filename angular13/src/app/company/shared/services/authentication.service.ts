@@ -21,8 +21,8 @@ export class AuthenticationService extends CrudService<UserDto, number> {
     private _Fb: FormBuilder,
   ) {
     super(_Http, Url._ACCESSCONTROL)
-    //this.currentUserSubject = new BehaviorSubject<UserDto>(JSON.parse(localStorage.getItem('usr')));
-    this.currentUserSubject = new BehaviorSubject<UserDto>(JSON.parse(sessionStorage.getItem('usr')));
+    this.currentUserSubject = new BehaviorSubject<UserDto>(JSON.parse(localStorage.getItem('usr')));
+    // this.currentUserSubject = new BehaviorSubject<UserDto>(JSON.parse(sessionStorage.getItem('usr')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -30,8 +30,8 @@ export class AuthenticationService extends CrudService<UserDto, number> {
     return this._Http.post<UserDto>(`${Url._ACCESSCONTROL}/login`, user)
       .pipe(map(usr => {
 
-        //localStorage.setItem('usr', JSON.stringify(usr))
-        sessionStorage.setItem('usr', JSON.stringify(usr))
+        localStorage.setItem('usr', JSON.stringify(usr))
+        //sessionStorage.setItem('usr', JSON.stringify(usr))
        // this.StoredToken = JSON.stringify('usr');
         this.currentUserSubject.next(usr);
         return usr;

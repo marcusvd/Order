@@ -46,6 +46,33 @@ namespace Application.Operations
 
         public async Task<PageListDto> GetAllAsync(Params Params)
         {
+
+
+            // try
+            // {
+            //     var fromDb = await _WORKER.PRO_REPO.GetAllProductAsync(Params);
+
+            //     if (fromDb == null) return null;
+
+            //     var ViewDto = _MAP.Map<PagedList<ProductDto>>(fromDb);
+
+            //     ViewDto.CurrentPg = fromDb.CurrentPg;
+            //     ViewDto.TotalPgs = fromDb.TotalPgs;
+            //     ViewDto.PgSize = fromDb.PgSize;
+            //     ViewDto.TotalCount = fromDb.TotalCount;
+
+
+            //     return PgDto;
+            // }
+            // catch (Exception ex)
+            // {
+            //     throw new Exception($"Camada de aplicação: {ex.Message}");
+            // }
+
+
+
+
+
             try
             {
                 var fromDb = await _WORKER.PRO_REPO.GetAllProductAsync(Params);

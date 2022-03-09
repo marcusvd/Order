@@ -58,6 +58,7 @@ namespace OStorage
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:KEY"])),
                     ValidateAudience = false,
                     ValidateIssuer = false,
+                    ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
             });

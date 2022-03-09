@@ -1,5 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+
 import { catchError, Observable, tap, throwError } from "rxjs";
 import { AuthenticationService } from "../shared/services/authentication.service";
 
@@ -11,7 +12,10 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(catchError(this.handleError))
+
+   //const authReq = req.clone({headers:req.headers.set()})
+
+    return next.handle(req)
   }
 
   handleError(error: any) {
