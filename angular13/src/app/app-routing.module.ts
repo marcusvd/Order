@@ -17,7 +17,7 @@ import { Auth0Guard } from './company/guards/auth-0.guard';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'register', component: RecordsComponent},
+  {path: 'register', component: RecordsComponent, canActivate: [Auth0Guard]},
   {path: 'notfound', component: NotFoundComponent},
   {path: 'welcome', component: WelcomeComponent, canActivate: [Auth0Guard]},
   {path:'catinsert', component: CategoryInsertComponent, canActivate: [Auth0Guard]},
@@ -26,7 +26,7 @@ const routes: Routes = [
   {path: 'measureadm', component: MeasureAdmComponent, canActivate: [Auth0Guard]},
   {path:'prodpagelist', component:ProductPagelistComponent, resolve: {loaded: ProdutsResolver}, canActivate: [Auth0Guard]},
   {path:'prodinsert', component:ProductInsertComponent, canActivate: [Auth0Guard]},
-  {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '**', redirectTo: 'notfound', pathMatch: 'full'},
 ];
 

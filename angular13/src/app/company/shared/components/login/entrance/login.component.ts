@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
     if (this._AuthenticationService.form.valid) {
       this.userdto = new UserDto();
       this.userdto = { ...this._AuthenticationService.form.value }
+
       this._AuthenticationService.login(this.userdto).pipe(take(1)).subscribe((usrDto: UserDto) => {
         this.userdto = usrDto;
         console.log(this.userdto)

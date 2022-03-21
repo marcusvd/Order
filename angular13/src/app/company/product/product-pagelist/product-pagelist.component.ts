@@ -4,7 +4,6 @@ import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PaginatedResult, Pagination } from '../../shared/dto/pagination';
 import { ProductDto } from '../dto/product-dto';
-import { ProductRoutingModule } from './modules/product-routing.module';
 import { ProductService } from '../services/product-service';
 
 

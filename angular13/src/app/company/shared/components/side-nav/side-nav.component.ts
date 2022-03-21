@@ -24,21 +24,42 @@ export class SideNavComponent implements OnInit {
   ) { }
 
 
-  quit(){
+  quit() {
     this._AuthenticationService.logout();
     this._Router.navigate(['/login']);
   }
   // public _opened: boolean = true;
   getUserName(): string {
-    return this._AuthenticationService.currentUserValue.userName;
-}
+    let timeIsNow = new Date();
 
-   isAuthenticated(): boolean {
-    if (this._AuthenticationService.currentUserValue) {
+    if (this._AuthenticationService.currentUserValue?.expiration === null) {
+      this._AuthenticationService.logout();
+
+    }
+    return this._AuthenticationService.currentUserValue?.userName;
+  }
+
+  isAuthenticated(): boolean {
+    let timeIsNow = new Date();
+    if (this._AuthenticationService.currentUserValue?.expiration) {
+
+    }
+    else{
+
+      this._AuthenticationService.logout();
+    }
+
+
+    if (this._AuthenticationService.IsAuthenticated) {
       return true;
     }
     return false;
   }
+
+
+
+
+
 
   ngOnInit(): void {
 
