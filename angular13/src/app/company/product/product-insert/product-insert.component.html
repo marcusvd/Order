@@ -6,44 +6,53 @@
             </div>
             <div>
                 <div>
-                    <!-- <div class="p-5"></div> -->
                     <form [formGroup]="_ProductService.formProductInsert" class="form-group" class="col-12">
-                        <div>
-                            <label>Nome:</label>
 
-                            <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('name', _ProductService.formProductInsert)}">
-                            <div class="invalid-feedback">
-                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'name', 'Nome', 3, 50)}}
-                            </div>
-                        </div>
-                        <div class="p-1"></div>
-
-                        <ng-select class="btn btn-warning" style="background-color: rgb(255, 197, 7); color: rgb(255, 255, 255); font-size: 25px;" [(ngModel)]="selectedCat" formControlName="categoryid" (change)="OnChange()">
-                            <ng-option class="btn btn-warning" *ngFor="let cat of category" [value]="cat.id">{{cat.name}}</ng-option>
-                        </ng-select>
-
-
-                        <div class="p-1"></div>
-                        <div *ngIf="!catToShow()">
-                            <!-- <button class="btn btn-danger col-12" style=" color: rgb(255, 255, 255); font-size: 25px;" [routerLink]="['/catinsert']">Cadastrar Categorias</button> -->
-                        </div>
-
-                        <div class="p-1"></div>
-                        <select class="form-select btn btn-warning " [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('categoryid', _ProductService.formProductInsert)}">
-
-              <div class="invalid-feedback">
-                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'categoryid',
-                'Categoria', null, null)}}
-              </div>
-
-              <option class="btn btn-warning" *ngFor="let sub of subCat" [value]="sub.id">
-                {{sub.name}}
-              </option>
-            </select>
+                        <!-- <ng-select [(ngModel)]="selectedCat" formControlName="categoryid" (change)="OnChange()">
+                            <ng-option *ngFor="let cat of category" [value]="cat.id" style="background-color: rgb(255, 197, 7); color: rgb(255, 255, 255); font-size: 25px;">{{cat.name}}</ng-option>
+                        </ng-select> -->
                         <div class="p-2"></div>
-
                         <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Nome:</label>
+                                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('name', _ProductService.formProductInsert)}">
+                                    <div class="invalid-feedback">
+                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'name', 'Nome', 3, 50)}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Categorias:</label>
+                                    <select class="form-select btn btn-warning" formControlName="categoryid" [(ngModel)]="selectedCat" (change)="OnChange()" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('categoryid', _ProductService.formProductInsert)}">
 
+                    <div class="invalid-feedback">
+                      {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'categoryid',
+                      'Categoria', null, null)}}
+                    </div>
+
+                    <option class="btn btn-warning" *ngFor="let cat of category" [value]="cat.id">
+                      {{cat.name}}
+                    </option>
+                  </select>
+                                </div>
+
+                                <div class="col-6">
+                                    <label>Sub-categorias:</label>
+                                    <select class="form-select btn btn-warning " [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('categoryid', _ProductService.formProductInsert)}">
+
+                    <div class="invalid-feedback">
+                      {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'categoryid',
+                      'Categoria', null, null)}}
+                    </div>
+
+                    <option class="btn btn-warning" *ngFor="let sub of subCat" [value]="sub.id">
+                      {{sub.name}}
+                    </option>
+                  </select>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-4">
                                     <label>Fabricante:</label>
@@ -60,25 +69,22 @@
                                     </div>
                                 </div>
                                 <div class="col-4">
-                                    <div *ngIf="!measureToShow()">
-                                        <!-- <button class="btn btn-danger col-12" style="color: rgb(255, 255, 255); font-size: 25px; " [routerLink]="['/measureinsert']">Cadastrar Medidas</button> -->
-                                    </div>
-                                    <div *ngIf="measureToShow()">
 
-                                        <div>
 
-                                            <select class="form-select btn btn-warning" style="height: 37px; margin-top: 38px;" formControlName="unitofmeasureid" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('unitofmeasureid', _ProductService.formProductInsert)}">
-                        <div class="invalid-feedback">
-                          {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
-                          'unitofmeasureid', 'Unidade de medida', 1, null)}}
-                        </div>
-                        <option class="btn btn-warning" *ngFor="let measure of uOfMeasures" [value]="measure.id"
-                          value="uOfMeasures[1]">
-                          {{measure.description}}
-                        </option>
-                      </select>
-                                        </div>
+                                    <div>
+
+                                        <select class="form-select btn btn-warning" style="height: 37px; margin-top: 38px;" formControlName="unitofmeasureid" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('unitofmeasureid', _ProductService.formProductInsert)}">
+                      <div class="invalid-feedback">
+                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                        'unitofmeasureid', 'Unidade de medida', 1, null)}}
+                      </div>
+                      <option class="btn btn-warning" *ngFor="let measure of uOfMeasures" [value]="measure.id"
+                        value="uOfMeasures[1]">
+                        {{measure.description}}
+                      </option>
+                    </select>
                                     </div>
+
                                 </div>
                                 <div class="container">
                                     <div class="row">

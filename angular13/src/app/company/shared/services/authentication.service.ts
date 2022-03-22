@@ -14,27 +14,27 @@ export class AuthenticationService extends CrudService<UserDto, number> {
   private currentUserSubject: BehaviorSubject<UserDto>;
   public currentUser: Observable<UserDto>;
   public form: FormGroup;
-//  public StoredToken: UserDto;
+  //  public StoredToken: UserDto;
 
   constructor(
     override _Http: HttpClient,
     private _Fb: FormBuilder,
   ) {
     super(_Http, Url._ACCESSCONTROL)
-  //  this.currentUserSubject = new BehaviorSubject<UserDto>(this.StoredToken);
+    //  this.currentUserSubject = new BehaviorSubject<UserDto>(this.StoredToken);
     this.currentUserSubject = new BehaviorSubject<UserDto>(JSON.parse(localStorage.getItem('usr')));
-    // this.currentUserSubject = new BehaviorSubject<UserDto>(JSON.parse(sessionStorage.getItem('usr')));
+ //   this.currentUserSubject = new BehaviorSubject<UserDto>(JSON.parse(sessionStorage.getItem('usr')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
   login(user: UserDto): Observable<UserDto> {
     // const u: UserDto = new UserDto();
-   // this.StoredToken = new UserDto();
+    // this.StoredToken = new UserDto();
 
     return this._Http.post<UserDto>(`${Url._ACCESSCONTROL}/login`, user)
       .pipe(map(usr => {
 
-          localStorage.setItem('usr', JSON.stringify(usr))
+        localStorage.setItem('usr', JSON.stringify(usr))
         //sessionStorage.setItem('usr', JSON.stringify(usr))
         //    this.StoredToken = JSON.stringify('usr');
         //this.StoredToken = usr;
@@ -46,7 +46,8 @@ export class AuthenticationService extends CrudService<UserDto, number> {
 
   logout() {
     localStorage.removeItem('usr');
-   // this.StoredToken = null;
+    //sessionStorage.removeItem('usr');
+    // this.StoredToken = null;
     //this.currentUserSubject.complete();
     this.currentUser = null;
     this.currentUserSubject.next(null);

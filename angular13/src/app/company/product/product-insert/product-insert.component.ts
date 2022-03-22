@@ -27,9 +27,8 @@ export class ProductInsertComponent implements OnInit {
   ) { }
 
   OnChange() {
-    console.log(this.selectedCat)
-    let ghy = this.category.map((catId) => {
-      if (catId.id === this.selectedCat) {
+    let ghy = this.category.forEach((catId) => {
+      if (catId.id == this.selectedCat) {
         this.subCat = catId.subCategories;
       }
     })
@@ -38,12 +37,9 @@ export class ProductInsertComponent implements OnInit {
   loadCategories() {
     this._ProductService.loadCats().subscribe((item: CategoryDto[]) => {
       this.category = item
-
       item.forEach((catDto: CategoryDto) => {
-        this.subCat = catDto.subCategories;
-
+        // this.subCat = catDto.subCategories;
       })
-
     })
   }
 

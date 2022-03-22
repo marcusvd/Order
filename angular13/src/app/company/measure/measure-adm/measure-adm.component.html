@@ -1,91 +1,59 @@
-<div id="general">
+<!-- <div class="mt-3 justify-content-center">
 
-
-
-    <div>
-        <tabset>
-            <tab heading="TODOS">
-                <div class="container">
-
-
-                    <div class="row">
-
-                        <div class="col-6 bi bi-rulers justify-content-center" style="font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
-                            <div class="pt-5"></div>
-                        </div>
-
-
-                        <div class="col-4 pt-5" style="font-size: 30px; ">
-                            Unidades de medidas
-                        </div>
-
-
-
-                    </div>
-
-
-                    <div class=" row ">
-                        <hr>
-                        <div class="col-4 " style="color: rgb(0, 0, 0); ">
-                            <div>
-                                <h5>MEDIDA</h5>
-                            </div>
-                            <div class="p-1 "></div>
-                        </div>
-                        <div class="col-4 " style=" color: rgb(0, 0, 0); ">
-                            <div>
-                                <h5>DESCRIÇÃO</h5>
-                            </div>
-                        </div>
-                        <div class="col-4" style=" color: rgb(0, 0, 0); ">
-                            <div>
-                                <h5>AÇÔES</h5>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-                    <br>
-                    <div class="container " *ngFor="let mes of this.Measures " style="text-shadow: none; font-size: 25px;">
-                        <div class="row ">
-                            <div class="col-4 ">
-                                {{mes.name}}
-                            </div>
-                            <div class="col-4 ">
-                                {{mes.description}}
-                            </div>
-                            <div class="col-4">
-                                <div class="btn-group " dropdown>
-                                    <button id="button-basic " dropdownToggle type="button " class="btn btn-warning dropdown-toggle " aria-controls="dropdown-basic " style="background-color: rgb(255, 193, 7); color: rgb(0, 0, 0); font-size: 15px; "><span
-                      class="caret "></span><i class="bi bi-list "></i>
-                  </button>
-                                    <div>
-                                        <ul id="dropdown-basic " *dropdownMenu class="dropdown-menu " role="menu " aria-labelledby="button-basic " style="background-color: rgb(255, 245, 160); color: white; width:50px; height: 50px; ">
-                                            <li role="menuitem "><a class="dropdown-item " formControlName="categoryId ">Delete</a></li>
-                                        </ul>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-                        <hr>
-                    </div>
-                </div>
-            </tab>
-            <!-- <tab heading="CADASTRO " class="col-12 ">
-
-            </tab> -->
-        </tabset>
+    <section class="bg-warning">
+        <h1 class="text-center">
+            Categorias
+        </h1>
+    </section>
+</div> -->
+<div class="pt-3 pb-3"></div>
+<section class="container">
+    <div class="row bi bi-rulers pt-4 pb-4 " style="font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
+        <div class="col-6 align-self-center" style="font-size: 30px;">
+            Medidas
+        </div>
     </div>
+    <section class="row align-items-" *ngFor="let mes of this.Measures ">
+        <ul class="list-group">
+            <div class="row ">
+
+
+                <div class="row" style="background-color: rgb(255,197,7);">
+                    <section class="pt-2">
+                        <table class="col-12">
+                            <tr class="col-12">
+                                <td class="col-4">
+                                    <h3>{{mes.name | uppercase}}</h3>
+                                </td>
+                                <td class="col-4">
+                                    <h3>{{mes.description | uppercase}}</h3>
+                                </td>
+                                <td class="pt-2 pb-2 pl-5" style="float: right;">
+                                    <button tooltip="Deletar {{mes.name}}" class="btn btn-outline-dark bi bi-trash"></button>
+                                    <button tooltip="Editar {{mes.name}}" class="btn btn-outline-dark bi bi-pen "></button>
+                                    <button tooltip="Detalhes {{mes.name}}" class="btn btn-outline-dark bi bi-info-square "></button>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </section>
+                </div>
+                <!-- <div class id="hr">
+              </div> -->
+                <!-- <dir class="btn-group">
+                  <button class="btn btn-outline-danger bi bi-trash3">sssssssssssssss</button>
+
+              </dir> -->
+            </div>
+        </ul>
+
+
+        <div style="height:30px; background-color: white;"></div>
 
 
 
 
-</div>
+
+
+    </section>
+</section>
