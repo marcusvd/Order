@@ -58,20 +58,20 @@ namespace Api.Controllers
             }
         }
 
-        [HttpGet("pagination")]
-        public async Task<IActionResult> SearchPagination(int pg = 1, int record = 5)
-        {
-            PageListDto search = await _IPROD_APPLICATION.SearchPg<ProductDto>(pg, record);
-            if (search == null)
-            {
-                return NoContent();
-            }
+        // [HttpGet("pagination")]
+        // public async Task<IActionResult> SearchPagination(int pg = 1, int record = 5)
+        // {
+        //     PageListDto search = await _IPROD_APPLICATION.SearchPg<ProductDto>(pg, record);
+        //     if (search == null)
+        //     {
+        //         return NoContent();
+        //     }
 
-            int amountRecords = _IPROD_APPLICATION.GetAmountRecords();
-            int pgAmount = ((int)Math.Ceiling((double)amountRecords / record));
+        //     int amountRecords = _IPROD_APPLICATION.GetAmountRecords();
+        //     int pgAmount = ((int)Math.Ceiling((double)amountRecords / record));
 
-            return Ok(search.Products);
-        }
+        //     return Ok(search.Products);
+        // }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveOne(int id)

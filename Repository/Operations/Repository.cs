@@ -50,12 +50,12 @@ namespace Repository.Operations
             return false;
         }
 
-        public Task<List<T>> SearchPg<Type>(int pgNumber, int pgSize) where Type : class
-        {
-            return _CONTEXT.Set<T>().AsNoTracking()
-            .Skip(pgNumber *  (pgSize -1))
-            .Take(pgSize).ToListAsync();
-        }
+        // public Task<List<T>> SearchPg<Type>(int pgNumber, int pgSize) where Type : class
+        // {
+        //     return _CONTEXT.Set<T>().AsNoTracking()
+        //     .Skip(pgNumber *  (pgSize -1))
+        //     .Take(pgSize).ToListAsync();
+        // }
 
         public int GetAmountRecords()
         {

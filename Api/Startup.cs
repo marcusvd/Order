@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Repository.Contracts;
+using Repository.Operations;
 
 namespace OStorage
 {
@@ -65,6 +67,7 @@ namespace OStorage
             //DEPENDENCIES
             //services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductApplication, ProductApplication>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddTransient<ITokenApplication, TokenApplication>();
             services.AddTransient<IAccountApplication, AccountApplication>();
             services.AddScoped<ICategoryApplication, CategoryApplication>();

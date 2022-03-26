@@ -16,8 +16,8 @@ namespace Application.Contracts
         Task<bool> DeleteAsync(int id);
         //PageListDto PgDto { get; set; }
         Task<PageListDto> GetAllAsync(Params Params);
-        Task<PageListDto> SearchPg<Type>(int pgNumber, int pgSize);
-        int GetAmountRecords();
+ //       Task<PageListDto> SearchPg<Type>(int pgNumber, int pgSize);
+      //  int GetAmountRecords();
 
     }
 }

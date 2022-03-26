@@ -69,14 +69,18 @@ export class ProductService extends CrudService<ProductDto, number> {
   }
 
 
-  loadProductsPagination(pg?: number, record?: number): Observable<PaginatedResult<ProductDto[]>> {
+  loadProductsPagination(pg?: number, record?: number, terms?: string): Observable<PaginatedResult<ProductDto[]>> {
     const paginatedResult: PaginatedResult<ProductDto[]> = new PaginatedResult<ProductDto[]>();
-
     let params = new HttpParams;
     if (pg != null && record != null) {
       params = params.append('pgnumber', pg.toString());
       params = params.append('pgsize', record.toString());
     }
+
+    if (terms !== null && terms !== '') {
+      params = params.append('term', terms)
+    }
+
 
     return this._Http.get<ProductDto[]>(Url._PRODUCTS, { observe: 'response', params })
       .pipe(
@@ -98,9 +102,9 @@ export class ProductService extends CrudService<ProductDto, number> {
 
 
   toDelete(record: ProductDto) {
-const closeInterceptor = () =>{
+    const closeInterceptor = () => {
 
-};
+    };
     const initState: ModalOptions = {
       initialState: {
         list: { record },

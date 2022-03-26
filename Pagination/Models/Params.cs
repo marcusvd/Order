@@ -17,6 +17,7 @@ namespace Pagination.Models
                 _pageSize = (value > maxPgSize) ? maxPgSize : value;
             }
         }
+        public string Term { get; set; } = string.Empty;
 
     }
 

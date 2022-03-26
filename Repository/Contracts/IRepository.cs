@@ -14,7 +14,7 @@ namespace Repository.Contracts
         void Update(T entity);
         void Delete(T entity);
         Task<bool> Save();
-        Task<List<T>> SearchPg<Type>(int pgNumber, int pgSize)where Type: class;
+      //  Task<List<T>> SearchPg<Type>(int pgNumber, int pgSize)where Type: class;
         int GetAmountRecords();
     }
 }

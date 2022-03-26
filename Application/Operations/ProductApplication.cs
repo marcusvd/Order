@@ -7,18 +7,22 @@ using UnitOfWork.Contracts;
 using AutoMapper;
 using Domain.Entities;
 using Pagination.Models;
+using Repository.Contracts;
 
 namespace Application.Operations
 {
     public class ProductApplication : IProductApplication
     {
         private readonly IUnitOfWork _WORKER;
+        private readonly IProductRepository _PRODUCT_REPO;
         private readonly IMapper _MAP;
         public PageListDto PgDto { get; set; }
 
-        public ProductApplication(IUnitOfWork WORKER, IMapper MAP)
+        public ProductApplication(IUnitOfWork WORKER, IMapper MAP,
+         IProductRepository PRODUCT_REPO)
         {
             _WORKER = WORKER;
+            _PRODUCT_REPO = PRODUCT_REPO; 
             _MAP = MAP;
         }
         public async Task<ProductDto> AddAsync(ProductDto DtoView)
@@ -75,7 +79,8 @@ namespace Application.Operations
 
             try
             {
-                var fromDb = await _WORKER.PRO_REPO.GetAllProductAsync(Params);
+                var fromDb = await _PRODUCT_REPO.GetAllProductAsync(Params);
+               // var fromDb = await _WORKER.PRO_REPO.GetAllProductAsync(Params);
 
                 if (fromDb == null) return null;
 
@@ -126,30 +131,30 @@ namespace Application.Operations
 
         }
 
-        public async Task<PageListDto> SearchPg<Type>(int pgNumber, int pgSize)
-        {
-            List<Product> srcPg = await _WORKER.PRO_REPO.SearchPg<Product>(pgNumber, pgSize);
+        // public async Task<PageListDto> SearchPg<Type>(int pgNumber, int pgSize)
+        // {
+        //     List<Product> srcPg = await _WORKER.PRO_REPO.SearchPg<Product>(pgNumber, pgSize);
 
-            if (srcPg == null) return null;
+        //     if (srcPg == null) return null;
 
-            List<ProductDto> srcPgDto = _MAP.Map<List<ProductDto>>(srcPg);
+        //     List<ProductDto> srcPgDto = _MAP.Map<List<ProductDto>>(srcPg);
 
-            PageListDto PgLstDto = new PageListDto();
-            PgLstDto.Products = srcPgDto;
-            PgLstDto.TotalCount = PgLstDto.TotalCount;
-            PgLstDto.PgSize = PgLstDto.PgSize;
-            PgLstDto.CurrentPg = PgLstDto.CurrentPg;
-            PgLstDto.TotalPgs = PgLstDto.TotalPgs;
-            PgLstDto.HasNext = PgLstDto.HasNext;
-            PgLstDto.HasPrevious = PgLstDto.HasPrevious;
-            return PgLstDto;
-        }
+        //     PageListDto PgLstDto = new PageListDto();
+        //     PgLstDto.Products = srcPgDto;
+        //     PgLstDto.TotalCount = PgLstDto.TotalCount;
+        //     PgLstDto.PgSize = PgLstDto.PgSize;
+        //     PgLstDto.CurrentPg = PgLstDto.CurrentPg;
+        //     PgLstDto.TotalPgs = PgLstDto.TotalPgs;
+        //     PgLstDto.HasNext = PgLstDto.HasNext;
+        //     PgLstDto.HasPrevious = PgLstDto.HasPrevious;
+        //     return PgLstDto;
+        // }
 
-        public int GetAmountRecords()
-        {
-            int amount = _WORKER.PRO_REPO.GetAmountRecords();
-            return amount;
-        }
+        // public int GetAmountRecords()
+        // {
+        //     int amount = _WORKER.PRO_REPO.GetAmountRecords();
+        //     return amount;
+        // }
 
 
     }
