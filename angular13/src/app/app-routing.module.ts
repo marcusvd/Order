@@ -17,7 +17,8 @@ import { Auth0Guard } from './company/guards/auth-0.guard';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'register', component: RecordsComponent, canActivate: [Auth0Guard]},
+  {path: 'record', component: RecordsComponent},
+  {path: 'register', component: RegisterComponent}, //, canActivate: [Auth0Guard]
   {path: 'notfound', component: NotFoundComponent},
   {path: 'welcome', component: WelcomeComponent, canActivate: [Auth0Guard]},
   {path:'catinsert', component: CategoryInsertComponent, canActivate: [Auth0Guard]},

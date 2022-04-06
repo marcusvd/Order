@@ -29,17 +29,23 @@ export class ProductPagelistComponent implements OnInit {
   }
 
   private loadProducts() {
-   const test: string = '';
-
-    this._ProductServices.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg, test)
-      .subscribe((pagedResult: PaginatedResult<ProductDto[]>) => {
-        this.pgResulted = pagedResult;
-        this.pagination = pagedResult.pagination;
-        this.products = pagedResult.result;
-      }, (error) => {
-        console.log(error)
+    this._ProductServices.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg, '')
+      .subscribe({
+        next:(pagedResult: PaginatedResult<ProductDto[]>) => {
+          this.pgResulted = pagedResult;
+          this.pagination = pagedResult.pagination;
+          this.products = pagedResult.result;
+        },
+        error:(error)=> {
+          console.log(error)
+        },
+        // complete:(comp)=>
       })
   }
+
+
+
+
 
   public filterProducts(evt: any): void {
     this._ProductServices.loadProductsPagination

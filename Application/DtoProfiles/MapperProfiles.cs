@@ -12,8 +12,6 @@ namespace Application.DtoProfiles
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<SubCategory, SubCategoryDto>().ReverseMap();
             CreateMap<UnitOfMeasure, UnitOfMeasureDto>().ReverseMap();
-
-
         }
     }
 }

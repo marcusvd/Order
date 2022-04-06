@@ -51,36 +51,9 @@ namespace Application.Operations
         public async Task<PageListDto> GetAllAsync(Params Params)
         {
 
-
-            // try
-            // {
-            //     var fromDb = await _WORKER.PRO_REPO.GetAllProductAsync(Params);
-
-            //     if (fromDb == null) return null;
-
-            //     var ViewDto = _MAP.Map<PagedList<ProductDto>>(fromDb);
-
-            //     ViewDto.CurrentPg = fromDb.CurrentPg;
-            //     ViewDto.TotalPgs = fromDb.TotalPgs;
-            //     ViewDto.PgSize = fromDb.PgSize;
-            //     ViewDto.TotalCount = fromDb.TotalCount;
-
-
-            //     return PgDto;
-            // }
-            // catch (Exception ex)
-            // {
-            //     throw new Exception($"Camada de aplicação: {ex.Message}");
-            // }
-
-
-
-
-
             try
             {
-                var fromDb = await _PRODUCT_REPO.GetAllProductAsync(Params);
-               // var fromDb = await _WORKER.PRO_REPO.GetAllProductAsync(Params);
+                var fromDb = await _WORKER.PRO_REPO.GetAllProductAsync(Params);
 
                 if (fromDb == null) return null;
 
@@ -130,32 +103,5 @@ namespace Application.Operations
             return DtoView;
 
         }
-
-        // public async Task<PageListDto> SearchPg<Type>(int pgNumber, int pgSize)
-        // {
-        //     List<Product> srcPg = await _WORKER.PRO_REPO.SearchPg<Product>(pgNumber, pgSize);
-
-        //     if (srcPg == null) return null;
-
-        //     List<ProductDto> srcPgDto = _MAP.Map<List<ProductDto>>(srcPg);
-
-        //     PageListDto PgLstDto = new PageListDto();
-        //     PgLstDto.Products = srcPgDto;
-        //     PgLstDto.TotalCount = PgLstDto.TotalCount;
-        //     PgLstDto.PgSize = PgLstDto.PgSize;
-        //     PgLstDto.CurrentPg = PgLstDto.CurrentPg;
-        //     PgLstDto.TotalPgs = PgLstDto.TotalPgs;
-        //     PgLstDto.HasNext = PgLstDto.HasNext;
-        //     PgLstDto.HasPrevious = PgLstDto.HasPrevious;
-        //     return PgLstDto;
-        // }
-
-        // public int GetAmountRecords()
-        // {
-        //     int amount = _WORKER.PRO_REPO.GetAmountRecords();
-        //     return amount;
-        // }
-
-
     }
 }

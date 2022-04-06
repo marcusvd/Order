@@ -77,7 +77,7 @@ export class CategoryService extends CrudService<CategoryDto, number>{
   subCatFormBuilder(): FormGroup {
     return this.subCatsFormGroup = this._Fb.group({
       // id: ['', []],
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]]
+      name: ['', [Validators.required,  Validators.maxLength(50)]]
     })
   }
   checkField() {
@@ -99,13 +99,13 @@ export class CategoryService extends CrudService<CategoryDto, number>{
 
   public formLoad() {
     this.formCategoryInsert = this._Fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      name: ['', [Validators.required,  Validators.maxLength(50)]],
       subcategories: this._Fb.array([this.subCatFormBuilder()])
     })
   }
 
 
-
+a
 
 
 }

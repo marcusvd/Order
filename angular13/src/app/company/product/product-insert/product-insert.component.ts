@@ -13,66 +13,29 @@ import { ProductService } from '../services/product-service';
 })
 export class ProductInsertComponent implements OnInit {
 
-  public category: CategoryDto[] = [];
-  public uOfMeasures: UnitOfMeasureDto[] = [];
-  public uom: UnitOfMeasureDto;
-  public cat: CategoryDto;
 
-  public subCat: SubCategoryDto[] = [];
-
-  selectedCat: number;
 
   constructor(
     public _ProductService: ProductService
   ) { }
 
-  OnChange() {
-    let ghy = this.category.forEach((catId) => {
-      if (catId.id == this.selectedCat) {
-        this.subCat = catId.subCategories;
-      }
-    })
-  }
-
-  loadCategories() {
-    this._ProductService.loadCats().subscribe((item: CategoryDto[]) => {
-      this.category = item
-      item.forEach((catDto: CategoryDto) => {
-        // this.subCat = catDto.subCategories;
-      })
-    })
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-  catToShow() {
-    return this.category.length > 0 ? true : false;
-  }
-  measureToShow() {
-    return this.uOfMeasures.length > 0 ? true : false;
-  }
-
-  refresh() {
-    window.location.reload();
-  }
-
-
   ngOnInit(): void {
     this._ProductService.formInsert();
-    this.loadCategories();
+    this._ProductService.loadCategories();
     this._ProductService.loadMeasures().subscribe((item: UnitOfMeasureDto[]) => {
-      this.uOfMeasures = item
-
+      this._ProductService.uOfMeasures = item
     })
+    this._ProductService.measureArray = [];
+    this._ProductService.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
+
+    this._ProductService.storageArray = [];
+    this._ProductService.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado');
+
+    this._ProductService.formatArray = [];
+    this._ProductService.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido');
+
+    this._ProductService.stateArray = [];
+    this._ProductService.stateArray.push('Sólido', 'Líquido', 'Gasoso');
   }
 
 }

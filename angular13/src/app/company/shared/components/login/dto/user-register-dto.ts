@@ -1,7 +1,7 @@
 
 export class UserRegisterDto {
   id: number;
-  email: string;
+  userName: string;
   password: string;
-  confirmpassword: string;
+  passwordConfirm: string;
 }
