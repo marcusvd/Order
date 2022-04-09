@@ -4,20 +4,15 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ProductPagelistComponent } from 'src/app/company/product/product-pagelist/product-pagelist.component';
-
+import { ProductInfoEditComponent } from '../product-info-edit.component';
 import { SharedModule } from '../../../shared/module/shared.module';
 import { ProductService } from '../../services/product-service';
-// import { ProductRoutingModule } from './product-routing.module';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgxBootStrapModule } from 'src/app/company/shared/module/ngx-bootstrap.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from '@auth0/angular-jwt';
-
 
 @NgModule({
   declarations: [
-
-    ProductPagelistComponent
+    ProductPagelistComponent,
+    ProductInfoEditComponent
   ],
   imports: [
     CommonModule,
@@ -26,18 +21,11 @@ import { JwtInterceptor } from '@auth0/angular-jwt';
     SharedModule,
     NgxBootStrapModule,
     RouterModule,
-    //ProductRoutingModule,
-
   ],
   exports: [
     NgxBootStrapModule,
     ProductPagelistComponent
   ],
-  providers: [ProductService,
-        // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-
-  ]
-
-
+  providers: [ProductService]
 })
 export class ProductModule { }

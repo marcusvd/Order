@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CategoryModule } from './company/category/modules/category.module';
-import { ProductModule } from './company/product/product-pagelist/modules/product.module';
+import { ProductModule } from './company/product/product-info-edit/modules/product.module';
 import { SharedModule } from './company/shared/module/shared.module';
 import { MeasureModule } from './company/measure/modules/measure.module';
 import { LoginModule } from 'src/app/company/shared/components/login/modules/login.module';

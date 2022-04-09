@@ -46,36 +46,32 @@
                                     <label>Categorias</label>
                                     <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeCategory($event)">
 
-                    <!-- <div class="invalid-feedback">
+                                        <!-- <div class="invalid-feedback">
                                             {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
                                             'categoryId',
                                             'Categoria', null, null)}}
                                         </div> -->
-                    <option class="btn btn-warning">
-                      {{'Selecione'}}
-                    </option>
-                    <option class="btn btn-warning" *ngFor="let cat of _ProductService.category" [value]="cat.id">
-                      {{cat.name}}
-                    </option>
-                  </select>
+
+                                        <option class="btn btn-warning" *ngFor="let cat of _ProductService.category" [value]="cat.id">
+                                            {{cat.name}}
+                                        </option>
+                                    </select>
                                 </div>
 
                                 <div class="col-6">
                                     <label>Sub-categorias</label>
                                     <select class="form-select btn btn-warning " formControlName="subCategoryId" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('subCategoryId', _ProductService.formProductInsert)}">
 
-                    <div class="invalid-feedback">
-                      {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
-                      'subCategoryId',
-                      'Categoria', null, null)}}
-                    </div>
-                    <option class="btn btn-warning">
-                      {{'Selecione'}}
-                    </option>
-                    <option class="btn btn-warning" *ngFor="let sub of _ProductService.subCat" [value]="sub.id">
-                      {{sub.name}}
-                    </option>
-                  </select>
+                                        <div class="invalid-feedback">
+                                            {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                                            'subCategoryId',
+                                            'Categoria', null, null)}}
+                                        </div>
+
+                                        <option class="btn btn-warning" *ngFor="let sub of _ProductService.subCat" [value]="sub.id">
+                                            {{sub.name}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -136,19 +132,17 @@
                                             <div>
                                                 <label>Em:</label>
                                                 <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeHeigth($event)">
-                          <!-- <div class="invalid-feedback">
+                                                    <!-- <div class="invalid-feedback">
                                                         {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
                                                         'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                     </div> -->
-                          <option class="btn btn-warning">
-                            {{'Selecione'}}
-                          </option>
-                          <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
-                            [value]="measure">
-                            {{measure}}
+                                                    <option class="btn btn-warning"
+                                                        *ngFor="let measure of _ProductService.measureArray"
+                                                        [value]="measure">
+                                                        {{measure}}
 
-                          </option>
-                        </select>
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
 
@@ -162,18 +156,16 @@
                                             <div>
                                                 <label>Em:</label>
                                                 <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeWidth($event)">
-                          <!-- <div class="invalid-feedback">
+                                                    <!-- <div class="invalid-feedback">
                                                         {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
                                                         'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                     </div> -->
-                          <option class="btn btn-warning">
-                            {{'Selecione'}}
-                          </option>
-                          <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
-                            [value]="measure">
-                            {{measure}}
-                          </option>
-                        </select>
+                                                    <option class="btn btn-warning"
+                                                    *ngFor="let measure of _ProductService.measureArray"
+                                                    [value]="measure">
+                                                    {{measure}}
+                                                </option>
+                                                </select>
                                             </div>
 
 
@@ -189,18 +181,16 @@
                                             <div>
                                                 <label>Em:</label>
                                                 <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeDepth($event)">
-                          <!-- <div class="invalid-feedback">
+                                                    <!-- <div class="invalid-feedback">
                                                         {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
                                                         'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                     </div> -->
-                          <option class="btn btn-warning">
-                            {{'Selecione'}}
-                          </option>
-                          <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
-                            [value]="measure">
-                            {{measure}}
-                          </option>
-                        </select>
+                                                    <option class="btn btn-warning"
+                                                    *ngFor="let measure of _ProductService.measureArray"
+                                                    [value]="measure">
+                                                    {{measure}}
+                                                </option>
+                                                </select>
                                             </div>
 
 
@@ -218,45 +208,33 @@
                                                 <div class="col">
                                                     <label>Estado</label>
                                                     <select class="form-select btn btn-warning" formControlName="state">
-                            <!-- <div class="invalid-feedback">
+                                                  <!-- <div class="invalid-feedback">
                                                       {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
                                                       'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                   </div> -->
-
-                            <option class="btn btn-warning" *ngFor="let state of _ProductService.stateArray"
-                              [value]="state" [selected]="state">
-                              {{state}}
-                            </option>
-                          </select>
+                                                  <option class="btn btn-warning"
+                                                      *ngFor="let Estado of _ProductService.stateArray"
+                                                      [value]="Estado">
+                                                      {{Estado}}
+                                                  </option>
+                                              </select>
                                                 </div>
 
 
                                                 <div class="col">
                                                     <label>Armazenamento</label>
                                                     <select class="form-select btn btn-warning" formControlName="storage">
-                            <!-- <div class="invalid-feedback">
+                                                <!-- <div class="invalid-feedback">
                                                     {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
                                                     'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                 </div> -->
-                            <option class="btn btn-warning" *ngFor="let storage of _ProductService.storageArray"
-                              [value]="storage" [selected]="storage">
-
-                              {{storage}}
-                            </option>
-                          </select>
+                                                <option class="btn btn-warning"
+                                                    *ngFor="let storage of _ProductService.storageArray"
+                                                    [value]="storage">
+                                                    {{storage}}
+                                                </option>
+                                            </select>
                                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
                                                 <div class="col">
                                                     <label>Empilhamento Máximo</label>
@@ -269,16 +247,17 @@
 
                                                 <div class="col">
                                                     <label>Formato:</label>
-                                                    <select class="form-select btn btn-warning" formControlName="format">
-                            <!-- <div class="invalid-feedback">
+                                                    <select class="form-select btn btn-warning" formControlName="shape">
+                                                      <!-- <div class="invalid-feedback">
                                                           {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
                                                           'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                       </div> -->
-                            <option class="btn btn-warning" *ngFor="let format of _ProductService.formatArray"
-                              [value]="format" [selected]="format">
-                              {{format}}
-                            </option>
-                          </select>
+                                                      <option class="btn btn-warning"
+                                                          *ngFor="let format of _ProductService.formatArray"
+                                                          [value]="format">
+                                                          {{format}}
+                                                      </option>
+                                                  </select>
                                                 </div>
 
 
@@ -295,27 +274,16 @@
                                         <div class="col-6">
                                             <label>Medida</label>
                                             <select class="form-select btn btn-warning" formControlName="unitofmeasureId" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('unitofmeasureId', _ProductService.formProductInsert)}">
-                        <div class="invalid-feedback">
-                          {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
-                          'unitofmeasureId', 'Unidade de medida', 1, null)}}
-                        </div>
-                        <option class="btn btn-warning" *ngFor="let measure of _ProductService.uOfMeasures"
-                          [value]="measure.id" [selected]="measure">
-                          {{measure.name}}
-                        </option>
-                      </select>
+                                                    <div class="invalid-feedback">
+                                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                                                        'unitofmeasureId', 'Unidade de medida', 1, null)}}
+                                                    </div>
+                                                    <option class="btn btn-warning" *ngFor="let measure of _ProductService.uOfMeasures"
+                                                        [value]="measure.id" value="uOfMeasures[1]">
+                                                        {{measure.description}}
+                                                    </option>
+                                                </select>
                                         </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

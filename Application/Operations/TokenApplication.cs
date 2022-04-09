@@ -31,7 +31,7 @@ namespace Application.Operations
 
 
 
-        public UserToken GenerateToken(UserDto usr)
+        public UserToken GenerateToken(UserRegisterDto usr)
         {
             //the class thas is really used to generate the token
             byte[] Key = Encoding.UTF8.GetBytes(_IConfiguration["JWT:KEY"]);
@@ -62,58 +62,41 @@ namespace Application.Operations
 
             return usrTkn;
         }
-/*
-        public string GenerateToken(IEnumerable<Claim> claims)
+
+   
+        public UserToken GenerateToken(UserLoginDto usr)
         {
+            //the class thas is really used to generate the token
+            byte[] Key = Encoding.UTF8.GetBytes(_IConfiguration["JWT:KEY"]);
             var TokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.ASCII.GetBytes(_IConfiguration["JWK:KEY"]);
+
+            var ExpDate = DateTime.Now.AddHours(Double.Parse(_IConfiguration["TOKEN:EXPIRESHOURS"]));
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddHours(double.Parse(_IConfiguration["TOKEN:EXPIRESHOURS"])),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key)
-                , SecurityAlgorithms.HmacSha256)
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, usr.UserName),
+                    new Claim("COMPAIXÃO", "CIÊNCIA"),
+                    new Claim(ClaimTypes.Role, usr.Id.ToString())
+                }),
+                Expires = ExpDate,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256),
             };
-            var token = TokenHandler.CreateToken(tokenDescriptor);
-            return TokenHandler.WriteToken(token);
-
-
-
-        }
-
-        public string GenerateRefreshToken()
-        {
-            byte[] rdnBytes = new byte[32];
-            var rndCreate = RandomNumberGenerator.Create();
-            rndCreate.GetBytes(rdnBytes);
-            return Convert.ToBase64String(rdnBytes);
-        }
-        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
-        {
-            var tokenValidationParameters = new TokenValidationParameters
+            SecurityToken token = TokenHandler.CreateToken(tokenDescriptor);
+            DateTime? F = tokenDescriptor.Expires;
+            var usrTkn = new UserToken()
             {
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_IConfiguration["JWT:KEY"])),
-                ValidateLifetime = false
+                Authenticated = true,
+                Expiration = tokenDescriptor.Expires ?? DateTime.Now,
+                Token = TokenHandler.WriteToken(token),
+                UserName = usr.UserName
             };
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
-            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256
-            , StringComparison.InvariantCultureIgnoreCase))
-                throw new SecurityTokenException("Invalid Token");
-            return principal;
+
+            return usrTkn;
         }
-        private List<RefreshTokenDto> _refreshTokens = new List<RefreshTokenDto>();
-        public void SaveRefreshToken(string usrName, string refreshToken)
-        {
-            _refreshTokens.Add(new RefreshTokenDto() { User = usrName, Token = refreshToken });
-        }
-        public void DeleteRefreshToken(string usrName, string refreshToken)
-        {
-            _refreshTokens.Add(new RefreshTokenDto() { User = usrName, Token = refreshToken });
-        }
-        */
+
+   
+   
     }
 }

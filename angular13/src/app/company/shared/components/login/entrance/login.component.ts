@@ -5,7 +5,7 @@ import { take } from 'rxjs';
 import { AlertsToastr } from '../../../services/alerts-toastr';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { UserDto } from '../dto/user-dto';
-import { LoginServices } from '../services/login.services';
+
 
 @Component({
   selector: 'app-login',
@@ -29,9 +29,9 @@ export class LoginComponent implements OnInit {
       this.userdto = new UserDto();
       this.userdto = { ...this._AuthenticationService.form.value }
 
+      console.log(this.userdto)
       this._AuthenticationService.login(this.userdto).pipe(take(1)).subscribe((usrDto: UserDto) => {
         this.userdto = usrDto;
-        console.log(this.userdto)
         this._AlertToastr.Notice(this.userdto.userName.toLocaleUpperCase(), 3, 'success');
         this._Router.navigate(['/welcome']);
       }

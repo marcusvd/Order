@@ -84,7 +84,7 @@ export class CategoryService extends CrudService<CategoryDto, number>{
 
     let val = <HTMLInputElement>document.getElementById((this.index).toString());
     // this.charactersSub = val.value.length;
-    if (val.value.length > 3) {
+    if (val.value.length > 2) {
       this.addSubCatArrays();
       this.index = 1 + this.index++;
     }

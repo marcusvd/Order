@@ -13,9 +13,7 @@ import { ProductService } from '../services/product-service';
   styleUrls: ['./product-pagelist.component.css']
 })
 export class ProductPagelistComponent implements OnInit {
-  public pagination = {} as Pagination;
-  public pgResulted: PaginatedResult<ProductDto[]>;
-  public products: ProductDto[] = [];
+
 
   constructor(
     public _ProductService: ProductService,
@@ -23,58 +21,11 @@ export class ProductPagelistComponent implements OnInit {
     public _ProductServices: ProductService
   ) { }
 
-  public pageChanged(e) {
-    this.pagination.currentPg = e.page;
-    this.loadProducts();
-  }
-
-  private loadProducts() {
-    this._ProductServices.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg, '')
-      .subscribe({
-        next:(pagedResult: PaginatedResult<ProductDto[]>) => {
-          this.pgResulted = pagedResult;
-          this.pagination = pagedResult.pagination;
-          this.products = pagedResult.result;
-        },
-        error:(error)=> {
-          console.log(error)
-        },
-        // complete:(comp)=>
-      })
-  }
-
-
-
-
-
-  public filterProducts(evt: any): void {
-    this._ProductServices.loadProductsPagination
-      (this.pagination.currentPg, this.pagination.itemsPerPg, evt.data)
-      .subscribe({
-        next: (pagedResult: PaginatedResult<ProductDto[]>) => {
-          // this.pgResulted = pagedResult;
-          console.log('method filter', evt)
-          this.pagination = pagedResult.pagination
-          this.products = pagedResult.result
-        },
-        error: (error) => console.log(error),
-        complete: () => console.log(),
-      })
-
-  }
-
-
-  //  => {
-
-  //
-  //   ;
-  //
-
 
 
 
   ngOnInit(): void {
-    this.loadProducts();
+    this._ProductService.loadProductsToView();
   }
 
 }

@@ -40,7 +40,6 @@ namespace Repository.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Comments")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
 
@@ -55,20 +54,22 @@ namespace Repository.Migrations
                         .HasColumnType("varchar(25)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("Format")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
                     b.Property<string>("Height")
                         .HasMaxLength(25)
                         .HasColumnType("varchar(25)");
 
                     b.Property<string>("Manufacturer")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int>("Maxstacked")
+                    b.Property<int?>("Maxstacked")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -82,13 +83,9 @@ namespace Repository.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("Shape")
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
-
                     b.Property<string>("State")
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Storage")
                         .HasMaxLength(30)
@@ -98,6 +95,9 @@ namespace Repository.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("UnitOfMeasureId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weight")
                         .HasColumnType("int");
 
                     b.Property<string>("Width")

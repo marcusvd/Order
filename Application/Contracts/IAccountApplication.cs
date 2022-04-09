@@ -9,7 +9,7 @@ namespace Application.Contracts
 {
     public interface IAccountApplication
     {
-        Task<UserToken> RegisterUsr([FromBody] UserDto userDto);
-        Task<UserToken> Login([FromBody] UserDto userDto);
+        Task<UserToken> RegisterUsr([FromBody] UserRegisterDto User);
+        Task<UserToken> Login([FromBody] UserLoginDto User);
     }
 }

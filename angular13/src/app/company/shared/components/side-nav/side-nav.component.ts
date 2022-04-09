@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ProductService } from 'src/app/company/product/services/product-service';
 import { UserDto } from 'src/app/company/shared/components/login/dto/user-dto';
-import { LoginServices } from 'src/app/company/shared/components/login/services/login.services';
 import { UsrToken } from '../../dto/usr-token';
 import { AuthenticationService } from '../../services/authentication.service';
 

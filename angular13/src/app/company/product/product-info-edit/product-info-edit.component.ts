@@ -6,56 +6,38 @@ import { UnitOfMeasureDto } from '../../measure/dto/unit-of-measure';
 import { ProductService } from '../services/product-service';
 
 @Component({
-  selector: 'product-insert',
-  templateUrl: './product-insert.component.html',
-  styleUrls: ['./product-insert.component.css'],
+  selector: 'product-info-edit',
+  templateUrl: './product-info-edit.component.html',
+  styleUrls: ['./product-info-edit.component.css'],
   providers: []
 })
-export class ProductInsertComponent implements OnInit {
+export class ProductInfoEditComponent implements OnInit {
 
 
-  select = 'Selecione';
+
   constructor(
     public _ProductService: ProductService
   ) { }
-
-  storage: string;
 
   ngOnInit(): void {
     this._ProductService.formInsert();
     this._ProductService.loadCategories();
     this._ProductService.loadMeasures().subscribe((item: UnitOfMeasureDto[]) => {
       this._ProductService.uOfMeasures = item
-      const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
-      unit.name = 'Selecione';
-      unit.description = 'Selecione';
-      this._ProductService.uOfMeasures.push(unit);
     })
     this._ProductService.measureArray = [];
     this._ProductService.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
 
     this._ProductService.storageArray = [];
-    this._ProductService.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado', 'Selecione');
+    this._ProductService.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado');
 
     this._ProductService.formatArray = [];
-    this._ProductService.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido', 'Selecione');
+    this._ProductService.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido');
 
     this._ProductService.stateArray = [];
-    this._ProductService.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
+    this._ProductService.stateArray.push('Sólido', 'Líquido', 'Gasoso');
 
     console.log(this._ProductService.formProductInsert.valid);
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

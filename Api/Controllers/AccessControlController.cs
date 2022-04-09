@@ -37,11 +37,11 @@ namespace OStorage.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserDto userDto)
+        public async Task<IActionResult> RegisterUser([FromBody] UserRegisterDto user)
         {
-            if (userDto == null) return NoContent();
+            if (user == null) return NoContent();
 
-            UserToken usrTkn = await _IAccountApplication.RegisterUsr(userDto);
+            UserToken usrTkn = await _IAccountApplication.RegisterUsr(user);
             if (usrTkn.Authenticated)
             {
                 return Ok(usrTkn);
@@ -51,7 +51,7 @@ namespace OStorage.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserDto userDto)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto userDto)
         {
             if (userDto == null) return NoContent();
 

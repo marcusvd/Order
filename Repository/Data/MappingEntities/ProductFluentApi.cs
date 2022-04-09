@@ -24,12 +24,12 @@ namespace Repository.Data.MappingEntities
            builder.Property(_h => _h.Height).HasMaxLength(25);
            builder.Property(_w => _w.Width).HasMaxLength(25);
            builder.Property(_d => _d.Depth).HasMaxLength(25);
-           builder.Property(_s => _s.Shape).HasMaxLength(25);
-           builder.Property(_s => _s.State).HasMaxLength(25);
+           builder.Property(_s => _s.Format).HasMaxLength(150);
+           builder.Property(_s => _s.State).HasMaxLength(30);
            builder.Property(_s => _s.Storage).HasMaxLength(30);
-           builder.Property(_m => _m.Manufacturer).HasMaxLength(150).IsRequired();
-           builder.Property(_d => _d.Description).HasMaxLength(1000).IsRequired();
-           builder.Property(_c => _c.Comments).HasMaxLength(1000).IsRequired();
+           builder.Property(_m => _m.Manufacturer).HasMaxLength(150);
+           builder.Property(_d => _d.Description).HasMaxLength(1000);
+           builder.Property(_c => _c.Comments).HasMaxLength(1000);
            
         }
     }

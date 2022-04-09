@@ -9,7 +9,8 @@ namespace Application.Contracts
 {
     public interface ITokenApplication
     {
-        UserToken GenerateToken(UserDto usr);
+        UserToken GenerateToken(UserRegisterDto usr);
+        UserToken GenerateToken(UserLoginDto usr);
      //  string GenerateToken(IEnumerable<Claim> claims);
      //  string GenerateRefreshToken();
      //  void SaveRefreshToken(string usrName, string refreshToken);

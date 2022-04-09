@@ -39,16 +39,16 @@ namespace Application.Operations
         }
 
 
-        public async Task<UserToken> RegisterUsr([FromBody] UserDto userDto)
+        public async Task<UserToken> RegisterUsr([FromBody] UserRegisterDto user)
         {
             var usrToRecord = new IdentityUser
             {
-                UserName = userDto.UserName,
+                UserName = user.UserName,
                 //Email = userDto.Email,
                 EmailConfirmed = true
             };
 
-            IdentityResult resultOfCreation = await _usrMgr.CreateAsync(usrToRecord, userDto.Password);
+            IdentityResult resultOfCreation = await _usrMgr.CreateAsync(usrToRecord, user.Password);
 
             if (!resultOfCreation.Succeeded)
             {
@@ -57,10 +57,10 @@ namespace Application.Operations
 
             await _signInManager.SignInAsync(usrToRecord, false);
 
-            return _ITokenApplication.GenerateToken(userDto);
+            return _ITokenApplication.GenerateToken(user);
         }
 
-        public async Task<UserToken> Login([FromBody] UserDto userDto)
+        public async Task<UserToken> Login([FromBody] UserLoginDto userDto)
         {
             var login = await _signInManager.PasswordSignInAsync(
                 userDto.UserName,
@@ -83,11 +83,6 @@ namespace Application.Operations
 
         }
 
-
-
-
-
-
-
+    
     }
 }

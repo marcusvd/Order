@@ -3,10 +3,10 @@ import { CategoryDto } from "../../category/dto/category-dto";
 export class ProductDto {
   id: number;
   name: string;
-  date: Date;
-  categoryId: number;
   manunfacture: string;
   quantity: number;
+  date: Date;
+  subCategoryId: number;
   // capacity: number;
   price: number;
   cost: number;
@@ -14,13 +14,16 @@ export class ProductDto {
   height: string;
   width: string;
   depth: string;
-  shape:string;
+  format: string;
   //state material
   state: string;
-  storage:string;
-  maxstacked:number;
+  storage: string;
+
+  maxstacked: number;
 
   unitofmeasureId: number;
+  weight: number;
   description: string;
   comments: string;
 }
+

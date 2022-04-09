@@ -7,7 +7,6 @@ import { SharedModule } from 'src/app/company/shared/module/shared.module';
 
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from '../entrance/login.component';
-import { LoginServices } from '../services/login.services';
 import { JwtInterceptor } from 'src/app/company/interceptors/jwt.interceptor';
 import { RegisterServices } from '../services/register.services';
 
@@ -29,7 +28,6 @@ import { RegisterServices } from '../services/register.services';
     LoginComponent,
   ],
   providers: [
-    LoginServices,
     RegisterServices
     // {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true},
   ]

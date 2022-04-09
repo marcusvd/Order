@@ -12,7 +12,7 @@ import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
-import { ProductModule } from "../product-pagelist/modules/product.module";
+import { ProductModule } from "../product-info-edit/modules/product.module";
 import { ProductInsertComponent } from "../product-insert/product-insert.component";
 import { SubCategoryDto } from "../../category/dto/sub-category-dto";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
@@ -20,28 +20,6 @@ import { DeleteComponent } from "../../shared/components/delete/delete.component
 
 @Injectable({ providedIn: 'root' })
 export class ProductService extends CrudService<ProductDto, number> {
-
-  public formProductInsert: FormGroup;
-  public pgnation: Pagination;
-  public products: ProductDto[];
-
-  //insert product
-  public category: CategoryDto[] = [];
-  public uOfMeasures: UnitOfMeasureDto[] = [];
-  public uom: UnitOfMeasureDto;
-  public cat: CategoryDto;
-  public subCat: SubCategoryDto[] = [];
-  selectedCat: number;
-  measureArray: string[];
-  storageArray: string[];
-  formatArray: string[];
-  stateArray: string[];
-  height: string;
-  width: string;
-  depth: string;
-
-  //deleting
-  bsModalRef?: BsModalRef;
 
   constructor(
     override _Http: HttpClient,
@@ -51,44 +29,202 @@ export class ProductService extends CrudService<ProductDto, number> {
     private _BsModalService: BsModalService
   ) {
     super(_Http, Url._PRODUCTS);
-
   }
 
-  formControl = new FormControl('unitofmeasureid');
+  //Delete edit and info
+  bsModalRef?: BsModalRef;
+  // formControl = new FormControl('unitofmeasureid');
 
+  // public pgnation: Pagination;
+  // public products: ProductDto[];
 
+  //#region LoadPagination
+  public pagination = {} as Pagination;
+  public pgResulted: PaginatedResult<ProductDto[]>;
+  public products: ProductDto[] = [];
 
-  formInsert() {
-    this.formProductInsert = this._Fb.group({
-      name: ['', []],
-      manufacturer: ['', []],
-      date: ['', []],
-      categoryId: ['', []],
-      subCategoryId: ['', []],
-      cost: ['', []],
-      price: ['', []],
-      quantity: ['', []],
-      height: ['', []],
-      width: ['', []],
-      depth: ['', []],
-      state: ['', []],
-      storage: ['', []],
-      maxstacked: ['', []],
-      shape: ['', []],
-      unitofmeasureId: ['', []],
-      weight: ['', []],
-      description: ['', []],
-      comments: ['', []],
+  public pageChanged(e) {
+    this.pagination.currentPg = e.page;
+    this.loadProductsToView();
+  }
 
-      // [Validators.required, Validators.minLength(3), Validators.maxLength(50)]
-      // [Validators.required, Validators.minLength(3), Validators.maxLength(50)]
-      // [Validators.required]
-      // [Validators.required, Validators.minLength(1)]
-      // [Validators.required, Validators.minLength(1)]
-      // [Validators.required]
-      // [Validators.minLength(3), Validators.maxLength(500)]
+  public loadProductsToView() {
+    this.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg, '')
+      .subscribe({
+        next: (pagedResult: PaginatedResult<ProductDto[]>) => {
+          this.pgResulted = pagedResult;
+          this.pagination = pagedResult.pagination;
+          this.products = pagedResult.result;
+        },
+        error: (error) => {
+          console.log(error)
+        },
+        // complete:(comp)=>
+      })
+  }
+
+  public filterProducts(evt: any): void {
+    this.loadProductsPagination
+      (this.pagination.currentPg, this.pagination.itemsPerPg, evt.data)
+      .subscribe({
+        next: (pagedResult: PaginatedResult<ProductDto[]>) => {
+          // this.pgResulted = pagedResult;
+          console.log('method filter', evt)
+          this.pagination = pagedResult.pagination
+          this.products = pagedResult.result
+        },
+        error: (error) => console.log(error),
+        complete: () => console.log(),
+      })
+  }
+  //#endregion
+  //#region Create Insert
+  public category: CategoryDto[] = [];
+  public uOfMeasures: UnitOfMeasureDto[] = [];
+  public uom: UnitOfMeasureDto;
+  public cat: CategoryDto;
+  public subCat: SubCategoryDto[] = [];
+  public formProductInsert: FormGroup;
+  selectedCat: number;
+  measureArray: string[];
+  storageArray: string[];
+  formatArray: string[];
+  stateArray: string[];
+  height: string;
+  width: string;
+  depth: string;
+
+  OnChangeHeigth($event: any) {
+    this.height = $event.target.value;
+  }
+  OnChangeWidth($event: any) {
+    this.width = $event.target.value;
+  }
+  OnChangeDepth($event: any) {
+    this.depth = $event.target.value;
+  }
+  loadCategories() {
+    this.loadCats().subscribe((item: CategoryDto[]) => {
+      this.category = item
     })
   }
+  OnChangeCategory($event: any) {
+    let ghy = this.category.forEach((catId) => {
+      if (catId.id == $event.target.value) {
+        this.subCat = catId.subCategories;
+      }
+    })
+  }
+  formInsert() {
+    this.formProductInsert = this._Fb.group({
+      name: ['', [Validators.required, Validators.maxLength(150), Validators.minLength(3)]],
+      manufacturer: ['', [Validators.maxLength(150)]],
+      quantity: ['', [Validators.required]],
+      date: ['', [Validators.required]],
+      subCategoryId: ['', [Validators.required]],
+
+      price: ['', [Validators.required]],
+      cost: ['', [Validators.required]],
+
+      height: ['', [Validators.maxLength(25)]],
+      width: ['', [Validators.maxLength(25)]],
+      depth: ['', [Validators.maxLength(25)]],
+      format: ['', [Validators.maxLength(150)]],
+
+      state: ['', [Validators.maxLength(30)]],
+      storage: ['', [Validators.maxLength(30)]],
+      maxstacked: ['', [Validators.maxLength(100000)]],
+
+      unitofmeasureId: ['', [Validators.required]],
+      weight: ['', [Validators.maxLength(100000)]],
+      description: ['', [Validators.maxLength(1000)]],
+      comments: ['', [Validators.maxLength(1000)]]
+    })
+  }
+
+  save() {
+
+    if (this.height === undefined) {
+      this.height = '';
+    }
+    else {
+      this.formProductInsert.value.height += ' ' + this.height
+    }
+    if (this.width === undefined) {
+      this.width = '';
+    }
+    else {
+      this.formProductInsert.value.width += ' ' + this.width
+    }
+    if (this.depth === undefined) {
+      this.depth = '';
+    }
+    else {
+      this.formProductInsert.value.depth += ' ' + this.depth
+    }
+
+    // this.formProductInsert.value.storage = 'undefined';
+    // this.formProductInsert.value.state = 'undefined';
+    // this.formProductInsert.value.format = 'undefined';
+    // this.formProductInsert.value.shape = 'undefined';
+
+
+    if (!this.formProductInsert.value.maxstacked) {
+      this.formProductInsert.value.maxstacked = 0;
+    }
+    const toSave: ProductDto = { ...this.formProductInsert.value }
+    console.log(toSave);
+    this.add(toSave).subscribe({
+      next: ((prod: ProductDto) => {
+        console.log(prod);
+        this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductInsert);
+        this.formProductInsert.value.subCategories = [];
+        this._AlertsToastr.Notice(`Produto,  ${toSave.name}`, 0, 'success');
+      }),
+      error: (error) => {
+        alert('deu ruim')
+        this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductInsert);
+      },
+    });
+
+
+  }
+  //#endregion
+  //#region Edit
+
+  toEdit(record: ProductDto) {
+    const initState: ModalOptions = {
+      initialState: {
+        list: { record },
+        title: 'Exclusão definitiva de registro.',
+      },
+
+    };
+    this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
+    this.bsModalRef.content.closeBtnName = 'Close';
+
+
+  }
+
+
+  //#endregion
+  //#region Delete
+  toDelete(record: ProductDto) {
+    const initState: ModalOptions = {
+      initialState: {
+        list: { record },
+        title: 'Exclusão definitiva de registro.',
+      },
+
+    };
+    this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
+    this.bsModalRef.content.closeBtnName = 'Close';
+
+
+  }
+  //#endregion
+
+
   loadCats(): Observable<CategoryDto[]> {
     return this._Http.get<CategoryDto[]>(Url._CATEGORIES).pipe(take(1));
   }
@@ -129,97 +265,7 @@ export class ProductService extends CrudService<ProductDto, number> {
         })
       );
   }
-  toDelete(record: ProductDto) {
-    const closeInterceptor = () => {
 
-    };
-    const initState: ModalOptions = {
-      initialState: {
-        list: { record },
-        title: 'Exclusão definitiva de registro.',
-      },
-
-    };
-    this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
-    this.bsModalRef.content.closeBtnName = 'Close';
-
-
-  }
-
-  OnChangeCategory() {
-    let ghy = this.category.forEach((catId) => {
-      if (catId.id == this.selectedCat) {
-        this.subCat = catId.subCategories;
-      }
-    })
-  }
-
-  //insert Product
-  OnChangeHeigth($event: any) {
-    //console.log(event)
-    this.height = $event.target.value;
-  }
-  OnChangeWidth($event: any) {
-    //console.log(event)
-    this.width = $event.target.value;
-  }
-  OnChangeDepth($event: any) {
-    //console.log(event)
-    this.depth = $event.target.value;
-  }
-
-  loadCategories() {
-    this.loadCats().subscribe((item: CategoryDto[]) => {
-      this.category = item
-      item.forEach((catDto: CategoryDto) => {
-        // this.subCat = catDto.subCategories;
-      })
-    })
-  }
-
-
-  catToShow() {
-    return this.category.length > 0 ? true : false;
-  }
-  measureToShow() {
-    return this.uOfMeasures.length > 0 ? true : false;
-  }
-
-  refresh() {
-    window.location.reload();
-  }
-
-
-
-
-
-  save() {
-    this.formProductInsert.value.height += ' ' + this.height
-    this.formProductInsert.value.width += ' ' + this.width
-    this.formProductInsert.value.depth += ' ' + this.depth
-    const toSave: ProductDto = { ...this.formProductInsert.value }
-
-
-
-    console.log(toSave);
-    //console.log(this.formProductInsert.value);
-
-
-    this.add(toSave).subscribe({ next:((prod: ProductDto) => {
-      console.log(prod);
-
-      this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductInsert);
-      this.formProductInsert.value.subCategories = [];
-      this._AlertsToastr.Notice(`Produto,  ${toSave.name}`, 0, 'success');
-    }),
-    error:(error) =>  {alert('deu ruim')
-    this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductInsert);
-  },
-
-    });
-
-
-  }
 
 
 
