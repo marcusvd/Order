@@ -9,7 +9,7 @@ using Repository.Data;
 namespace Repository.Migrations
 {
     [DbContext(typeof(OSDbContext))]
-    [Migration("20220409004357_Validation BackEnd")]
+    [Migration("20220410144149_Validation BackEnd")]
     partial class ValidationBackEnd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,9 @@ namespace Repository.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Comments")
@@ -108,11 +111,11 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubCategoryId")
-                        .IsUnique();
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("UnitOfMeasureId")
-                        .IsUnique();
+                    b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("UnitOfMeasureId");
 
                     b.ToTable("Products");
                 });
@@ -353,17 +356,25 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
+                    b.HasOne("Domain.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.SubCategory", "SubCategory")
-                        .WithOne("Product")
-                        .HasForeignKey("Domain.Entities.Product", "SubCategoryId")
+                        .WithMany("Products")
+                        .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.UnitOfMeasure", "UnitOfMeasure")
-                        .WithOne("Product")
-                        .HasForeignKey("Domain.Entities.Product", "UnitOfMeasureId")
+                        .WithMany("Products")
+                        .HasForeignKey("UnitOfMeasureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("SubCategory");
 
@@ -434,17 +445,19 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
+                    b.Navigation("Products");
+
                     b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("Domain.Entities.SubCategory", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Domain.Entities.UnitOfMeasure", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,10 +16,10 @@ namespace Application.Dtos
         public int Quantity { get; set; }
         [Required(ErrorMessage = "{0}, precisa ser preenchido.")]
         public DateTime Date { get; set; }
-
+        public int CategoryId { get; set; }
+        public CategoryDto Category { get; set; }
         public int SubCategoryId { get; set; }
-        // public SubCategoryDto SubCategory { get; set; }
-        // [RegularExpression(@"^\d+\.\d{0,2}$")]
+        public SubCategoryDto SubCategory { get; set; }        // [RegularExpression(@"^\d+\.\d{0,2}$")]
         [Range(0, 9999999999999999.99)]
         public decimal Price { get; set; }
         // [RegularExpression(@"^\d+\.\d{0,2}$")]
@@ -38,7 +38,7 @@ namespace Application.Dtos
         [StringLength(30)]
         public string Storage { get; set; }
 
-         [StringLength(25, ErrorMessage = ("{0} deve conter o máximo de 25 carácteres."))]
+        [StringLength(25, ErrorMessage = ("{0} deve conter o máximo de 25 carácteres."))]
         public string Format { get; set; }
 
         [Range(0, 100000, ErrorMessage = ("{0} Máximo aceito é 100000."))]
@@ -47,7 +47,7 @@ namespace Application.Dtos
         public int Weight { get; set; }
 
         public int UnitOfMeasureId { get; set; }
-        // public UnitOfMeasureDto UnitOfMeasure { get; set; }
+        public UnitOfMeasureDto UnitOfMeasure { get; set; }
         [StringLength(1000, ErrorMessage = ("{0} deve o máximo de 1000 carácteres."))]
         public string Description { get; set; }
         [StringLength(1000, ErrorMessage = ("{0} deve conter o máximo de 1000 carácteres."))]

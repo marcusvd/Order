@@ -44,17 +44,15 @@
                                 </div>
                                 <div class="col-6">
                                     <label>Categorias</label>
-                                    <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeCategory($event)">
+                                    <select class="form-select btn btn-warning" formControlName="CategoryId" (change)="_ProductService.OnChangeCategory($event)">
 
                     <!-- <div class="invalid-feedback">
                                             {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
                                             'categoryId',
                                             'Categoria', null, null)}}
                                         </div> -->
-                    <option class="btn btn-warning">
-                      {{'Selecione'}}
-                    </option>
-                    <option class="btn btn-warning" *ngFor="let cat of _ProductService.category" [value]="cat.id">
+
+                    <option class="btn btn-warning" *ngFor="let cat of _ProductService.category" [value]="cat.id" [selected]="cat">
                       {{cat.name}}
                     </option>
                   </select>

@@ -35,11 +35,12 @@ namespace OStorage
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
             services.AddIdentity<IdentityUser, IdentityRole>(
-                opt => {
+                opt =>
+                {
                     opt.Password.RequireDigit = false;
                     opt.Password.RequireNonAlphanumeric = false;
                     opt.Password.RequireLowercase = false;
-                    opt.Password.RequireUppercase =false;
+                    opt.Password.RequireUppercase = false;
                     opt.Password.RequiredLength = 3;
                 }
             )
@@ -68,6 +69,10 @@ namespace OStorage
             //services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductApplication, ProductApplication>();
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddTransient<ISubCategoryApplication, SubCategoryApplication>();
+            services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+
             services.AddTransient<ITokenApplication, TokenApplication>();
             services.AddTransient<IAccountApplication, AccountApplication>();
             services.AddScoped<ICategoryApplication, CategoryApplication>();

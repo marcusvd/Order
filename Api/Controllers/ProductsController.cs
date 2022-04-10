@@ -57,6 +57,19 @@ namespace Api.Controllers
                 throw new Exception($"Erro: {ex.Message}");
             }
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            try
+            {
+                var returnFromDb = await _IPROD_APPLICATION.GetByIdAsync(id);
+                return Ok(returnFromDb);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: {ex.Message}");
+            }
+        }
 
         // [HttpGet("pagination")]
         // public async Task<IActionResult> SearchPagination(int pg = 1, int record = 5)

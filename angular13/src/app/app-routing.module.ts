@@ -14,6 +14,7 @@ import { WelcomeComponent } from './company/welcome/welcome.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {RecordsComponent} from 'src/app/company/records/records.component'
 import { Auth0Guard } from './company/guards/auth-0.guard';
+import { ProductInfoEditComponent } from './company/product/product-info-edit/product-info-edit.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'catadm', component: CategoryAdmComponent, canActivate: [Auth0Guard]},
   {path: 'measureinsert', component: MeasureInsertComponent, canActivate: [Auth0Guard]},
   {path: 'measureadm', component: MeasureAdmComponent, canActivate: [Auth0Guard]},
+  {path: 'product/:id/edit', component: ProductInfoEditComponent, canActivate: [Auth0Guard]},
   {path:'prodpagelist', component:ProductPagelistComponent, resolve: {loaded: ProdutsResolver}, canActivate: [Auth0Guard]},
   {path:'prodinsert', component:ProductInsertComponent, canActivate: [Auth0Guard]},
   {path: '', redirectTo: 'login', pathMatch: 'full'},

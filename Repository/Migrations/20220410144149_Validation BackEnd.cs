@@ -259,6 +259,7 @@ namespace Repository.Migrations
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     SubCategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     Height = table.Column<string>(type: "varchar(25)", maxLength: 25, nullable: true)
@@ -284,6 +285,12 @@ namespace Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Products_SubCategories_SubCategoryId",
                         column: x => x.SubCategoryId,
@@ -337,16 +344,19 @@ namespace Repository.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_SubCategoryId",
                 table: "Products",
-                column: "SubCategoryId",
-                unique: true);
+                column: "SubCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UnitOfMeasureId",
                 table: "Products",
-                column: "UnitOfMeasureId",
-                unique: true);
+                column: "UnitOfMeasureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubCategories_CategoryId",

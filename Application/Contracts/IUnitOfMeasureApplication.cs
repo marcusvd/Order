@@ -8,7 +8,7 @@ namespace Application.Contracts
     public interface IUnitOfMeasureApplication
     {
         Task<UnitOfMeasureDto> AddAsync(UnitOfMeasureDto DtoView);
-        Task<UnitOfMeasureDto> EditAsync(int id, UnitOfMeasureDto DtoView);
+        Task<UnitOfMeasureDto> GetByIdAsync(int id);
         Task<List<UnitOfMeasureDto>> GetAllAsync();
         Task<bool> DeleteAsync(int id, UnitOfMeasureDto DtoView);
         PageListDto PgDto { get; set; }

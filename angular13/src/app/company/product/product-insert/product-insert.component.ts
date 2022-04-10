@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CategoryDto } from '../../category/dto/category-dto';
 import { SubCategoryDto } from '../../category/dto/sub-category-dto';
 import { UnitOfMeasureDto } from '../../measure/dto/unit-of-measure';
+import { ProductInsertService } from '../services/product-insert.service';
 import { ProductService } from '../services/product-service';
 
 @Component({
@@ -13,37 +14,16 @@ import { ProductService } from '../services/product-service';
 })
 export class ProductInsertComponent implements OnInit {
 
-
-  select = 'Selecione';
   constructor(
-    public _ProductService: ProductService
+    public _ProductService: ProductInsertService
   ) { }
-
-  storage: string;
 
   ngOnInit(): void {
     this._ProductService.formInsert();
     this._ProductService.loadCategories();
-    this._ProductService.loadMeasures().subscribe((item: UnitOfMeasureDto[]) => {
-      this._ProductService.uOfMeasures = item
-      const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
-      unit.name = 'Selecione';
-      unit.description = 'Selecione';
-      this._ProductService.uOfMeasures.push(unit);
-    })
-    this._ProductService.measureArray = [];
-    this._ProductService.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
-
-    this._ProductService.storageArray = [];
-    this._ProductService.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado', 'Selecione');
-
-    this._ProductService.formatArray = [];
-    this._ProductService.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido', 'Selecione');
-
-    this._ProductService.stateArray = [];
-    this._ProductService.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
-
-    console.log(this._ProductService.formProductInsert.valid);
+    this._ProductService.loadSelects();
+    this._ProductService.addSelectCat();
+    this._ProductService.addSelectMeasure();
   }
 
 }

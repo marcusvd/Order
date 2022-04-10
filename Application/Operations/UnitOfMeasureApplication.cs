@@ -27,11 +27,11 @@ namespace Application.Operations
                 if (DtoView == null) return null;
 
                 UnitOfMeasure ViewToRecord = _MAP.Map<UnitOfMeasure>(DtoView);
-                _WORKER.UMEASURE_REPO.Add(ViewToRecord);
+                _WORKER.UNITOFMEASURE_REPO.Add(ViewToRecord);
 
                 if (await _WORKER.CAT_REPO.Save())
                 {
-                    UnitOfMeasure RecordFromDb = await _WORKER.UMEASURE_REPO.GetAById(_id => _id.Id == ViewToRecord.Id);
+                    UnitOfMeasure RecordFromDb = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == ViewToRecord.Id);
                     UnitOfMeasureDto ViewDtoToReturn = _MAP.Map<UnitOfMeasureDto>(RecordFromDb);
                     return ViewDtoToReturn;
                 }
@@ -48,7 +48,7 @@ namespace Application.Operations
         {
             try
             {
-                List<UnitOfMeasure> fromDb = await _WORKER.UMEASURE_REPO.GeAllCategories();
+                List<UnitOfMeasure> fromDb = await _WORKER.UNITOFMEASURE_REPO.GeAllCategories();
                 if (fromDb == null) return null;
 
                 List<UnitOfMeasureDto> CatList = _MAP.Map<List<UnitOfMeasureDto>>(fromDb);
@@ -68,11 +68,21 @@ namespace Application.Operations
             throw new System.NotImplementedException();
         }
 
-        public Task<UnitOfMeasureDto> EditAsync(int id, UnitOfMeasureDto Entiry)
+        public async Task<UnitOfMeasureDto> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+               try
+            {
+               UnitOfMeasure fromDb = await  _WORKER.UNITOFMEASURE_REPO.GetByIdAsync(id);
+                if (fromDb == null) return null;
+
+                UnitOfMeasureDto unitOfMeasure = _MAP.Map<UnitOfMeasureDto>(fromDb);
+
+                return unitOfMeasure;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Camada de aplicação: {ex.Message}");
+            }
         }
-
-
     }
 }

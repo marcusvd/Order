@@ -51,5 +51,22 @@ namespace Api.Controllers
                 throw new Exception($"Erro: {ex.Message}");
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAll(int id)
+        {
+            try
+            {
+
+                var returnFromDb = await _UNITMEASURE_APPLICATION.GetByIdAsync(id);
+        
+                if (returnFromDb == null) return null;
+                     return Ok(returnFromDb);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: {ex.Message}");
+            }
+        }
     }
 }

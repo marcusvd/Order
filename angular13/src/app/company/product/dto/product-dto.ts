@@ -1,4 +1,6 @@
 import { CategoryDto } from "../../category/dto/category-dto";
+import { SubCategoryDto } from "../../category/dto/sub-category-dto";
+import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
 
 export class ProductDto {
   id: number;
@@ -6,8 +8,10 @@ export class ProductDto {
   manunfacture: string;
   quantity: number;
   date: Date;
+  category: CategoryDto;
+  categoryId: number;
+  subCategory: SubCategoryDto;
   subCategoryId: number;
-  // capacity: number;
   price: number;
   cost: number;
   //dimensions
@@ -20,8 +24,8 @@ export class ProductDto {
   storage: string;
 
   maxstacked: number;
-
-  unitofmeasureId: number;
+  unitOfMeasure: UnitOfMeasureDto;
+  unitOfMeasureId: number;
   weight: number;
   description: string;
   comments: string;

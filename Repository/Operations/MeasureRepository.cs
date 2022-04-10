@@ -12,20 +12,24 @@ namespace Repository.Operations
 {
     public class UnitOfMeasureRepository : Repository<UnitOfMeasure>, IUnitOfMeasureRepository
     {
-      private readonly OSDbContext _CONTEXT;
+        private readonly OSDbContext _CONTEXT;
         public UnitOfMeasureRepository(OSDbContext CONTEXT) : base(CONTEXT)
         {
-          _CONTEXT = CONTEXT;
-         }
+            _CONTEXT = CONTEXT;
+        }
 
         public async Task<List<UnitOfMeasure>> GeAllCategories()
         {
             return await _CONTEXT.UnitsOfMeasures.AsNoTracking().ToListAsync();
         }
+    
 
-        Task<List<UnitOfMeasure>> IUnitOfMeasureRepository.GeAllCategories()
+        public Task<UnitOfMeasure> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return _CONTEXT.UnitsOfMeasures.SingleOrDefaultAsync(_id => _id.Id == id);
         }
+
+
+
     }
 }

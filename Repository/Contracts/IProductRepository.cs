@@ -10,7 +10,7 @@ namespace Repository.Contracts
     {
         // Task<PageList<Product>> GetAllProductAsync(QueryParams queryParams);
         Task<PagedList<Product>> GetAllProductAsync(Params Params);
-        
+        Task<Product> GetByIdIncludeAsync(int id, bool include = false);
     
     }
 }

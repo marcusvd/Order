@@ -22,7 +22,7 @@ import { ProductInfoEditComponent } from "../product-info-edit/product-info-edit
 import { MeasureDto } from "../../measure/dto/measure-dto";
 
 @Injectable({ providedIn: 'root' })
-export class ProductService extends CrudService<ProductDto, number> {
+export class ProductInsertService extends CrudService<ProductDto, number> {
 
   constructor(
     override _Http: HttpClient,
@@ -36,47 +36,7 @@ export class ProductService extends CrudService<ProductDto, number> {
 
   bsModalRef?: BsModalRef;
 
-  //#region LoadPagination
-  public pagination = {} as Pagination;
-  public pgResulted: PaginatedResult<ProductDto[]>;
-  public products: ProductDto[] = [];
-
-  public pageChanged(e) {
-    this.pagination.currentPg = e.page;
-    this.loadProductsToView();
-  }
-
-  public loadProductsToView() {
-    this.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg, '')
-      .subscribe({
-        next: (pagedResult: PaginatedResult<ProductDto[]>) => {
-          this.pgResulted = pagedResult;
-          this.pagination = pagedResult.pagination;
-          this.products = pagedResult.result;
-        },
-        error: (error) => {
-          console.log(error)
-        },
-        // complete:(comp)=>
-      })
-  }
-
-  public filterProducts(evt: any): void {
-    this.loadProductsPagination
-      (this.pagination.currentPg, this.pagination.itemsPerPg, evt.data)
-      .subscribe({
-        next: (pagedResult: PaginatedResult<ProductDto[]>) => {
-          // this.pgResulted = pagedResult;
-          console.log('method filter', evt)
-          this.pagination = pagedResult.pagination
-          this.products = pagedResult.result
-        },
-        error: (error) => console.log(error),
-        complete: () => console.log(),
-      })
-  }
-  //#endregion
- //#region General
+  //#region Create Insert
   public category: CategoryDto[] = [];
   public uOfMeasures: UnitOfMeasureDto[] = [];
   public uom: UnitOfMeasureDto;
@@ -113,70 +73,48 @@ export class ProductService extends CrudService<ProductDto, number> {
       }
     })
   }
-  OnLoadCategory() {
-    let ghy = this.category.forEach((catId) => {
 
-        this.subCat = catId.subCategories;
-        console.log()
+loadSelects(){
+  this.measureArray = [];
+  this.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
 
-    })
-  }
-  loadSelects() {
-    this.measureArray = [];
-    this.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
+  this.storageArray = [];
+  this.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado', 'Selecione');
 
-    this.storageArray = [];
-    this.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado', 'Selecione');
+  this.formatArray = [];
+  this.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido', 'Selecione');
 
-    this.formatArray = [];
-    this.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido', 'Selecione');
+  this.stateArray = [];
+  this.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
+}
 
-    this.stateArray = [];
-    this.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
-    this.OnLoadCategory();
-  }
+addSelectMeasure()
+{
+  this.loadMeasures().subscribe((item: UnitOfMeasureDto[]) => {
+    this.uOfMeasures = item
+    const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
+    unit.name = 'Selecione';
+    unit.description = 'Selecione';
+    this.uOfMeasures.push(unit);
+  })
+}
+addSelectCat()
+{
+  this.loadCats().subscribe((item: CategoryDto[]) => {
+    this.category = item
+    const cat: CategoryDto = new CategoryDto();
+    cat.name = 'Selecione';
+    this.category.push(cat);
+  })
+}
 
-  addSelectMeasure() {
-    this.loadMeasures().subscribe((item: UnitOfMeasureDto[]) => {
-      this.uOfMeasures = item
-      const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
-      unit.name = 'Selecione';
-      unit.description = 'Selecione';
-      this.uOfMeasures.push(unit);
-    })
-  }
-  addSelectCat() {
-    this.loadCats().subscribe((item: CategoryDto[]) => {
-      this.category = item
-      const cat: CategoryDto = new CategoryDto();
-      cat.name = 'Selecione';
-      this.category.push(cat);
-    })
-  }
-  save() {
-  }
-  //#endregion
-  //#region Edit
-  public formProductEdit: FormGroup;
-  prod: ProductDto = new ProductDto();
-
-  loadProductToEdit(record: number) {
-    return this._Http.get<ProductDto>(`${Url._PRODUCTS}/${record}`).pipe(take(1));
-    //  .subscribe({
-    //   next: (prodInclude: ProductDto) => {
-    //     this.prod = { ...prodInclude }
-    //   }
-    // })
-
-  }
-  formEdit() {
-    this.formProductEdit = this._Fb.group({
-      id: ['', []],
+formInsert() {
+    this.formProductInsert = this._Fb.group({
       name: ['', [Validators.required, Validators.maxLength(150), Validators.minLength(3)]],
       manufacturer: ['', [Validators.maxLength(150)]],
       quantity: ['', [Validators.required]],
       date: ['', [Validators.required]],
-      categoryId: ['', [Validators.required]],
+      CategoryId: ['', [Validators.required]],
       subCategoryId: ['', [Validators.required]],
 
       price: ['', [Validators.required]],
@@ -191,45 +129,57 @@ export class ProductService extends CrudService<ProductDto, number> {
       storage: ['', [Validators.maxLength(30)]],
       maxstacked: ['', [Validators.maxLength(100000)]],
 
-      unitOfMeasureId: ['', [Validators.required]],
+      unitofmeasureId: ['', [Validators.required]],
       weight: ['', [Validators.maxLength(100000)]],
       description: ['', [Validators.maxLength(1000)]],
       comments: ['', [Validators.maxLength(1000)]]
     })
   }
 
-  toEdit(record: ProductDto) {
-    let prod: ProductDto = new ProductDto();
-    prod = { ...record }
-    this._Http.get<ProductDto>(`${Url._PRODUCTS}/${record.id}`).pipe(take(1))
-      .subscribe({
-        next: (prodInclude: ProductDto) => {
-          prod = { ...prodInclude }
-        }
-      })
+  save() {
 
-    const initState: ModalOptions = {
-      initialState: {
-        list: { prod },
-        title: 'Exclusão definitiva de registro.'
+    if (this.height === undefined) {
+      this.height = '';
+    }
+    else {
+      this.formProductInsert.value.height += ' ' + this.height
+    }
+    if (this.width === undefined) {
+      this.width = '';
+    }
+    else {
+      this.formProductInsert.value.width += ' ' + this.width
+    }
+    if (this.depth === undefined) {
+      this.depth = '';
+    }
+    else {
+      this.formProductInsert.value.depth += ' ' + this.depth
+    }
+
+    // this.formProductInsert.value.storage = 'undefined';
+    // this.formProductInsert.value.state = 'undefined';
+    // this.formProductInsert.value.format = 'undefined';
+    // this.formProductInsert.value.shape = 'undefined';
+
+
+    if (!this.formProductInsert.value.maxstacked) {
+      this.formProductInsert.value.maxstacked = 0;
+    }
+    const toSave: ProductDto = { ...this.formProductInsert.value }
+    console.log(toSave);
+    this.add(toSave).subscribe({
+      next: ((prod: ProductDto) => {
+        console.log(prod);
+        this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductInsert);
+        this.formProductInsert.value.subCategories = [];
+        this._AlertsToastr.Notice(`Produto,  ${toSave.name}`, 0, 'success');
+      }),
+      error: (error) => {
+        alert('deu ruim')
+        this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductInsert);
       },
-    };
-    this.bsModalRef = this._BsModalService.show(ProductInfoEditComponent, initState);
-    this.bsModalRef.content.closeBtnName = 'Close';
-  }
-
-  //#endregion
-  //#region Delete
-  toDelete(record: ProductDto) {
-    const initState: ModalOptions = {
-      initialState: {
-        list: { record },
-        title: 'Exclusão definitiva de registro.',
-      },
-
-    };
-    this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
-    this.bsModalRef.content.closeBtnName = 'Close';
+    });
 
 
   }
@@ -275,5 +225,8 @@ export class ProductService extends CrudService<ProductDto, number> {
         })
       );
   }
+
+
+
 
 }

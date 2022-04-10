@@ -9,8 +9,9 @@ namespace UnitOfWork.Contracts
     {
           //Task<ProductRepository> PRO_REPO_MTD(); 
           ProductRepository PRO_REPO {get;}
-          UnitOfMeasureRepository UMEASURE_REPO {get;}
+          UnitOfMeasureRepository UNITOFMEASURE_REPO {get;}
           CategoryRepository CAT_REPO {get;}
+          SubCategoryRepository SUBCAT_REPO {get;}
           Task<bool> Save();
     }
 }

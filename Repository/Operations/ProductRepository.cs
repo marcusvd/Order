@@ -18,37 +18,29 @@ namespace Repository.Operations
         {
             _CONTEXT = CONTEXT;
         }
-        // public async Task<ICollection<Product>> GetAll(Params PgParams)
-        // {
-        //     return await GetAll().AsNoTracking().Skip((PgParams.PgNumber - 1) * PgParams.PgSize)
-        //     .Take(PgParams.PgSize)
-        //     .ToListAsync();
-        // }
-        // public async Task<PagedList<Product>> GetAllProductAsync(Params Params)
-        // {
-        //     return await PagedList<Product>.ToPagedList(
-        //         GetAll().OrderBy(_by => _by.Name), Params.PgNumber, Params.PgSize
-        //         );
-        // }
-
-
-
-        // public async Task<PagedList<Product>> GetAllProductAsync(Params parameters)
-        // {
-        //      IQueryable<Product> query = GetAll().OrderBy(_by => _by.Name)
-        //     .Where(p => p.Name.ToLower().Contains(parameters.Term.ToLower()));
-        //     return await PagedList<Product>.ToPagedList(query, parameters.PgNumber, parameters.PgSize);
-        // }
         public async Task<PagedList<Product>> GetAllProductAsync(Params parameters)
         {
-
-        
-                IQueryable<Product> query =
-                GetAll().OrderBy(o => o.Name).Where(p => p.Name.ToLower().Contains(parameters.Term));
-                return await PagedList<Product>.ToPagedList(query, parameters.PgNumber, parameters.PgSize);
-
-          
+            IQueryable<Product> query =
+            GetAll().OrderBy(o => o.Name).Where(p => p.Name.ToLower().Contains(parameters.Term));
+            return await PagedList<Product>.ToPagedList(query, parameters.PgNumber, parameters.PgSize);
         }
+
+        public async Task<Product> GetByIdIncludeAsync(int id, bool include = false)
+        {
+            Product product = await GetAById(_id => _id.Id == id);
+            // _CONTEXT.Products.AsNoTracking().SingleOrDefaultAsync(_id => _id.Id == id);
+            if (include)
+            {
+                Product productIncluded = await _CONTEXT.Products.AsNoTracking()
+                .Include(_sub => _sub.SubCategory)
+                .Include(_cat => _cat.Category)
+                .Include(_unit => _unit.UnitOfMeasure).SingleOrDefaultAsync(_id => _id.Id == id);
+                return productIncluded;
+            }
+            return product;
+        }
+
+
 
 
 

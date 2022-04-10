@@ -12,7 +12,8 @@ namespace UnitOfWork.Operations
         public readonly OSDbContext _CONTEXT;
         private ProductRepository _PRO_REPO;
         private CategoryRepository _CAT_REPO;
-        private UnitOfMeasureRepository _UMEASURE_REPO;
+        private SubCategoryRepository _SUBCAT_REPO;
+        private UnitOfMeasureRepository _UNITOFMEASURE_REPO;
         public Worker(OSDbContext CONTEXT)
         {
             _CONTEXT = CONTEXT;
@@ -33,12 +34,19 @@ namespace UnitOfWork.Operations
                 return _CAT_REPO = _CAT_REPO ?? new CategoryRepository(_CONTEXT);
             }
         }
-
-        public UnitOfMeasureRepository UMEASURE_REPO
+        public SubCategoryRepository SUBCAT_REPO
         {
             get
             {
-                return _UMEASURE_REPO = _UMEASURE_REPO ?? new UnitOfMeasureRepository(_CONTEXT);
+                return _SUBCAT_REPO = _SUBCAT_REPO ?? new SubCategoryRepository(_CONTEXT);
+            }
+        }
+
+        public UnitOfMeasureRepository UNITOFMEASURE_REPO
+        {
+            get
+            {
+                return _UNITOFMEASURE_REPO = _UNITOFMEASURE_REPO ?? new UnitOfMeasureRepository(_CONTEXT);
             }
         }
 

@@ -39,6 +39,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comments")
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
@@ -106,11 +109,11 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubCategoryId")
-                        .IsUnique();
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("UnitOfMeasureId")
-                        .IsUnique();
+                    b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("UnitOfMeasureId");
 
                     b.ToTable("Products");
                 });
@@ -351,17 +354,25 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
+                    b.HasOne("Domain.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.SubCategory", "SubCategory")
-                        .WithOne("Product")
-                        .HasForeignKey("Domain.Entities.Product", "SubCategoryId")
+                        .WithMany("Products")
+                        .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.UnitOfMeasure", "UnitOfMeasure")
-                        .WithOne("Product")
-                        .HasForeignKey("Domain.Entities.Product", "UnitOfMeasureId")
+                        .WithMany("Products")
+                        .HasForeignKey("UnitOfMeasureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("SubCategory");
 
@@ -432,17 +443,19 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
+                    b.Navigation("Products");
+
                     b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("Domain.Entities.SubCategory", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Domain.Entities.UnitOfMeasure", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

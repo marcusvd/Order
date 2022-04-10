@@ -22,7 +22,7 @@ namespace Application.Operations
          IProductRepository PRODUCT_REPO)
         {
             _WORKER = WORKER;
-            _PRODUCT_REPO = PRODUCT_REPO; 
+            _PRODUCT_REPO = PRODUCT_REPO;
             _MAP = MAP;
         }
         public async Task<ProductDto> AddAsync(ProductDto DtoView)
@@ -95,12 +95,19 @@ namespace Application.Operations
 
         public async Task<ProductDto> GetByIdAsync(int id)
         {
-            var fromDb = await _WORKER.PRO_REPO.GetAById(_id => _id.Id == id);
+            try
+            {
+                var fromDb = await _WORKER.PRO_REPO.GetByIdIncludeAsync(id, true);
+                var DtoView = _MAP.Map<ProductDto>(fromDb);
+                if (DtoView == null) throw new Exception("Entity null");
+                return DtoView;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro, camada de aplicação. {ex.Message}");
+            }
 
-            var DtoView = _MAP.Map<ProductDto>(fromDb);
-
-            if (DtoView == null) throw new Exception("Entity null");
-            return DtoView;
+          
 
         }
     }
