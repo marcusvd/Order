@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { empty, Observable } from 'rxjs';
 import { PaginatedResult, Pagination } from '../../shared/dto/pagination';
 import { ProductDto } from '../dto/product-dto';
+import { ProductListService } from '../services/product-list.service';
 import { ProductService } from '../services/product-service';
 
 
@@ -18,7 +19,7 @@ export class ProductPagelistComponent implements OnInit {
   constructor(
     public _ProductService: ProductService,
     public _RouteData: ActivatedRoute,
-    public _ProductServices: ProductService
+    public _ProductServices: ProductListService
   ) { }
 
 

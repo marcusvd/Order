@@ -10,7 +10,8 @@ namespace Repository.Contracts
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        Task<List<Category>> GeAllCategories(bool include = false);
+        Task<List<Category>> GeAllCategoriesAsync(bool include = false);
+        Task<Category> GetCategoryByIdAsync(int id, bool include = false);
     }
 
 }

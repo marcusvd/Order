@@ -5,7 +5,7 @@ import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
 export class ProductDto {
   id: number;
   name: string;
-  manunfacture: string;
+  manufacturer: string;
   quantity: number;
   date: Date;
   category: CategoryDto;

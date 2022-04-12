@@ -76,8 +76,9 @@ export class ProductService extends CrudService<ProductDto, number> {
       })
   }
   //#endregion
- //#region General
-  public category: CategoryDto[] = [];
+
+  //#region General
+  public categories: CategoryDto[] = [];
   public uOfMeasures: UnitOfMeasureDto[] = [];
   public uom: UnitOfMeasureDto;
   public cat: CategoryDto;
@@ -102,23 +103,32 @@ export class ProductService extends CrudService<ProductDto, number> {
     this.depth = $event.target.value;
   }
   loadCategories() {
-    this.loadCats().subscribe((item: CategoryDto[]) => {
-      this.category = item
+    this.loadCats().subscribe((catDto: CategoryDto[]) => {
+      this.categories = catDto
+      catDto.forEach(_CatItem => {
+       this.subCat = _CatItem.subCategories;
+      })
+
+
     })
   }
   OnChangeCategory($event: any) {
-    let ghy = this.category.forEach((catId) => {
+    let ghy = this.categories.forEach((catId) => {
       if (catId.id == $event.target.value) {
         this.subCat = catId.subCategories;
       }
     })
   }
   OnLoadCategory() {
-    let ghy = this.category.forEach((catId) => {
+    this.loadCats().subscribe((item: CategoryDto[]) => {
+      this.categories = item
+      this.subCat = item
+      let ghy = item.forEach((catId) => {
 
         this.subCat = catId.subCategories;
-        console.log()
+        console.log(this.subCat)
 
+      })
     })
   }
   loadSelects() {
@@ -133,7 +143,7 @@ export class ProductService extends CrudService<ProductDto, number> {
 
     this.stateArray = [];
     this.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
-    this.OnLoadCategory();
+   // this.OnLoadCategory();
   }
 
   addSelectMeasure() {
@@ -147,10 +157,10 @@ export class ProductService extends CrudService<ProductDto, number> {
   }
   addSelectCat() {
     this.loadCats().subscribe((item: CategoryDto[]) => {
-      this.category = item
+      this.categories = item
       const cat: CategoryDto = new CategoryDto();
       cat.name = 'Selecione';
-      this.category.push(cat);
+      this.categories.push(cat);
     })
   }
   save() {
@@ -234,6 +244,10 @@ export class ProductService extends CrudService<ProductDto, number> {
 
   }
   //#endregion
+
+  loadCatById(id:number): Observable<CategoryDto> {
+    return this._Http.get<CategoryDto>(`${Url._CATEGORIES}/${id}`).pipe(take(1));
+  }
 
   loadCats(): Observable<CategoryDto[]> {
     return this._Http.get<CategoryDto[]>(Url._CATEGORIES).pipe(take(1));

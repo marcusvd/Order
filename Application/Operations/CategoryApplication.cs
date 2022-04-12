@@ -49,7 +49,7 @@ namespace Application.Operations
         {
             try
             {
-                List<Category> fromDb = await _WORKER.CAT_REPO.GeAllCategories(true);
+                List<Category> fromDb = await _WORKER.CAT_REPO.GeAllCategoriesAsync(true);
                 if (fromDb == null) return null;
 
                 List<CategoryDto> CatList = _MAP.Map<List<CategoryDto>>(fromDb);
@@ -74,6 +74,25 @@ namespace Application.Operations
             throw new System.NotImplementedException();
         }
 
+        public async Task<CategoryDto> GetByIdAsync(int id)
+        {
+            try
+            {
+                if(id == 0) return null;
 
+                Category catFromDb = await _WORKER.CAT_REPO.GetCategoryByIdAsync(id, true);
+
+                var catDto = _MAP.Map<CategoryDto>(catFromDb);
+
+                if (catDto == null) return null;
+
+                return catDto;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: Camada de aplicação, {ex.Message}");
+            }
+        }
     }
 }

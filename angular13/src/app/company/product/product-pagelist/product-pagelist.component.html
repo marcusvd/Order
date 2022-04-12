@@ -30,7 +30,7 @@
 
                             <section class="col-3 pt-2 pb-2 align-self-center">
                                 <button tooltip="Deletar {{prod.name}}" class="btn btn-outline-dark bi bi-trash" (click)="_ProductServices.toDelete(prod)"></button>
-                                <button tooltip="Editar {{prod.name}}" class="btn btn-outline-dark bi bi-pen" [routerLink]="['/product', prod.id, 'edit']"></button>
+                                <button tooltip="Editar {{prod.name}}" class="btn btn-outline-dark bi bi-pen " [routerLink]="['/product', prod.id, 'edit']"></button>
                                 <button tooltip="Detalhes {{prod.name}}" class="btn btn-outline-dark bi bi-info-square"></button>
                             </section>
 

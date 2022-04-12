@@ -8,9 +8,9 @@ using Newtonsoft.Json;
 
 namespace Api.Controllers
 {
-    //[AllowAnonymous]
-//    (AuthenticationSchemes = "Bearer")
-   [Authorize]
+    // [AllowAnonymous]
+    //    (AuthenticationSchemes = "Bearer")
+     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CategoriesController : ControllerBase
@@ -42,6 +42,20 @@ namespace Api.Controllers
             try
             {
                 var returnFromDb = await _CAT_APPLICATION.GetAllAsync();
+                if (returnFromDb == null) return null;
+                return Ok(returnFromDb);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: {ex.Message}");
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCategoryByIdAsync(int id)
+        {
+            try
+            {
+                var returnFromDb = await _CAT_APPLICATION.GetByIdAsync(id);
                 if (returnFromDb == null) return null;
                 return Ok(returnFromDb);
             }

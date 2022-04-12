@@ -17,9 +17,6 @@ import { AuthenticationService } from './company/shared/services/authentication.
 
 
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -19,7 +19,7 @@ namespace Repository.Operations
         }
 
 
-        public async Task<List<Category>> GeAllCategories(bool include = false)
+        public async Task<List<Category>> GeAllCategoriesAsync(bool include = false)
         {
             if (include)
             {
@@ -32,6 +32,15 @@ namespace Repository.Operations
             return await _CONTEXT.Categories.AsNoTracking().ToListAsync();
         }
 
-      
+        public async Task<Category> GetCategoryByIdAsync(int id, bool include = false)
+        {
+            if (include)
+            {
+                Category CatInclude = await _CONTEXT.Categories.Include(_sub => _sub.SubCategories).SingleOrDefaultAsync(_id => _id.Id == id);
+                return CatInclude;
+            }
+            Category CatNoInclude = await GetAById(_id => _id.Id == id);
+            return CatNoInclude;
+        }
     }
 }

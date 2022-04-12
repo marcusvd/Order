@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="col-4">
                                     <label>Compra</label>
-                                    <input type="date" class="form-control" formControlName="date" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('date', _ProductService.formProductEdit)}">
+                                    <input bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" type="text" class="form-control" formControlName="date" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('date', _ProductService.formProductEdit)}">
                                     <div class="invalid-feedback">
                                         {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'date', 'date', null, null)}}
                                     </div>
@@ -40,16 +40,19 @@
                                 <div class="pt-3">
                                     <h6 style="color: black;">Classificação</h6>
                                 </div>
-                                <div class="col-6">
+
+
+                                <div class="col-6" *ngIf="_ProductService.categories">
                                     <label>Categorias</label>
                                     <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeCategory($event)">
-                    <option class="btn btn-warning" *ngFor="let cat of _ProductService.category" [value]="cat.id" [selected]="cat.id == prodToLoad.categoryId">
+                    <option class="btn btn-warning" *ngFor="let cat of _ProductService.categories" [value]="cat.id"
+                      [selected]="cat.id === this.CategoryIdCompare">
                       {{cat.name}}
                     </option>
                   </select>
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-6" *ngIf="_ProductService.subCat">
                                     <label>Sub-categorias</label>
                                     <select class="form-select btn btn-warning " formControlName="subCategoryId" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('subCategoryId', _ProductService.formProductEdit)}">
 
@@ -61,17 +64,15 @@
                     <option class="btn btn-warning">
                       {{'Selecione'}}
                     </option>
-                    <option class="btn btn-warning" *ngFor="let sub of _ProductService.subCat" [value]="sub.id" [selected]="prodToLoad.subCategoryId == sub.id">
+                    <option class="btn btn-warning" *ngFor="let sub of _ProductService.subCat" [value]="sub.id"
+                      [selected]="sub.id == this.SubCategoryIdCompare">
                       {{sub.name}}
                     </option>
                   </select>
                                 </div>
                             </div>
                             <div class="row">
-
-
                                 <div class="container">
-
                                     <div class="pt-3">
                                         <h6 style="color: black;">Valores</h6>
                                     </div>
@@ -92,8 +93,6 @@
                                                 {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'price', 'Preço', 1, null)}}
                                             </div>
                                         </div>
-
-
                                         <div class="col">
                                             <label>Quantidade</label>
                                             <input type="number" class="form-control" formControlName="quantity" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('quantity', _ProductService.formProductEdit)}">
@@ -102,10 +101,6 @@
                                             </div>
 
                                         </div>
-
-
-
-
                                     </div>
                                 </div>
 
@@ -249,7 +244,7 @@
                                                 {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'weight', 'Peso', 1, null)}}
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-6" *ngIf="this._idMeasure">
                                             <label>Medida</label>
                                             <select class="form-select btn btn-warning" formControlName="unitOfMeasureId" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('unitOfMeasureId', _ProductService.formProductEdit)}">
                         <div class="invalid-feedback">
@@ -257,7 +252,7 @@
                           'unitOfMeasureId', 'Unidade de medida', 1, null)}}
                         </div>
                         <option class="btn btn-warning" *ngFor="let measure of _ProductService.uOfMeasures"
-                          [value]="measure.id" [selected]="measure.id == prodToLoad.unitOfMeasureId">
+                          [value]="measure.id" [selected]="measure.id === this._idMeasure">
                           {{measure.name}}
                         </option>
                       </select>

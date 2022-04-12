@@ -8,9 +8,9 @@ using Newtonsoft.Json;
 
 namespace Api.Controllers
 {
-    //[AllowAnonymous]
+    [AllowAnonymous]
     //    (AuthenticationSchemes = "Bearer")
-    [Authorize]
+   // [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class SubCategoriesController : ControllerBase

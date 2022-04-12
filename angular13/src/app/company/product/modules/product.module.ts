@@ -9,6 +9,7 @@ import { SharedModule } from '../../shared/module/shared.module';
 import { ProductService } from '../services/product-service';
 import { NgxBootStrapModule } from 'src/app/company/shared/module/ngx-bootstrap.module';
 import { ProductInsertService } from '../services/product-insert.service';
+import { ProductListService } from '../services/product-list.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,6 @@ import { ProductInsertService } from '../services/product-insert.service';
     NgxBootStrapModule,
     ProductPagelistComponent
   ],
-  providers: [ProductService, ProductInsertService]
+  providers: [ProductService, ProductInsertService,ProductListService]
 })
 export class ProductModule { }
