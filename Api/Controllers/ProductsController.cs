@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Contracts;
 using Application.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pagination.Models;
 
@@ -67,7 +68,7 @@ namespace Api.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro productController: {ex.Message}");
             }
         }
 
@@ -89,12 +90,42 @@ namespace Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveOne(int id)
         {
-            if (id == 0) throw new Exception("id is not true.");
+            try
+            {
+                if (id == 0) throw new Exception("id is not true.");
 
-            bool resultDel = await _IPROD_APPLICATION.DeleteAsync(id);
-            if (resultDel) return Ok(true);
-            return Ok(false);
+                bool resultDel = await _IPROD_APPLICATION.DeleteAsync(id);
+                if (resultDel) return Ok(true);
+                return Ok(false);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro productController: {ex.Message}");
+            }
+
         }
+
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, ProductDto ViewDto)
+        {
+            try
+            {
+                if (id != ViewDto.Id) return BadRequest("Id that was indicated for update don't equal of the viewDto");
+                if (id == 0) return NoContent();
+                return Ok(await _IPROD_APPLICATION.UpdateAsync(ViewDto));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+        }
+
+
+
+
+
 
 
     }

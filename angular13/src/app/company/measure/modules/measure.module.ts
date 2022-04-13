@@ -5,10 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../../shared/module/shared.module';
 import { MeasureService } from '../services/measure.service';
-import { MeasureRoutingModule } from './measure-routing.module';
+// import { MeasureRoutingModule } from './measure-routing.module';
 import { MeasureAdmComponent } from '../measure-adm/measure-adm.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from '../../interceptors/jwt.interceptor';
+
 
 
 @NgModule({
@@ -33,4 +32,6 @@ import { JwtInterceptor } from '../../interceptors/jwt.interceptor';
 
   ]
 })
+
+
 export class MeasureModule { }

@@ -4,17 +4,21 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ProductPagelistComponent } from 'src/app/company/product/product-pagelist/product-pagelist.component';
-import { ProductInfoEditComponent } from '../product-info-edit/product-info-edit.component';
+import { ProductEditComponent } from '../product-edit/product-edit.component';
 import { SharedModule } from '../../shared/module/shared.module';
-import { ProductService } from '../services/product-service';
 import { NgxBootStrapModule } from 'src/app/company/shared/module/ngx-bootstrap.module';
 import { ProductInsertService } from '../services/product-insert.service';
 import { ProductListService } from '../services/product-list.service';
+import { ProductEditService } from '../services/product-edit.service';
+import { ProductInfoComponent } from '../product-info/product-info.component';
+import { DateTimeFormatPipe } from '../../shared/helpers/pipes/date-time-format.pipe';
 
 @NgModule({
   declarations: [
+    ProductEditComponent,
     ProductPagelistComponent,
-    ProductInfoEditComponent
+    ProductInfoComponent,
+    DateTimeFormatPipe
   ],
   imports: [
     CommonModule,
@@ -28,6 +32,6 @@ import { ProductListService } from '../services/product-list.service';
     NgxBootStrapModule,
     ProductPagelistComponent
   ],
-  providers: [ProductService, ProductInsertService,ProductListService]
+  providers: [ ProductInsertService,ProductListService]
 })
 export class ProductModule { }

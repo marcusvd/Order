@@ -5,6 +5,6 @@ export interface ICrudService<T, ID> {
   update<T>(record: T): Observable<T>;
   delete<T>(record: any): Observable<any>;
   getAll<T>(): Observable<T[]>;
-  getById<T>(record: T): Observable<T>;
+  getByIdAsync<T>(id:number): Observable<T>;
 
 }

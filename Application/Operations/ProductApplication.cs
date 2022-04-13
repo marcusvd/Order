@@ -97,7 +97,7 @@ namespace Application.Operations
         {
             try
             {
-                var fromDb = await _WORKER.PRO_REPO.GetByIdIncludeAsync(id, true);
+                var fromDb = await _WORKER.PRO_REPO.GetByIdIncludeAsync(id, false);
                 var DtoView = _MAP.Map<ProductDto>(fromDb);
                 if (DtoView == null) throw new Exception("Entity null");
                 return DtoView;
@@ -106,9 +106,37 @@ namespace Application.Operations
             {
                 throw new Exception($"Erro, camada de aplicação. {ex.Message}");
             }
-
-          
-
         }
+
+
+        public async Task<ProductDto> UpdateAsync(ProductDto DtoView)
+        {
+            try
+            {
+                ProductDto prodDto = DtoView;
+
+                Product product = _MAP.Map<Product>(prodDto);
+
+                _WORKER.PRO_REPO.Update(product);
+                if (await _WORKER.Save())
+                {
+                    Product prodFromdB = await _PRODUCT_REPO.GetByIdIncludeAsync(product.Id);
+                    ProductDto ProductToRetorn = _MAP.Map<ProductDto>(prodFromdB);
+                    return ProductToRetorn;
+                }
+
+                throw new Exception($"Error update update layer");
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error at layer of application ${ex.Message}");
+            }
+        }
+
+
+
+
+
     }
 }

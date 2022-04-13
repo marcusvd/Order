@@ -1,32 +1,26 @@
 
 
-import { HttpClient, HttpParams, JsonpClientBackend } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, } from "@angular/forms";
 import { map, Observable, take } from "rxjs";
 import { PaginatedResult, Pagination } from "../../shared/dto/pagination";
 import { Url } from "../../back-end/back-end";
-import { CategoryDto } from "../../category/dto/category-dto";
-import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
+
 import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
-import { ProductModule } from "../modules/product.module";
-import { ProductInsertComponent } from "../product-insert/product-insert.component";
-import { SubCategoryDto } from "../../category/dto/sub-category-dto";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
 import { DeleteComponent } from "../../shared/components/delete/delete.component";
-import { ProductInfoEditComponent } from "../product-info-edit/product-info-edit.component";
-import { MeasureDto } from "../../measure/dto/measure-dto";
-
+import { ProductInfoComponent } from "../product-info/product-info.component";
 @Injectable({ providedIn: 'root' })
 export class ProductListService extends CrudService<ProductDto, number> {
 
   constructor(
     override _Http: HttpClient,
     private _Fb: FormBuilder,
-    public _ValidatorsSrv: ValidatorsService,
+    _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
     private _BsModalService: BsModalService
   ) {
@@ -35,17 +29,16 @@ export class ProductListService extends CrudService<ProductDto, number> {
 
   bsModalRef?: BsModalRef;
 
-  //#region LoadPagination
-  public pagination = {} as Pagination;
-  public pgResulted: PaginatedResult<ProductDto[]>;
-  public products: ProductDto[] = [];
+  pagination = {} as Pagination;
+  pgResulted: PaginatedResult<ProductDto[]>;
+  products: ProductDto[] = [];
 
-  public pageChanged(e) {
+  pageChanged(e) {
     this.pagination.currentPg = e.page;
     this.loadProductsToView();
   }
 
-  public loadProductsToView() {
+  loadProductsToView() {
     this.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg, '')
       .subscribe({
         next: (pagedResult: PaginatedResult<ProductDto[]>) => {
@@ -60,7 +53,11 @@ export class ProductListService extends CrudService<ProductDto, number> {
       })
   }
 
-  public filterProducts(evt: any): void {
+  loadProductByIdAsync(id: number): Observable<ProductDto> {
+    return this.getByIdAsync<ProductDto>(id);
+  }
+
+  filterProducts(evt: any): void {
     this.loadProductsPagination
       (this.pagination.currentPg, this.pagination.itemsPerPg, evt.data)
       .subscribe({
@@ -98,10 +95,7 @@ export class ProductListService extends CrudService<ProductDto, number> {
         })
       );
   }
-  //#endregion
 
-
-  //#region Delete
   toDelete(record: ProductDto) {
     const initState: ModalOptions = {
       initialState: {
@@ -115,8 +109,18 @@ export class ProductListService extends CrudService<ProductDto, number> {
 
 
   }
-  //#endregion
+  toInfo(record: ProductDto) {
+    const initState: ModalOptions = {
+      initialState: {
+        list: { record },
+        title: 'Exclusão definitiva de registro.',
+      },
+
+    };
+    this.bsModalRef = this._BsModalService.show(ProductInfoComponent, initState);
+    this.bsModalRef.content.closeBtnName = 'Close';
 
 
+  }
 
 }

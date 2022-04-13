@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { SharedModule } from 'src/app/company/shared/module/shared.module';
-
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from '../entrance/login.component';
-import { JwtInterceptor } from 'src/app/company/interceptors/jwt.interceptor';
 import { RegisterServices } from '../services/register.services';
 
 

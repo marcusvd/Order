@@ -1,0 +1,200 @@
+<div class="row bg-warning">
+    <div class="container">
+
+        <div class="modal-header">
+            <h4 class="modal-title pull-center">
+                <table>
+                    <tr class="align-self-center">
+                        <td>
+                            <div class="row bi bi-boxes" style="margin: 15px; font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: 60px;">
+                                <h1 style="color: black;">{{prodInfo?.name | uppercase}}</h1>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </h4>
+            <button tooltip="Fecha essa tela." type="button" class="btn-close close pull-right" aria-label="Close" (click)="_ModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+        </div>
+        <div class="modal-body">
+
+            <section>
+                <ul class="list-group">
+                    <div class="row">
+
+
+                        <div class="bg-warning">
+                            <div class="row">
+                                <div class="pt-2 col-9 align-self-end">
+                                    <table>
+                                        <thead>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                                <label style="font-size: 30px;">Detalhes:</label>
+                                            </td>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <h6>Fabricante:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.manufacturer}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Quantidade:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.quantity}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Cadastrado em:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.date | date: 'dd/MM/YYYY'}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Categoria Id:</h6>
+                                                </td>
+                                                <td> <span class="badge bg-success ">{{prodInfo?.categoryId}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>SubCategoriaId:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.subCategoryId}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Preço:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.price}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Custo:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.cost}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Altura:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.height}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Largura:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.width}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Profundidade:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.depth}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Formato:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.format}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Estado Material:</h6>
+                                                </td>
+                                                <td> <span class="badge bg-success ">{{prodInfo?.state}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Armaazenamento:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.storage}}</span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <h6>Máximo empilhados:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.maxstacked}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Medida:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.unitOfMeasureId}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6>Medido:</h6>
+                                                </td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.weight}}</span></td>
+                                            </tr>
+                                            <div class="row pt-4"></div>
+                                            <tr>
+                                                <td>
+                                                    <h6>Descrição:</h6>
+                                                </td>
+                                                <td>
+                                                    <textarea rows="4" cols="35" type="text">{{prodInfo?.description}}</textarea>
+                                                </td>
+
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>
+                                                    <h6>Comentários:</h6>
+                                                </td>
+
+                                                <td>
+                                                    <textarea rows="4" cols="35" type="text">{{prodInfo?.comments}}</textarea>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                        <td>
+
+                                        </td>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                            <div class="row pt-4"> </div>
+                        </div>
+                    </div>
+                </ul>
+            </section>
+        </div>
+        <div class="modal-footer">
+            <table>
+                <tr class="col-12">
+                    <td class="col-6 pull-left">
+                        <button tooltip="Deletar {{prodInfo.name}}" class="btn btn-outline-dark bi bi-trash"></button>
+                        <button tooltip="Editar {{prodInfo.name}}" class="btn btn-outline-dark bi bi-pen " (click)="_ModalRef.hide()" [routerLink]="['/product', prodInfo.id, 'edit']"></button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-dark bi-door-open-fill" (click)="_ModalRef.hide()">  Fechar</button>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+
+
+</div>

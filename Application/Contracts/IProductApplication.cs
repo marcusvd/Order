@@ -12,12 +12,9 @@ namespace Application.Contracts
     {
         Task<ProductDto> AddAsync(ProductDto DtoView);
         Task<ProductDto> GetByIdAsync(int id);
-       // Task<List<ProductDto>> GetAllAsync(Params Params);
+        Task<ProductDto> UpdateAsync(ProductDto DtoView);
         Task<bool> DeleteAsync(int id);
-        //PageListDto PgDto { get; set; }
         Task<PageListDto> GetAllAsync(Params Params);
- //       Task<PageListDto> SearchPg<Type>(int pgNumber, int pgSize);
-      //  int GetAmountRecords();
 
     }
 }

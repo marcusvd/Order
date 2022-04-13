@@ -5,6 +5,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { ProductDto } from "../../product/dto/product-dto";
 import { ICrudService } from "./icrud.service";
 
 @Injectable()
@@ -19,20 +20,20 @@ export abstract class CrudService<T, ID> implements ICrudService<T, ID> {
     this.BackEnd = _BackEnd.toLocaleLowerCase();
   }
 
-  add<T>(record: T):Observable<T> {
-   return this._Http.post<T>(this._BackEnd.toLocaleLowerCase(), record);
+  add<T>(record: T): Observable<T> {
+    return this._Http.post<T>(this._BackEnd.toLocaleLowerCase(), record);
   }
-  update<T>(record: T): Observable<T> {
-    throw new Error("Method not implemented.");
+  update<T>(record: any): Observable<T> {
+    return this._Http.put<any>(`${this._BackEnd.toLocaleLowerCase()}/${record.id}`, record)
   }
   delete<T>(record: any): Observable<any> {
-   return this._Http.delete<any>(`${this._BackEnd.toLocaleLowerCase()}/${record.id}`, record);
+    return this._Http.delete<any>(`${this._BackEnd.toLocaleLowerCase()}/${record.id}`, record);
   }
   getAll<T>(): Observable<T[]> {
     return this._Http.get<T[]>(this.BackEnd);
   }
-  getById<T>(record: T): Observable<T> {
-    throw new Error("Method not implemented.");
+  getByIdAsync<T>(id:number): Observable<T> {
+   return this._Http.get<T>(`${this._BackEnd.toLocaleLowerCase()}/${id}`)
   }
 
 

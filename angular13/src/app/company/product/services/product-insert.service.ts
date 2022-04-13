@@ -12,14 +12,8 @@ import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
-import { ProductModule } from "../modules/product.module";
-import { ProductInsertComponent } from "../product-insert/product-insert.component";
 import { SubCategoryDto } from "../../category/dto/sub-category-dto";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
-import { DeleteComponent } from "../../shared/components/delete/delete.component";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
-import { ProductInfoEditComponent } from "../product-info-edit/product-info-edit.component";
-import { MeasureDto } from "../../measure/dto/measure-dto";
 
 @Injectable({ providedIn: 'root' })
 export class ProductInsertService extends CrudService<ProductDto, number> {
@@ -177,7 +171,6 @@ formInsert() {
 
 
   }
-  //#endregion
 
   loadCats(): Observable<CategoryDto[]> {
     return this._Http.get<CategoryDto[]>(Url._CATEGORIES).pipe(take(1));
@@ -186,7 +179,6 @@ formInsert() {
     return this._Http.get<UnitOfMeasureDto[]>(Url._UNITOFMEASURES).pipe(take(1));
   }
   loadProducts() {
-    // this._Http.get<ProductDto[]>(Url._PRODUCTS).pipe(take(1));
     return this.getAll<ProductDto[]>().pipe(take(1));
   }
   loadProductsPagination(pg?: number, record?: number, terms?: string): Observable<PaginatedResult<ProductDto[]>> {

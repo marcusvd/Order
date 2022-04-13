@@ -40,13 +40,11 @@
                                 <div class="pt-3">
                                     <h6 style="color: black;">Classificação</h6>
                                 </div>
-
-
                                 <div class="col-6" *ngIf="_ProductService.categories">
                                     <label>Categorias</label>
                                     <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeCategory($event)">
                     <option class="btn btn-warning" *ngFor="let cat of _ProductService.categories" [value]="cat.id"
-                      [selected]="cat.id === this.CategoryIdCompare">
+                      [selected]="cat.id === this._ProductService.CategoryIdCompare">
                       {{cat.name}}
                     </option>
                   </select>
@@ -65,7 +63,7 @@
                       {{'Selecione'}}
                     </option>
                     <option class="btn btn-warning" *ngFor="let sub of _ProductService.subCat" [value]="sub.id"
-                      [selected]="sub.id == this.SubCategoryIdCompare">
+                      [selected]="sub.id == this._ProductService.SubCategoryIdCompare">
                       {{sub.name}}
                     </option>
                   </select>
@@ -124,7 +122,7 @@
                             {{'Selecione'}}
                           </option>
                           <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
-                            [value]="measure" [selected]="measure === this.strHeightCompare">
+                            [value]="measure" [selected]="measure === this._ProductService.strHeightCompare">
                             {{measure}}
 
                           </option>
@@ -147,7 +145,7 @@
                             {{'Selecione'}}
                           </option>
                           <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
-                            [value]="measure" [selected]="measure ===   strWidthCompare">
+                            [value]="measure" [selected]="measure ===   _ProductService.strWidthCompare">
                             {{measure}}
                           </option>
                         </select>
@@ -171,7 +169,7 @@
                             {{'Selecione'}}
                           </option>
                           <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
-                            [value]="measure" [selected]="measure === strDepthCompare">
+                            [value]="measure" [selected]="measure === _ProductService.strDepthCompare">
                             {{measure}}
                           </option>
                         </select>
@@ -244,7 +242,7 @@
                                                 {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'weight', 'Peso', 1, null)}}
                                             </div>
                                         </div>
-                                        <div class="col-6" *ngIf="this._idMeasure">
+                                        <div class="col-6" *ngIf="this._ProductService._idMeasure">
                                             <label>Medida</label>
                                             <select class="form-select btn btn-warning" formControlName="unitOfMeasureId" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('unitOfMeasureId', _ProductService.formProductEdit)}">
                         <div class="invalid-feedback">
@@ -252,7 +250,7 @@
                           'unitOfMeasureId', 'Unidade de medida', 1, null)}}
                         </div>
                         <option class="btn btn-warning" *ngFor="let measure of _ProductService.uOfMeasures"
-                          [value]="measure.id" [selected]="measure.id === this._idMeasure">
+                          [value]="measure.id" [selected]="measure.id === this._ProductService._idMeasure">
                           {{measure.name}}
                         </option>
                       </select>
@@ -266,14 +264,14 @@
                                         <h6 style="color: black;">Detalhamento peculiaridade</h6>
                                     </div>
                                     <label>Descrição</label>
-                                    <input type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('description', _ProductService.formProductEdit)}">
+                                    <textarea type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('description', _ProductService.formProductEdit)}"></textarea>
                                     <label>Observações</label>
-                                    <input type="text" class="form-control" formControlName="comments" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('comments', _ProductService.formProductEdit)}">
+                                    <textarea type="text" class="form-control" formControlName="comments" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('comments', _ProductService.formProductEdit)}"></textarea>
                                     <div class="invalid-feedback">
                                         {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'description', 'Descrição', 3, 500)}}
                                     </div>
                                     <div class="p-3">
-                                        <button [disabled]="!_ProductService.formProductEdit.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="_ProductService.save()">Cadastrar</button>
+                                        <button [disabled]="!_ProductService.formProductEdit.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="_ProductService.updateProduct()">Atualizar</button>
                                         <br>
                                         <br>
                                     </div>
@@ -286,6 +284,6 @@
 
             </div>
         </div>
-        <div>
+        <!-- <div>
             {{_ProductService.formProductEdit.value | json}}
-        </div>
+        </div> -->

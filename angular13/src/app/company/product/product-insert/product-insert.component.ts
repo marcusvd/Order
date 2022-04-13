@@ -4,7 +4,6 @@ import { CategoryDto } from '../../category/dto/category-dto';
 import { SubCategoryDto } from '../../category/dto/sub-category-dto';
 import { UnitOfMeasureDto } from '../../measure/dto/unit-of-measure';
 import { ProductInsertService } from '../services/product-insert.service';
-import { ProductService } from '../services/product-service';
 
 @Component({
   selector: 'product-insert',

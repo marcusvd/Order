@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
-import { ProductService } from 'src/app/company/product/services/product-service';
 import { UserDto } from 'src/app/company/shared/components/login/dto/user-dto';
 import { UsrToken } from '../../dto/usr-token';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -19,7 +18,6 @@ export class SideNavComponent implements OnInit {
     private _Router: Router,
     public _AuthenticationService: AuthenticationService,
     //just test below
-    public proSrv: ProductService,
   ) { }
 
 

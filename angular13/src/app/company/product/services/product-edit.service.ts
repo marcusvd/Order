@@ -1,10 +1,10 @@
-
-
-import { HttpClient, HttpParams, JsonpClientBackend } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { map, Observable, take } from "rxjs";
-import { PaginatedResult, Pagination } from "../../shared/dto/pagination";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { map, Observable, switchMap, take } from "rxjs";
+
+import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
+
 import { Url } from "../../back-end/back-end";
 import { CategoryDto } from "../../category/dto/category-dto";
 import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
@@ -12,14 +12,8 @@ import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
-import { ProductModule } from "../modules/product.module";
-import { ProductInsertComponent } from "../product-insert/product-insert.component";
 import { SubCategoryDto } from "../../category/dto/sub-category-dto";
-import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
-import { DeleteComponent } from "../../shared/components/delete/delete.component";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
-import { ProductInfoEditComponent } from "../product-info-edit/product-info-edit.component";
-import { MeasureDto } from "../../measure/dto/measure-dto";
+
 
 @Injectable({ providedIn: 'root' })
 export class ProductEditService extends CrudService<ProductDto, number> {
@@ -29,150 +23,34 @@ export class ProductEditService extends CrudService<ProductDto, number> {
     private _Fb: FormBuilder,
     public _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
-    private _BsModalService: BsModalService
   ) {
     super(_Http, Url._PRODUCTS);
   }
 
-  bsModalRef?: BsModalRef;
-
-  //#region LoadPagination
-  public pagination = {} as Pagination;
-  public pgResulted: PaginatedResult<ProductDto[]>;
-  public products: ProductDto[] = [];
-
-  public pageChanged(e) {
-    this.pagination.currentPg = e.page;
-    this.loadProductsToView();
-  }
-
-  public loadProductsToView() {
-    this.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg, '')
-      .subscribe({
-        next: (pagedResult: PaginatedResult<ProductDto[]>) => {
-          this.pgResulted = pagedResult;
-          this.pagination = pagedResult.pagination;
-          this.products = pagedResult.result;
-        },
-        error: (error) => {
-          console.log(error)
-        },
-        // complete:(comp)=>
-      })
-  }
-
-  public filterProducts(evt: any): void {
-    this.loadProductsPagination
-      (this.pagination.currentPg, this.pagination.itemsPerPg, evt.data)
-      .subscribe({
-        next: (pagedResult: PaginatedResult<ProductDto[]>) => {
-          // this.pgResulted = pagedResult;
-          console.log('method filter', evt)
-          this.pagination = pagedResult.pagination
-          this.products = pagedResult.result
-        },
-        error: (error) => console.log(error),
-        complete: () => console.log(),
-      })
-  }
-  //#endregion
-
-  //#region General
-  public categories: CategoryDto[] = [];
-  public uOfMeasures: UnitOfMeasureDto[] = [];
-  public uom: UnitOfMeasureDto;
-  public cat: CategoryDto;
-  public subCat: SubCategoryDto[] = [];
-  public formProductInsert: FormGroup;
-  selectedCat: number;
   measureArray: string[];
   storageArray: string[];
   formatArray: string[];
   stateArray: string[];
+  categories: CategoryDto[] = [];
+  subCat: SubCategoryDto[] = [];
+  uOfMeasures: UnitOfMeasureDto[] = [];
+  prod: ProductDto = new ProductDto();
+  formProductEdit: FormGroup;
   height: string;
   width: string;
   depth: string;
 
-  OnChangeHeigth($event: any) {
-    this.height = $event.target.value;
-  }
-  OnChangeWidth($event: any) {
-    this.width = $event.target.value;
-  }
-  OnChangeDepth($event: any) {
-    this.depth = $event.target.value;
-  }
-  loadCategories() {
-    this.loadCats().subscribe((item: CategoryDto[]) => {
-      this.categories = item
-    })
-  }
-  OnChangeCategory($event: any) {
-    let ghy = this.categories.forEach((catId) => {
-      if (catId.id == $event.target.value) {
-        this.subCat = catId.subCategories;
-      }
-    })
-  }
-  OnLoadCategory() {
-    this.loadCats().subscribe((item: CategoryDto[]) => {
-      this.categories = item
-      this.subCat = item
-      let ghy = item.forEach((catId) => {
+  strHeightCompare: string;
+  strWidthCompare: string;
+  strDepthCompare: string;
+  CategoryIdCompare: number;
+  SubCategoryIdCompare: number;
+  _idMeasure: number;
+  prodToLoad: ProductDto = new ProductDto();
 
-        this.subCat = catId.subCategories;
-        console.log(this.subCat)
-
-      })
-    })
-  }
-  loadSelects() {
-    this.measureArray = [];
-    this.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
-
-    this.storageArray = [];
-    this.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado', 'Selecione');
-
-    this.formatArray = [];
-    this.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido', 'Selecione');
-
-    this.stateArray = [];
-    this.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
-    this.OnLoadCategory();
-  }
-
-  addSelectMeasure() {
-    this.loadMeasures().subscribe((item: UnitOfMeasureDto[]) => {
-      this.uOfMeasures = item
-      const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
-      unit.name = 'Selecione';
-      unit.description = 'Selecione';
-      this.uOfMeasures.push(unit);
-    })
-  }
-  addSelectCat() {
-    this.loadCats().subscribe((item: CategoryDto[]) => {
-      this.categories = item
-      const cat: CategoryDto = new CategoryDto();
-      cat.name = 'Selecione';
-      this.categories.push(cat);
-    })
-  }
-  save() {
-  }
-  //#endregion
-  //#region Edit
-  public formProductEdit: FormGroup;
-  prod: ProductDto = new ProductDto();
 
   loadProductToEdit(record: number) {
     return this._Http.get<ProductDto>(`${Url._PRODUCTS}/${record}`).pipe(take(1));
-    //  .subscribe({
-    //   next: (prodInclude: ProductDto) => {
-    //     this.prod = { ...prodInclude }
-    //   }
-    // })
-
   }
   formEdit() {
     this.formProductEdit = this._Fb.group({
@@ -202,83 +80,178 @@ export class ProductEditService extends CrudService<ProductDto, number> {
       comments: ['', [Validators.maxLength(1000)]]
     })
   }
+  loadSelects() {
+    this.measureArray = [];
+    this.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
 
-  toEdit(record: ProductDto) {
-    let prod: ProductDto = new ProductDto();
-    prod = { ...record }
-    this._Http.get<ProductDto>(`${Url._PRODUCTS}/${record.id}`).pipe(take(1))
-      .subscribe({
-        next: (prodInclude: ProductDto) => {
-          prod = { ...prodInclude }
-        }
+    this.storageArray = [];
+    this.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado', 'Selecione');
+
+    this.formatArray = [];
+    this.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido', 'Selecione');
+
+    this.stateArray = [];
+    this.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
+    // this.OnLoadCategory();
+  }
+  loadCategories() {
+    this.loadCats().subscribe((catDto: CategoryDto[]) => {
+      this.categories = catDto
+      catDto.forEach(_CatItem => {
+        this.subCat = _CatItem.subCategories;
       })
-
-    const initState: ModalOptions = {
-      initialState: {
-        list: { prod },
-        title: 'Exclusão definitiva de registro.'
-      },
-    };
-    this.bsModalRef = this._BsModalService.show(ProductInfoEditComponent, initState);
-    this.bsModalRef.content.closeBtnName = 'Close';
+    })
   }
-
-  //#endregion
-  //#region Delete
-  toDelete(record: ProductDto) {
-    const initState: ModalOptions = {
-      initialState: {
-        list: { record },
-        title: 'Exclusão definitiva de registro.',
-      },
-
-    };
-    this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
-    this.bsModalRef.content.closeBtnName = 'Close';
-
-
-  }
-  //#endregion
-
   loadCats(): Observable<CategoryDto[]> {
     return this._Http.get<CategoryDto[]>(Url._CATEGORIES).pipe(take(1));
+  }
+  OnChangeCategory($event: any) {
+    let ghy = this.categories.forEach((catId) => {
+      if (catId.id == $event.target.value) {
+        this.subCat = catId.subCategories;
+      }
+    })
+  }
+  OnChangeHeigth($event: any) {
+    this.height = $event.target.value;
+  }
+  OnChangeWidth($event: any) {
+    this.width = $event.target.value;
+  }
+  OnChangeDepth($event: any) {
+    this.depth = $event.target.value;
+  }
+  loadCatById(id: number): Observable<CategoryDto> {
+    return this._Http.get<CategoryDto>(`${Url._CATEGORIES}/${id}`).pipe(take(1));
   }
   loadMeasures() {
     return this._Http.get<UnitOfMeasureDto[]>(Url._UNITOFMEASURES).pipe(take(1));
   }
-  loadProducts() {
-    // this._Http.get<ProductDto[]>(Url._PRODUCTS).pipe(take(1));
-    return this.getAll<ProductDto[]>().pipe(take(1));
+  productEditing(item: ProductDto) {
+    this.measureArray.forEach((itemFor: string) => {
+      if (itemFor.split('-')[1] === item.height.split('-')[1]) {
+        this.strHeightCompare = itemFor
+      }
+    })
+    this.measureArray.forEach((itemFor: string) => {
+      if (itemFor.split('-')[1] === item.width.split('-')[1]) {
+        this.strWidthCompare = itemFor
+      }
+    })
+    this.measureArray.forEach((itemFor: string) => {
+      if (itemFor.split('-')[1] === item.depth.split('-')[1]) {
+        this.strDepthCompare = itemFor
+      }
+    })
+    this.formProductEdit.patchValue({
+      id: item.id,
+      name: item.name,
+      manufacturer: item.manufacturer,
+      quantity: item.quantity,
+      date: item.date,
+      category: item.category,
+      categoryId: item.categoryId,
+      subCategory: item.subCategory,
+      subCategoryId: item.subCategoryId,
+      price: item.price,
+      cost: item.cost,
+      //dimensions
+      height: item.height.split('(')[0].trim(),
+      width: item.width.split('(')[0].trim(),
+      depth: item.depth.split('(')[0].trim(),
+      format: item.format,
+      //state material
+      state: item.state,
+      storage: item.storage,
+      maxstacked: item.maxstacked,
+      unitOfMeasure: item.unitOfMeasure,
+      unitOfMeasureId: item.unitOfMeasureId,
+      weight: item.weight,
+      description: item.description,
+      comments: item.comments,
+    });
+
+    this.prodToLoad = { ...item }
+    this.CategoryIdCompare = item.categoryId;
+    this.SubCategoryIdCompare = item.subCategoryId;
+    this.loadCatById(item.categoryId).subscribe({
+      next: (_cat: CategoryDto) => {
+        this.subCat = _cat.subCategories;
+        console.log(_cat.subCategories)
+      }
+    });
+    this.loadMeasures().subscribe((_un: UnitOfMeasureDto[]) => {
+      this.uOfMeasures = [..._un]
+      this.uOfMeasures.forEach((_unit: UnitOfMeasureDto) => {
+        if (_unit.id === item.unitOfMeasureId) {
+          this._idMeasure = _unit.id;
+          console.log(_unit.id);
+        }
+      });
+      const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
+      unit.name = 'Selecione';
+      unit.description = 'Selecione';
+      this.uOfMeasures.push(unit);
+    });
   }
-  loadProductsPagination(pg?: number, record?: number, terms?: string): Observable<PaginatedResult<ProductDto[]>> {
-    const paginatedResult: PaginatedResult<ProductDto[]> = new PaginatedResult<ProductDto[]>();
-    let params = new HttpParams;
-    if (pg != null && record != null) {
-      params = params.append('pgnumber', pg.toString());
-      params = params.append('pgsize', record.toString());
+  updateProduct() {
+
+
+
+    if (this.height === undefined) {
+      this.height = '';
+    }
+    else {
+      this.formProductEdit.value.height += ' ' + this.height
+    }
+    if (this.width === undefined) {
+      this.width = '';
+    }
+    else {
+      this.formProductEdit.value.width += ' ' + this.width
+    }
+    if (this.depth === undefined) {
+      this.depth = '';
+    }
+    else {
+      this.formProductEdit.value.depth += ' ' + this.depth
     }
 
-    if (terms !== null && terms !== '') {
-      params = params.append('term', terms)
+    if (!this.formProductEdit.value.maxstacked) {
+      this.formProductEdit.value.maxstacked = 0;
     }
+    const toSave: ProductDto = { ...this.formProductEdit.value }
+    console.log(toSave);
+    this.update(toSave).subscribe({
+      next: ((prod: ProductDto) => {
+        console.log(prod);
+        //this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductEdit);
+        this.formProductEdit.value.subCategories = [];
+        this._AlertsToastr.Notice(`Produto,  ${toSave.name}`, 0, 'success');
+      }),
+      error: (error) => {
+        alert('deu ruim')
+        this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductEdit);
+      },
+    });
 
 
-    return this._Http.get<ProductDto[]>(Url._PRODUCTS, { observe: 'response', params })
-      .pipe(
-        take(1),
-        map((response) => {
 
-          paginatedResult.result = response.body;
-          //  console.log('Body', this.products)
-          //  console.log('Headers', this.pgnation)
-          if (response.headers.has('pagination')) {
 
-            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
 
-          }
-          return paginatedResult;
-        })
-      );
+
+    // const upd: ProductDto = { ...this.formProductEdit.value }
+
+    // this.update<ProductDto>(upd).subscribe({
+    //   next: (_p: ProductDto) => {
+    //     console.log('Updated');
+    //   },
+    //   error: (_Err)=>{
+    //     console.log(_Err);
+    //   }
+
+    // })
+
+
   }
-
 }
