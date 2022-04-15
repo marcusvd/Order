@@ -193,7 +193,7 @@
 
 
                             <option class="btn btn-warning" *ngFor="let state of _ProductService.stateArray"
-                              [value]="state" [selected]="state">
+                              [value]="state" [selected]="state === _ProductService.state">
                               {{state}}
                             </option>
                           </select>
@@ -205,7 +205,7 @@
                                                     <select class="form-select btn btn-warning" formControlName="storage">
 
                             <option class="btn btn-warning" *ngFor="let storage of _ProductService.storageArray"
-                              [value]="storage" [selected]="storage">
+                              [value]="storage" [selected]="storage === this._ProductService.storage">
 
                               {{storage}}
                             </option>
@@ -225,7 +225,7 @@
                                                     <select class="form-select btn btn-warning" formControlName="format">
 
                             <option class="btn btn-warning" *ngFor="let format of _ProductService.formatArray"
-                              [value]="format" [selected]="format">
+                              [value]="format" [selected]="format  === this._ProductService.format">
                               {{format}}
                             </option>
                           </select>
@@ -284,6 +284,9 @@
 
             </div>
         </div>
+
         <!-- <div>
             {{_ProductService.formProductEdit.value | json}}
         </div> -->
+    </div>
+</div>

@@ -11,6 +11,7 @@ import { ProductDto } from '../dto/product-dto';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ProductEditService } from '../services/product-edit.service';
+import { MeasureDto } from '../../measure/dto/measure-dto';
 defineLocale('pt-br', ptBrLocale)
 @Component({
   selector: 'product-edit',
@@ -35,22 +36,35 @@ export class ProductEditComponent implements OnInit {
 
 
   callToEdit() {
+    this._ActRoute.data.subscribe({next:(item: any)=> {
+      console.log(item.loaded['cat']);
+      this._ProductService.productEditing
+      (
+      item.loaded['prod'] as ProductDto,
+      item.loaded['cat'] as CategoryDto[],
+      item.loaded['mse'] as UnitOfMeasureDto[]
+      );
+    }})
 
-    this._ActRoute.params.pipe(map((params: any) => params['id']),
-      switchMap(id => this._ProductService.loadProductToEdit(id))
-    ).subscribe({
-      next: (item: ProductDto) => {
-        this._ProductService.productEditing(item);
-      }
-    });
+
+
+
+    // this._ActRoute.params.pipe(map((params: any) => params['id']),
+    //   switchMap(id => this._ProductService.loadProductToEdit(id))
+    // ).subscribe({
+    //   next: (item: ProductDto) => {
+    //     this._ProductService.productEditing(item);
+    //   }
+    // });
   }
 
 
   ngOnInit(): void {
-    this.callToEdit();
-    this._ProductService.formEdit();
-    this._ProductService.loadCategories();
     this._ProductService.loadSelects();
+    this._ProductService.formEdit();
+
+    this.callToEdit();
+
   }
 
 }
