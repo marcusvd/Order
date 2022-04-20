@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Contracts;
 using Application.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -64,6 +65,23 @@ namespace Api.Controllers
             {
                 throw new Exception($"Erro: {ex.Message}");
             }
+        }
+       [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveOne(int id)
+        {
+            try
+            {
+                if (id == 0) throw new Exception("id is not true.");
+
+                bool resultDel = await _CAT_APPLICATION.DeleteAsync(id);
+                if (resultDel) return Ok(true);
+                return Ok(false);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro productController: {ex.Message}");
+            }
+
         }
     }
 }

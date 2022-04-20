@@ -8,6 +8,7 @@ namespace Application.Contracts
     public interface ICategoryApplication
     {
         Task<CategoryDto> AddAsync(CategoryDto DtoView);
+         Task<bool> DeleteAsync(int id);
         Task<CategoryDto> EditAsync(int id, CategoryDto DtoView);
         Task<CategoryDto> GetByIdAsync(int id);
         Task<List<CategoryDto>> GetAllAsync();

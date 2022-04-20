@@ -13,6 +13,7 @@ import { ProductEditService } from '../services/product-edit.service';
 import { ProductInfoComponent } from '../product-info/product-info.component';
 import { DateTimeFormatPipe } from '../../shared/helpers/pipes/date-time-format.pipe';
 import { ProductResolver } from '../resolvers/products.resolver';
+import { ProductInfoService } from '../services/product-info.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,6 @@ import { ProductResolver } from '../resolvers/products.resolver';
     NgxBootStrapModule,
     ProductPagelistComponent
   ],
-  providers: [ ProductInsertService,ProductListService, ProductResolver]
+  providers: [ ProductInsertService,ProductListService, ProductResolver, ProductInfoService]
 })
 export class ProductModule { }

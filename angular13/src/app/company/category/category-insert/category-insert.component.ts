@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 
-import { CategoryService } from '../services/category.service';
+import { CategoryInsertService } from '../services/category-insert.service';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { CategoryService } from '../services/category.service';
 export class CategoryInsertComponent implements OnInit {
 
   constructor(
-    public _CatService: CategoryService,
+    public _CatService: CategoryInsertService,
 
 
     ) { }

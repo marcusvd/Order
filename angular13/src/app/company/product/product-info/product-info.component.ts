@@ -5,6 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { map, switchMap } from 'rxjs';
 import { CategoryDto } from '../../category/dto/category-dto';
 import { ProductDto } from '../dto/product-dto';
+import { ProductInfoService } from '../services/product-info.service';
 
 import { ProductListService } from '../services/product-list.service';
 
@@ -19,7 +20,7 @@ export class ProductInfoComponent implements OnInit {
 
 
   constructor(
-    private _ProductServices: ProductListService,
+    private _ProductServices: ProductInfoService,
     private _ActRouter: ActivatedRoute,
     private _BsModalService: BsModalService,
    public _ModalRef: BsModalRef
@@ -54,7 +55,8 @@ export class ProductInfoComponent implements OnInit {
   ngOnInit(): void {
     this.prodInfo = this._BsModalService.config.initialState['list']['record'] as ProductDto;
 
-    //this._ProductServices.lo
+    this._ProductServices.productGetInfo(this.prodInfo);
+
     //this._ProductServices.loadProductsToView();
     // this.loadProductById();
   }

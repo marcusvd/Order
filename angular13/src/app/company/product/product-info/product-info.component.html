@@ -64,15 +64,15 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <h6>Categoria Id:</h6>
+                                                    <h6>Categoria</h6>
                                                 </td>
-                                                <td> <span class="badge bg-success ">{{prodInfo?.categoryId}}</span></td>
+                                                <td> <span class="badge bg-success ">{{prodInfo?.category?.name}}</span></td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <h6>SubCategoriaId:</h6>
+                                                    <h6>SubCategoria</h6>
                                                 </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.subCategoryId}}</span></td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.category?.subCategories[0].name}}</span></td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -131,16 +131,11 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <h6>Medida:</h6>
-                                                </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.unitOfMeasureId}}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
                                                     <h6>Medido:</h6>
                                                 </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.weight}}</span></td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.weight + ' '}}{{prodInfo?.unitOfMeasure?.description}}</span></td>
                                             </tr>
+
                                             <div class="row pb-4"></div>
                                             <tr>
                                                 <td>

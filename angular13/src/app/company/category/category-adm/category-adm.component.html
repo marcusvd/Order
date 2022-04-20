@@ -1,22 +1,37 @@
-<!-- <div class="mt-3 justify-content-center">
-
-    <section class="bg-warning">
-        <h1 class="text-center">
-            Categorias
-        </h1>
-    </section>
-</div> -->
-<div class="pt-3 pb-3"></div>
+<div class="pt-3 pb-3">
+</div>
 <section class="container">
-    <div class="row bi bi-tags pt-4 pb-4 " style="font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
-        <div class="col-6 align-self-center" style="font-size: 30px;">
-            Categorias
+    <div class="container">
+        <div class="row">
+            <table class="col-12">
+                <tr class="col-12">
+                    <td>
+                        <div class="row bi bi-rulers pt-4 pb-4 " style="font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
+                            <div class="col-6 align-self-center" style="font-size: 30px;">
+                                Categorias
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-6 ">
+                        <button tooltip="Cadastrar um novo Produto." class="btn btn-outline-warning bi bi-plus" style="font-size: 35px; float: right;" (click)="_CatServices.catShowHide()"></button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-    <section class="row align-items-" *ngFor="let cat of this.categories">
+
+    <div class="container" *ngIf="_CatServices.catInsertShow">
+        <div>
+            <category-insert>
+            </category-insert>
+        </div>
+    </div>
+
+    <div class="pt-5"></div>
+    <section class="row align-items-" *ngFor="let cat of this.categories; let i = index">
+
         <ul class="list-group">
             <div class="row ">
-
 
                 <div class="row align-self-end" style="background-color: rgb(255,197,7);">
 
@@ -28,67 +43,26 @@
                     </section>
                     <div class="col-3"></div>
                     <section class="col-2 pr-5 pt-2 pb-2 ">
-                        <button tooltip="Deletar {{cat.name}}" class="btn btn-outline-dark bi bi-trash  "></button>
-                        <button tooltip="Editar {{cat.name}}" class="btn btn-outline-dark bi bi-pen "></button>
+                        <button tooltip="Deletar {{cat.name}}" class="btn btn-outline-dark bi bi-trash" (click)="_CatServices.toDelete(cat)"></button>
+                        <button tooltip="Editar {{cat.name}}" class="btn btn-outline-dark bi bi-pen " (click)="editShow(i)"></button>
                         <button tooltip="Detalhes {{cat.name}}" class="btn btn-outline-dark bi bi-info-square "></button>
                     </section>
+                    <div [id]="i" [style.display]="isVisible">
+                        <!--[id]="i" [style.visibility]="isVisible" -->
+                        <div>
+                            <category-edit [category]="this.categories[i]">
+                            </category-edit>
+                        </div>
+                        <div class="pb-5"></div>
+                    </div>
 
 
 
                 </div>
-                <!-- <div class id="hr">
-              </div> -->
-                <!-- <dir class="btn-group">
-                  <button class="btn btn-outline-danger bi bi-trash3">sssssssssssssss</button>
 
-              </dir> -->
             </div>
         </ul>
-
-
         <div style="height:30px; background-color: white;"></div>
-
-
-
-
-
 
     </section>
 </section>
-
-
-
-
-
-
-
-
-
-<!-- <div class="container">
-    <div class="row">
-        <div *ngFor="let cat of this.categories" style="background-color: rgb(211, 162, 2);">
-            <div class="mb-3">
-            </div>
-
-            <table class="col-12">
-                <thead class="col-12 align-self-end">AÇÕES</thead>
-                <tr class="row">
-                    <td class="col-6">
-                        <h3 style="color: white;">{{cat.name | uppercase}}</h3>
-                    </td>
-                    <td class="col-6">
-                        <button class="btn btn-outline-dark bi bi-trash justify-content-end " tooltip=" Deletar {{cat.name}} " (click)="12 "></button>
-                        <button class="btn btn-outline-dark bi bi-pen justify-content-end " tooltip="Editar {{cat.name}} "></button>
-                        <button class="btn btn-outline-dark bi bi-info-square justify-content-end " tooltip="Detalhes {{cat.name}} "></button>
-                    </td>
-                </tr>
-            </table>
-
-            <div class="mt-3 ">
-            </div>
-            <hr style=" background: rgb(255, 210, 60); box-shadow: 5 8px 32px 6 rgba(0, 0, 0, 0.37); border-radius: 10px; border: 1px solid rgb(0, 0, 0); ">
-
-        </div>
-
-    </div>
-</div> -->

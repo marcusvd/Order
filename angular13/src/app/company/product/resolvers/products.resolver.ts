@@ -23,19 +23,11 @@ export class ProductResolver extends CrudService<ProductDto, number> implements 
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<{ cat: CategoryDto[], mse: UnitOfMeasureDto[], prod: ProductDto }> {
-
     const id: number = route.params['id'];
-
     var prod$ = this.getByIdAsync<ProductDto>(id);
-
     var cat$ = this._Http.get<CategoryDto[]>(Url._CATEGORIES);
     var mse$ = this._Http.get<UnitOfMeasureDto[]>(Url._UNITOFMEASURES);
-
-
     var Return = zip(cat$, mse$, prod$).pipe(map(([cat, mse, prod]) => ({ cat, mse, prod })))
-
-
-
     return Return;
 
   }

@@ -14,6 +14,7 @@ import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
 import { SubCategoryDto } from "../../category/dto/sub-category-dto";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Injectable({ providedIn: 'root' })
 export class ProductInsertService extends CrudService<ProductDto, number> {
@@ -23,7 +24,7 @@ export class ProductInsertService extends CrudService<ProductDto, number> {
     private _Fb: FormBuilder,
     public _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
-    private _BsModalService: BsModalService
+    private _Navigation: Router
   ) {
     super(_Http, Url._PRODUCTS);
   }
@@ -84,22 +85,26 @@ loadSelects(){
 
 addSelectMeasure()
 {
-  this.loadMeasures().subscribe((item: UnitOfMeasureDto[]) => {
+  this.loadMeasures().subscribe({next:(item: UnitOfMeasureDto[]) => {
     this.uOfMeasures = item
     const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
     unit.name = 'Selecione';
     unit.description = 'Selecione';
     this.uOfMeasures.push(unit);
-  })
+  }, error: (err)=>{
+    console.log(err);
+  }})
 }
 addSelectCat()
 {
-  this.loadCats().subscribe((item: CategoryDto[]) => {
+  this.loadCats().subscribe({next:(item: CategoryDto[]) => {
     this.category = item
     const cat: CategoryDto = new CategoryDto();
     cat.name = 'Selecione';
     this.category.push(cat);
-  })
+  }, error: (err)=>{
+    console.log(err);
+  }})
 }
 
 formInsert() {
@@ -162,6 +167,7 @@ formInsert() {
         this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductInsert);
         this.formProductInsert.value.subCategories = [];
         this._AlertsToastr.Notice(`Produto,  ${toSave.name}`, 0, 'success');
+        this._Navigation.navigateByUrl('prodpagelist');
       }),
       error: (error) => {
         alert('deu ruim')

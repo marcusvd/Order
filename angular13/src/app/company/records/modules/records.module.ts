@@ -4,7 +4,7 @@ import { SharedModule } from '../../shared/module/shared.module';
 import { NgxBootStrapModule } from '../../shared/module/ngx-bootstrap.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CategoryInsertComponent } from 'src/app/company/category/category-insert/category-insert.component';
+// import { CategoryInsertComponent } from 'src/app/company/category/category-insert/category-insert.component';
 import { ProductInsertComponent } from 'src/app/company/product/product-insert/product-insert.component'
 import { MeasureInsertComponent } from 'src/app/company/measure/measure-insert/measure-insert.component';
 import { RegisterComponent } from 'src/app/company/shared/components/register/register.component';
@@ -12,7 +12,7 @@ import { RegisterComponent } from 'src/app/company/shared/components/register/re
 @NgModule({
   declarations: [
     RecordsComponent,
-    CategoryInsertComponent,
+    // CategoryInsertComponent,
     ProductInsertComponent,
     MeasureInsertComponent,
     RegisterComponent

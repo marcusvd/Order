@@ -8,11 +8,26 @@
 </div> -->
 <div class="pt-3 pb-3"></div>
 <section class="container">
-    <div class="row bi bi-rulers pt-4 pb-4 " style="font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
-        <div class="col-6 align-self-center" style="font-size: 30px;">
-            Medidas
+    <div class="container">
+        <div class="row">
+            <table class="col-12">
+                <tr class="col-12">
+                    <td>
+                        <div class="row bi bi-rulers pt-4 pb-4 " style="font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
+                            <div class="col-6 align-self-center" style="font-size: 30px;">
+                                Medidas
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-6 ">
+                        <button tooltip="Cadastrar um novo Produto." class="btn btn-outline-warning bi bi-plus" style="font-size: 35px; float: right;" [routerLink]="['/measureinsert']"></button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
+
+
     <section class="row align-items-" *ngFor="let mes of this.Measures ">
         <ul class="list-group">
             <div class="row ">

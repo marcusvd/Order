@@ -94,5 +94,22 @@ namespace Application.Operations
                 throw new Exception($"Erro: Camada de aplicação, {ex.Message}");
             }
         }
+
+           public async Task<bool> DeleteAsync(int id)
+        {
+            if (id == 0) throw new Exception("Is null.");
+
+            var fromDb = await _WORKER.CAT_REPO.GetAById(_id => _id.Id == id);
+
+            if (fromDb == null) throw new Exception("Sorry, null.");
+
+            _WORKER.CAT_REPO.Delete(fromDb);
+
+            await _WORKER.PRO_REPO.Save();
+
+            return true;
+
+        }
+
     }
 }

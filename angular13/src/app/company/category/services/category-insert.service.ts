@@ -10,9 +10,10 @@ import { Observable, take } from "rxjs";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
 import { DeleteComponent } from "../../shared/components/delete/delete.component";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Injectable()
-export class CategoryService extends CrudService<CategoryDto, number>{
+export class CategoryInsertService extends CrudService<CategoryDto, number>{
   subCats: SubCategoryDto[] = [];
   private cat: SubCategoryDto;
   formCategoryInsert: FormGroup;
@@ -23,18 +24,6 @@ export class CategoryService extends CrudService<CategoryDto, number>{
   msg: boolean = null;
   RetSubCat: string = 'insert';
   public index: number = 0;
-
-
-  //#region insertShow
-
- public catInsertShow: boolean = false;
-public catShowHide(){
-  this.catInsertShow = !this.catInsertShow;
-}
-
-
-  //#endregion
-
 
   //#region Edit
   valLength: string = '';
@@ -51,27 +40,10 @@ public catShowHide(){
     private _Fb: FormBuilder,
     public _ValidatorsSrv: ValidatorsService,
     public _AlertsToastr: AlertsToastr,
-    private _BsModalService: BsModalService
+    public Router:Router,
 
   ) {
     super(_Http, Url._CATEGORIES)
-  }
-
-  bsModalRef: BsModalRef;
-
-
-  toDelete(record: CategoryDto) {
-    const initState: ModalOptions = {
-      initialState: {
-        list: { record },
-        title: 'Exclusão definitiva de registro.',
-      },
-
-    };
-    this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
-    this.bsModalRef.content.closeBtnName = 'Close';
-
-
   }
 
 
@@ -86,11 +58,14 @@ public catShowHide(){
       // this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formCategoryInsert);
       // this.formCategoryInsert.value.subCategories = [];
       this.RetSubCatArrays.clear();
-      this.addSubCatArrays();
+      // this.addSubCatArrays();
       this.formCategoryInsert.clearValidators();
       this.formCategoryInsert.reset();
       this.index = 0;
       this._AlertsToastr.Notice(`Categoria,  ${toSave.name}`, 0, 'success');
+      window.location.reload();
+
+
     }, (error) => {
       this._AlertsToastr.Notice(`Categoria,  ${toSave.name}`, null, error, 'error');
     });
@@ -106,25 +81,12 @@ public catShowHide(){
 
 
   get RetSubCatArrays(): FormArray {
-    if (this.RetSubCat === 'edit') {
-      //    console.log('Categoria edit');
-      return <FormArray>this.formCategoryEdit.controls['subcategories'];
-    }
     //console.log('Categoria insert');
     return <FormArray>this.formCategoryInsert.controls['subcategories'];
   }
 
-
-
-
-
   public addSubCatArrays() {
-    if (this.RetSubCat === 'edit') {
-      this.RetSubCatArrays.push(this.subCatFormBuilderEdit());
-    }
-    if (this.RetSubCat === 'insert') {
-      this.RetSubCatArrays.push(this.subCatFormBuilder());
-    }
+    this.RetSubCatArrays.push(this.subCatFormBuilder());
   }
   removeSub(ind: number): void {
     if (this.RetSubCatArrays.length > 1) {
@@ -152,64 +114,32 @@ public catShowHide(){
 
 
 
-  OnBlur(val) {
+  // OnBlur(val) {
 
-    //#region edit
+  //  //#region edit
 
-    console.log(this.valLength)
-    //#endregion
-    return val.value.length > 3 ? this.msg = true : this.msg = false;
-  }
-  OnLoad(val) {
-    return val.value.length === 0 ? this.msg = true : this.msg = false;
-  }
+  //   console.log(this.valLength)
+  //   //#endregion
+  //   return val.value.length > 3 ? this.msg = true : this.msg = false;
+  // }
+  // OnLoad(val) {
+  //   return val.value.length === 0 ? this.msg = true : this.msg = false;
+  // }
 
   subCatFormBuilder(): FormGroup {
     return this.subCatsFormGroup = this._Fb.group({
-      name: ['', [Validators.required, Validators.maxLength(50)]]
+      name: ['', [Validators.required, Validators.maxLength(150), Validators.minLength(3)]]
     })
   }
 
   public formLoad() {
-    this.RetSubCat = 'insert';
     this.formCategoryInsert = this._Fb.group({
-      name: ['', [Validators.required, Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.maxLength(150), Validators.minLength(3)]],
       subcategories: this._Fb.array([this.subCatFormBuilder()])
     })
   }
 
-  // #region Edit
-  subCatFormBuilderEdit(): FormGroup {
-    return this.subCatsEditFormGroup = this._Fb.group({
-      id: ['', []],
-      name: ['', [Validators.required, Validators.maxLength(50)]]
-    })
-  }
-
-  public formLoadEdit() {
-    this.RetSubCat = 'edit';
-    this.formCategoryEdit = this._Fb.group({
-      name: ['', [Validators.required, Validators.maxLength(50)]],
-      subcategories: this._Fb.array([this.subCatFormBuilderEdit()])
-    })
-  }
-  changeValue(val: any) {
-    this.valLength = val.value;
-
-    console.log(val.value)
-    // if (val.length > 2) {
-    //   this._CatServices.addSubCatArrays();
-    //   this._CatServices.index = 1 + this._CatServices.index++;
-    // }
-  }
 
 
-  checkField() {
-    console.log('SIZE' + this.valLength.length)
-    if (this.valLength.length > 2) {
-      this.addSubCatArrays();
-      this.index = 1 + this.index++;
-    }
-  }
   //#endregion
 }

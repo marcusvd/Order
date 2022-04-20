@@ -6,16 +6,16 @@
             </div>
             <div>
                 <div>
-                    <form [formGroup]="_CatService.formCategoryInsert" class="form-group" class="col-12">
+                    <form [formGroup]="_CatService.formCategoryEdit" class="form-group" class="col-12">
                         <div id="hr"></div>
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
 
                                     <label>Nome:</label>
-                                    <input class="form-control" type="text" formControlName="name" [ngClass]="{'is-invalid': _CatService._ValidatorsSrv.touchedErrors('name', _CatService.formCategoryInsert)}">
+                                    <input class="form-control" type="text" formControlName="name" [ngClass]="{'is-invalid': _CatService._ValidatorsSrv.touchedErrors('name', _CatService.formCategoryEdit)}">
                                     <div class="invalid-feedback">
-                                        {{_CatService._ValidatorsSrv.required2(this._CatService.formCategoryInsert, 'name', 'Nome', 3, 250)}}
+                                        {{_CatService._ValidatorsSrv.required2(this._CatService.formCategoryEdit, 'name', 'Nome', 3, 250)}}
                                     </div>
 
                                 </div>
@@ -59,12 +59,11 @@
                             <div id="hr"></div>
                         </div>
                         <div class="p-3">
-                            <button [disabled]="!_CatService.formCategoryInsert.valid" id="label" class="btn btn-success btn-lg" style="color:rgb(255, 255, 255); float: right;" (click)="_CatService.save()">Cadastrar</button>
+                            <button [disabled]="!_CatService.formCategoryEdit.valid" id="label" class="btn btn-success btn-lg" style="color:rgb(255, 255, 255); float: right;" (click)="_CatService.save()">Atualizar</button>
                             <div>
                                 <button class="btn btn-success" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1; float: left;" (click)="this._CatService.addSubCatArrays()">Adicionar </button>
                             </div>
-                            <br>
-                            <br>
+
                         </div>
                     </form>
 
@@ -78,5 +77,5 @@
 </div>
 
 <div>
-    <!-- {{_CatService.formCategoryInsert.value | json}}} -->
+    <!-- {{_CatService.formCategoryEdit.value | json}}} -->
 </div>

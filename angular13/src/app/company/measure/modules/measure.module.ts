@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/module/shared.module';
 import { MeasureService } from '../services/measure.service';
 // import { MeasureRoutingModule } from './measure-routing.module';
 import { MeasureAdmComponent } from '../measure-adm/measure-adm.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -20,6 +21,7 @@ import { MeasureAdmComponent } from '../measure-adm/measure-adm.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    RouterModule
     // MeasureRoutingModule
   ],
   exports:[
