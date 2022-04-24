@@ -3,13 +3,13 @@ import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable, take } from "rxjs";
 import { Url } from "../../back-end/back-end";
-import { CategoryDto } from "../../category/dto/category-dto";
+import { CategoryDto } from "src/app/company/category/dto/category-dto";
 import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
 import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
-import { SubCategoryDto } from "../../category/dto/sub-category-dto";
+import { SubCategoryDto } from "src/app/company/category/dto/sub-category-dto";
 import { MeasureDto } from "../../measure/dto/measure-dto";
 
 
@@ -17,12 +17,12 @@ import { MeasureDto } from "../../measure/dto/measure-dto";
 export class ProductEditService extends CrudService<ProductDto, number> {
 
   constructor(
-    override _Http: HttpClient,
+    override Http: HttpClient,
     private _Fb: FormBuilder,
     public _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
   ) {
-    super(_Http, Url._PRODUCTS);
+    super(Http, Url._PRODUCTS);
   }
 
   measureArray: string[];
@@ -117,7 +117,7 @@ export class ProductEditService extends CrudService<ProductDto, number> {
     this.depth = $event.target.value;
   }
   loadCatById(id: number): Observable<CategoryDto> {
-    return this._Http.get<CategoryDto>(`${Url._CATEGORIES}/${id}`).pipe(take(1));
+    return this.Http.get<CategoryDto>(`${Url._CATEGORIES}/${id}`).pipe(take(1));
   }
 
   productEditing(item: ProductDto, cat: CategoryDto[], mse: UnitOfMeasureDto[]) {

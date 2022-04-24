@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MeasureService } from '../services/measure.service';
+import { MeasureInsertService } from '../services/measure-insert.service';
 
 
 @Component({
@@ -9,11 +9,11 @@ import { MeasureService } from '../services/measure.service';
   styleUrls: ['./measure-insert.component.css']
 })
 export class MeasureInsertComponent implements OnInit {
-  constructor(public _MeaServices: MeasureService ) { }
+  constructor(public MeaServices: MeasureInsertService ) { }
 
   ngOnInit(): void {
 
-    this._MeaServices.formLoad();
+    this.MeaServices.formLoad();
 
   }
 

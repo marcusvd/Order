@@ -1,20 +1,8 @@
-<div class="container">
-    <div class="row">
-        <h4 class="modal-title ">
-            <h1 style="color: red; ">DELETANDO</h1>
-        </h4>
-    </div>
-
-
-
-    <div class="row" style="font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
-        <div style="font-size: 60px;">
-            <div class="row align-self-center">
-                <h2 style=" text-align: center;">{{_DeleteService.record.name}}</h2>
-            </div>
-        </div>
-
-    </div>
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Excluindo registro...</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="doHide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
 </div>
 <div class="modal-body">
     <div class="container">
@@ -23,24 +11,35 @@
         </div>
         <h2> EXCLUIR:</h2>
     </div>
+
+    <div class="row" style="font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
+        <div style="font-size: 60px;">
+            <div class="row align-self-center">
+                <h2 style=" text-align: center;">{{DeleteService.record.name}}</h2>
+            </div>
+        </div>
+
+    </div>
     <div class="pt-3"></div>
     <div class="container">
         <div>
-            {{'Nome: ' + _DeleteService.record.name}}
+            {{'Nome: ' + DeleteService.record.name}}
         </div>
         <div>
-            {{' ' +'Código: ' + _DeleteService.record.id}}
+            {{' ' +'Código: ' + DeleteService.record.id}}
         </div>
-        <div *ngIf="_DeleteService.record.manufacturer">{{' ' +'Fabricante: ' + _DeleteService.record.manufacturer}}</div>
+        <div *ngIf="DeleteService.record.manufacturer">{{' ' +'Fabricante: ' + DeleteService.record.manufacturer}}</div>
     </div>
 </div>
+
 <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-default" (click)="doHide()">Fechar</button> -->
     <div class="row">
         <div class="col-6">
-            <button class="btn btn-warning" (click)="_BsModalRef.hide()">Cancelar</button>
+            <button class="btn btn-warning" (click)="doHide()">Cancelar</button>
         </div>
         <div class="col-6">
-            <button class="btn btn-danger" (click)="_BsModalRef.hide()" (click)="deleteRecordCat()">Apagar</button>
+            <button class="btn btn-danger" (click)="doHide()" (click)="DeleteService.deleteRecord()">Apagar</button>
         </div>
     </div>
 </div>

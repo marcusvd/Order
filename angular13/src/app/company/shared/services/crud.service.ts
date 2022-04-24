@@ -12,28 +12,28 @@ import { ICrudService } from "./icrud.service";
 
 export abstract class CrudService<T, ID> implements ICrudService<T, ID> {
 
-  private BackEnd: string;
+  private backEnd: string;
   constructor(
-    protected _Http: HttpClient,
-    protected _BackEnd: String,
+    protected Http: HttpClient,
+    protected BackEnd: String,
   ) {
-    this.BackEnd = _BackEnd.toLocaleLowerCase();
+    this.backEnd = BackEnd.toLocaleLowerCase();
   }
 
   add<T>(record: T): Observable<T> {
-    return this._Http.post<T>(this._BackEnd.toLocaleLowerCase(), record);
+    return this.Http.post<T>(this.backEnd.toLocaleLowerCase(), record);
   }
   update<T>(record: any): Observable<T> {
-    return this._Http.put<any>(`${this._BackEnd.toLocaleLowerCase()}/${record.id}`, record)
+    return this.Http.put<any>(`${this.backEnd.toLocaleLowerCase()}/${record.id}`, record)
   }
   delete<T>(record: any): Observable<any> {
-    return this._Http.delete<any>(`${this._BackEnd.toLocaleLowerCase()}/${record.id}`, record);
+    return this.Http.delete<any>(`${this.backEnd.toLocaleLowerCase()}/${record.id}`, record);
   }
   getAll<T>(): Observable<T[]> {
-    return this._Http.get<T[]>(this.BackEnd);
+    return this.Http.get<T[]>(this.backEnd);
   }
   getByIdAsync<T>(id:number): Observable<T> {
-   return this._Http.get<T>(`${this._BackEnd.toLocaleLowerCase()}/${id}`)
+   return this.Http.get<T>(`${this.backEnd.toLocaleLowerCase()}/${id}`)
   }
 
 

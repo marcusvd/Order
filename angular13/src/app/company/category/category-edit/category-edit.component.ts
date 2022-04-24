@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CategoryDto } from '../dto/category-dto';
+
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CategoryDto } from 'src/app/company/category/dto/category-dto';
 import { CategoryEditService } from '../services/category-edit.service';
 
 
@@ -9,37 +11,21 @@ import { CategoryEditService } from '../services/category-edit.service';
   styleUrls: ['./category-edit.component.css']
 })
 export class CategoryEditComponent implements OnInit {
-  @Input() category: CategoryDto = new CategoryDto();
+
 
   constructor(
-    public _CatService: CategoryEditService
+    public CatEditServices: CategoryEditService,
+    private _ModalService: BsModalService,
+    private _ModalRef: BsModalRef,
   ) { }
 
+  doHide() {
+    this._ModalRef.hide();
+  }
 
   ngOnInit(): void {
-    this._CatService.formLoadEdit();
-
-    this._CatService.formCategoryEdit.patchValue({
-      id: this.category.id,
-      name: this.category.name,
-      subCategories: this.category.subCategories
-    });
-
-    // this._CatService.loadCats().subscribe({
-    //   next: ((cat: CategoryDto[]) => {
-
-
-
-
-    //     this._CatService.categories = cat;
-    //   }),
-    //   error: (error) => {
-    //     alert('deu ruim')
-    //     this._CatService._ValidatorsSrv.cleanAfters(['contact', 'address'], this._CatService.formCategoryEdit);
-    //   },
-    // });
-
-
+    this.CatEditServices.formLoad(this._ModalService.config.initialState['list']['record'] as CategoryDto);
+    this.CatEditServices.category = this._ModalService.config.initialState['list']['record'];
   }
 
 }

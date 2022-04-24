@@ -1,0 +1,98 @@
+<div class="row bg-warning">
+    <div class="container">
+
+        <div class="modal-header">
+            <h4 class="modal-title">
+                <table>
+                    <tr class="align-self-center">
+                        <td>
+                            <div class="row bi bi-boxes" style="margin: 15px; font-size: 80px; color: rgb(0, 0, 0); text-shadow: 0 0 1px #ff9900, 0 0 7px #f08e1f;">
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: 60px;">
+                                <h1 style="color: black;">{{category?.name | uppercase}}</h1>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </h4>
+            <button tooltip="Fecha essa tela." type="button" class="btn-close close pull-right" aria-label="Close" (click)="_ModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+        </div>
+        <div class="modal-body">
+
+            <section>
+                <ul class="list-group">
+                    <div class="row">
+
+
+                        <div style="background-color: rgb(196, 155, 21);">
+                            <div class="row">
+                                <div class="pt-2 col-9 align-self-end">
+                                    <table>
+                                        <thead>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                                <label style="font-size: 30px;">Detalhes:</label>
+                                            </td>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <h6>Subcategorias:</h6>
+                                                </td>
+
+                                                <div *ngFor="let sub of category?.subCategories">
+                                                    <div>
+                                                        <label for="">Código</label> {{sub.id}}
+                                                    </div>
+                                                    <div>
+                                                        <label for="">Nome</label> {{sub.name}}
+                                                    </div>
+
+                                                </div>
+
+                                            </tr>
+
+                                        </tbody>
+                                        <td>
+
+                                        </td>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                            <div class="row pt-4"> </div>
+                        </div>
+                    </div>
+                </ul>
+            </section>
+        </div>
+        <div class="modal-footer">
+            <table>
+                <tr class="col-12">
+                    <td class="col-6 pull-left">
+                        <button tooltip="Deletar {{category.name}}" class="btn btn-outline-dark bi bi-trash"></button>
+                        <button tooltip="Editar {{category.name}}" class="btn btn-outline-dark bi bi-pen " (click)="_ModalRef.hide()" (click)="this.CategoryEditServices.toEdit(category)"></button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-dark bi-door-open-fill" (click)="_ModalRef.hide()">
+              Fechar</button>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+
+
+</div>

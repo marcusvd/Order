@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CrudService } from "../../shared/services/crud.service";
 import { CategoryDto } from "src/app/company/category/dto/category-dto";
-import { SubCategoryDto } from "../dto/sub-category-dto";
+import { SubCategoryDto } from "src/app/company/category/dto/sub-category-dto";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { Url } from "../../back-end/back-end";
@@ -36,14 +36,14 @@ export class CategoryInsertService extends CrudService<CategoryDto, number>{
 
 
   constructor(
-    override _Http: HttpClient,
+    override Http: HttpClient,
     private _Fb: FormBuilder,
     public _ValidatorsSrv: ValidatorsService,
     public _AlertsToastr: AlertsToastr,
     public Router:Router,
 
   ) {
-    super(_Http, Url._CATEGORIES)
+    super(Http, Url._CATEGORIES)
   }
 
 
@@ -76,7 +76,7 @@ export class CategoryInsertService extends CrudService<CategoryDto, number>{
 
 
   loadCats(): Observable<CategoryDto[]> {
-    return this._Http.get<CategoryDto[]>(Url._CATEGORIES).pipe(take(1));
+    return this.Http.get<CategoryDto[]>(Url._CATEGORIES).pipe(take(1));
   }
 
 

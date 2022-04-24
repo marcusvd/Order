@@ -1,31 +1,40 @@
-<div class="container-fluid;" id="general_container">
-    <div class="row">
-        <div class="col" style="margin: 20px; color: transparent;" id="myForm">
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Editando registro...</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="doHide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+    <div class="container-fluid;" id="general_container">
+        <div class="row">
             <div>
-                <h1 style="text-align: center; margin-top: 20px;">CATEGORIA / SUB</h1>
+                <h1 style="text-align: center; margin-top: 20px;">{{this.CatEditServices.category.name}}</h1>
             </div>
             <div>
                 <div>
-                    <form [formGroup]="_CatService.formCategoryEdit" class="form-group" class="col-12">
+                    <form [formGroup]="CatEditServices.formCategoryEdit" class="form-group" class="col-12">
                         <div id="hr"></div>
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
 
                                     <label>Nome:</label>
-                                    <input class="form-control" type="text" formControlName="name" [ngClass]="{'is-invalid': _CatService._ValidatorsSrv.touchedErrors('name', _CatService.formCategoryEdit)}">
-                                    <div class="invalid-feedback">
-                                        {{_CatService._ValidatorsSrv.required2(this._CatService.formCategoryEdit, 'name', 'Nome', 3, 250)}}
-                                    </div>
+                                    <input class="form-control" type="text" formControlName="name">
+                                    <!-- [ngClass]="{'is-invalid': CatEditServices._ValidatorsSrv.touchedErrors('name', CatEditServices.formCategoryEdit)}" -->
+                                    <!-- <div class="invalid-feedback">
+                                {{CatEditServices._ValidatorsSrv.required2(this.CatEditServices.formCategoryEdit, 'name', 'Nome', 3, 250)}}
+                            </div> -->
 
                                 </div>
                             </div>
                         </div>
                         <div class="pt-1"></div>
                         <div class="container">
-                            <div class="row" formArrayName="subcategories">
-                                <label>Sub Categoria</label>
-                                <div *ngFor="let sub of _CatService.RetSubCatArrays.controls; let i=index">
+                            <div class="row" formArrayName="subCategories">
+                                <label>SubCategoria</label>
+                                <!-- <div *ngFor="let sub of this.CatEditServices.category.subCategories let i=index"> -->
+                                <div *ngFor="let sub of CatEditServices?.RetSubCatArrays?.controls let i=index">
                                     <div [formGroupName]="i">
 
                                         <div class="col-12">
@@ -33,16 +42,17 @@
                                             <table class="col-12">
                                                 <tr class="col-12">
                                                     <td class="col-10">
-                                                        <input [ngClass]="{'is-invalid': _CatService._ValidatorsSrv.touchedErrorsArray(_CatService.RetSubCatArrays, i+'.name')}" type="text" #Val class="form-control" [id]="i" name="subs" placeholder="{{(i + 1)+'º' + ' ' + 'Subcategoria'}}" formControlName="name">
-                                                        <div class="invalid-feedback">
-                                                            {{_CatService._ValidatorsSrv.requiredArray(_CatService.RetSubCatArrays, i+'.name', 'Nome', 3, 150)}}
-                                                        </div>
+                                                        <input type="text" #Val class="form-control" [id]="i" name="subs" placeholder="{{(i + 1)+'º' + ' ' + 'Subcategoria'}}" formControlName="name">
+                                                        <!-- [ngClass]="{'is-invalid': CatEditServices._ValidatorsSrv.touchedErrorsArray(CatEditServices.RetSubCatArrays, i+'.name')}" -->
+                                                        <!-- <div class="invalid-feedback">
+                                                    {{CatEditServices._ValidatorsSrv.requiredArray(CatEditServices.RetSubCatArrays, i+'.name', 'Nome', 3, 150)}}
+                                                </div> -->
                                                     </td>
                                                     <div class="p-3">
 
                                                     </div>
                                                     <td class="col">
-                                                        <button class="btn btn-danger" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1;" (click)="_CatService.removeSub(i)">Remover </button>
+                                                        <button class="btn btn-danger" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1;" (click)="CatEditServices.removeSub(i)">Remover </button>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -56,26 +66,49 @@
                                 </div>
                             </div>
                             <br>
-                            <div id="hr"></div>
+                            <div class="pt-1"></div>
                         </div>
-                        <div class="p-3">
-                            <button [disabled]="!_CatService.formCategoryEdit.valid" id="label" class="btn btn-success btn-lg" style="color:rgb(255, 255, 255); float: right;" (click)="_CatService.save()">Atualizar</button>
-                            <div>
-                                <button class="btn btn-success" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1; float: left;" (click)="this._CatService.addSubCatArrays()">Adicionar </button>
-                            </div>
 
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-success" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1;  float: right;" (click)="this.CatEditServices.addSubCatArrays(CatEditServices.category.id)">Adicionar </button>
+                                </div>
+                            </div>
                         </div>
+                        <div class="pt-3"></div>
+
+
+                        <!-- [disabled]="!CatEditServices.formCategoryEdit.valid" -->
+
                     </form>
 
                 </div>
 
             </div>
 
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-6" style=" float: left;">
+                    <button class="btn btn-warning" (click)="doHide()">Cancelar</button>
+                </div>
+                <div class="col-6" style=" float: right;">
+                    <button id="label" class="btn btn-success btn-lg" style="color:rgb(255, 255, 255); float: right;" (click)="CatEditServices.updateAsync()" (click)="doHide()">Atualizar</button>
+                </div>
+            </div>
         </div>
 
     </div>
-</div>
 
-<div>
-    <!-- {{_CatService.formCategoryEdit.value | json}}} -->
-</div>
+
+    <div>
+        {{CatEditServices.formCategoryEdit.value | json}}}
+    </div>

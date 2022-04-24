@@ -10,6 +10,11 @@ namespace Repository.Data.MappingEntities
     {
         public void Configure(EntityTypeBuilder<UnitOfMeasure> builder)
         {
+            builder.HasKey(_id => _id.Id);
+
+
+
+
         }
     }
 }

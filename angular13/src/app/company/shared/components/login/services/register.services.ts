@@ -14,12 +14,12 @@ import { UserRegisterDto } from "../dto/user-register-dto";
 export class RegisterServices extends CrudService<UserRegisterDto, number> {
 
   constructor(
-    override _Http: HttpClient,
+    override Http: HttpClient,
     private _Route: Router,
     private _Fb: FormBuilder
   ) {
     super(
-      _Http,
+      Http,
       Url._ACCESSCONTROL + '/register',
     )
   }
@@ -36,7 +36,7 @@ export class RegisterServices extends CrudService<UserRegisterDto, number> {
   register() {
     const usr: UserRegisterDto = this._formGroupControl.value;
     console.log(usr)
-    return this._Http.post<UserRegisterDto>(Url._ACCESSCONTROL + '/register', usr).subscribe((item) => {
+    return this.Http.post<UserRegisterDto>(Url._ACCESSCONTROL + '/register', usr).subscribe((item) => {
     alert('Deu TOP');
     });
   }

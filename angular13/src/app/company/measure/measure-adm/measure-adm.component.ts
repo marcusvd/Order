@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MeasureDto } from 'src/app/company/measure/dto/measure-dto';
-import { MeasureService } from '../services/measure.service';
+import { MeasureEditService } from '../services/measure-edit.service';
+import { MeasureInsertService } from '../services/measure-insert.service';
 
 @Component({
   selector: 'app-measure-adm',
@@ -9,12 +10,18 @@ import { MeasureService } from '../services/measure.service';
 })
 export class MeasureAdmComponent implements OnInit {
   public Measures: MeasureDto[];
-  constructor(private _MeasureServices: MeasureService) { }
+  constructor(
+    public MeasureServices: MeasureInsertService,
+    public MeasureEditServices: MeasureEditService
+    ) { }
+
+
+
+
 
   ngOnInit(): void {
-    this._MeasureServices.loadMeasures().subscribe((_measure: MeasureDto[]) => {
+    this.MeasureServices.loadMeasures().subscribe((_measure: MeasureDto[]) => {
       this.Measures = _measure;
-
     })
   }
 

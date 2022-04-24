@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { CategoryInsertComponent } from 'src/app/company/category/category-insert/category-insert.component';
 import { ProductInsertComponent } from 'src/app/company/product/product-insert/product-insert.component'
-import { MeasureInsertComponent } from 'src/app/company/measure/measure-insert/measure-insert.component';
+// import { MeasureInsertComponent } from 'src/app/company/measure/measure-insert/measure-insert.component';
 import { RegisterComponent } from 'src/app/company/shared/components/register/register.component';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { RegisterComponent } from 'src/app/company/shared/components/register/re
     RecordsComponent,
     // CategoryInsertComponent,
     ProductInsertComponent,
-    MeasureInsertComponent,
+    // MeasureInsertComponent,
     RegisterComponent
   ],
   imports: [

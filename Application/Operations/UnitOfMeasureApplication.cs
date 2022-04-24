@@ -63,16 +63,36 @@ namespace Application.Operations
             }
         }
 
-        public Task<bool> DeleteAsync(int id, UnitOfMeasureDto Entiry)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                if (id == 0) return false;
+
+                UnitOfMeasure fromDb = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == id);
+
+                if (fromDb == null) return false;
+
+                _WORKER.UNITOFMEASURE_REPO.Delete(fromDb);
+                if (await _WORKER.UNITOFMEASURE_REPO.Save())
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Camada de aplicação: {ex.Message}");
+            }
         }
+
 
         public async Task<UnitOfMeasureDto> GetByIdAsync(int id)
         {
-               try
+            try
             {
-               UnitOfMeasure fromDb = await  _WORKER.UNITOFMEASURE_REPO.GetByIdAsync(id);
+                UnitOfMeasure fromDb = await _WORKER.UNITOFMEASURE_REPO.GetByIdAsync(id);
                 if (fromDb == null) return null;
 
                 UnitOfMeasureDto unitOfMeasure = _MAP.Map<UnitOfMeasureDto>(fromDb);
@@ -83,6 +103,34 @@ namespace Application.Operations
             {
                 throw new Exception($"Camada de aplicação: {ex.Message}");
             }
+        }
+
+        public async Task<UnitOfMeasureDto> UpdateAsync(UnitOfMeasureDto DtoView)
+        {
+            try
+            {
+                var fromDb = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == DtoView.Id);
+                if (fromDb == null) return null;
+
+                var DtoToDomainToUpdate = _MAP.Map<UnitOfMeasure>(DtoView);
+                _WORKER.UNITOFMEASURE_REPO.Update(DtoToDomainToUpdate);
+
+                var result = await _WORKER.UNITOFMEASURE_REPO.Save();
+
+                if (result)
+                {
+                    var ReturnUpdated = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == DtoView.Id);
+                    var DomainToDtoUpdated = _MAP.Map<UnitOfMeasureDto>(ReturnUpdated);
+                    return DomainToDtoUpdated;
+                }
+                throw new Exception($"Error update update layer");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+
         }
     }
 }

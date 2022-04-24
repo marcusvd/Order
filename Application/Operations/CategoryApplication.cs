@@ -64,21 +64,12 @@ namespace Application.Operations
             }
         }
 
-        public Task<bool> DeleteAsync(int id, CategoryDto Entiry)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<CategoryDto> EditAsync(int id, CategoryDto Entiry)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public async Task<CategoryDto> GetByIdAsync(int id)
         {
             try
             {
-                if(id == 0) return null;
+                if (id == 0) return null;
 
                 Category catFromDb = await _WORKER.CAT_REPO.GetCategoryByIdAsync(id, true);
 
@@ -95,21 +86,62 @@ namespace Application.Operations
             }
         }
 
-           public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            if (id == 0) throw new Exception("Is null.");
+            try
+            {
+                if (id == 0) throw new Exception("Is null.");
 
-            var fromDb = await _WORKER.CAT_REPO.GetAById(_id => _id.Id == id);
+                var fromDb = await _WORKER.CAT_REPO.GetAById(_id => _id.Id == id);
 
-            if (fromDb == null) throw new Exception("Sorry, null.");
+                if (fromDb == null) throw new Exception("Sorry, null.");
 
-            _WORKER.CAT_REPO.Delete(fromDb);
+                _WORKER.CAT_REPO.Delete(fromDb);
 
-            await _WORKER.PRO_REPO.Save();
+                await _WORKER.PRO_REPO.Save();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: Camada de aplicação, {ex.Message}");
+            }
+        }
+
+        public async Task<CategoryDto> UpdateAsync(CategoryDto DtoView)
+        {
+            try
+            {
+                var fromDb = await _WORKER.CAT_REPO.GetCategoryByIdAsync(DtoView.Id, true);
+
+                if (fromDb == null) return null;
+
+                _MAP.Map(DtoView, fromDb);
+
+                var DtoToDomainToUpdate = _MAP.Map<Category>(fromDb);
+
+                _WORKER.CAT_REPO.Update(DtoToDomainToUpdate);
+
+                var result = await _WORKER.CAT_REPO.Save();
+
+                if (result)
+                {
+                    var ReturnUpdated = await _WORKER.CAT_REPO.GetAById(_id => _id.Id == DtoView.Id);
+                    var DomainToDtoUpdated = _MAP.Map<CategoryDto>(ReturnUpdated);
+                    return DomainToDtoUpdated;
+                }
+                throw new Exception($"Error update update layer");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 
+        public Task<bool> DeleteAsync(int id, CategoryDto DtoView)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

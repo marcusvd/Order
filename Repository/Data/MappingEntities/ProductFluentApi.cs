@@ -12,14 +12,14 @@ namespace Repository.Data.MappingEntities
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasOne<Category>(_cat => _cat.Category).
-           WithMany(_product => _product.Products).HasForeignKey(_f => _f.CategoryId);
+           WithMany(_product => _product.Products).HasForeignKey(_f => _f.CategoryId).OnDelete(DeleteBehavior.Restrict);
             builder
             .HasOne<SubCategory>(_sub => _sub.SubCategory)
-            .WithMany(_product => _product.Products).HasForeignKey(_f => _f.SubCategoryId);
+            .WithMany(_product => _product.Products).HasForeignKey(_f => _f.SubCategoryId).OnDelete(DeleteBehavior.Restrict);
             builder
             .HasOne<UnitOfMeasure>(_um => _um.UnitOfMeasure)
             .WithMany(_product => _product.Products)
-            .HasForeignKey(_f => _f.UnitOfMeasureId);
+            .HasForeignKey(_f => _f.UnitOfMeasureId).OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(_n => _n.Name).HasMaxLength(150).IsRequired();
             builder.Property(_h => _h.Height).HasMaxLength(25);

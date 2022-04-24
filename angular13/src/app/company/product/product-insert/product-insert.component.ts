@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CategoryDto } from '../../category/dto/category-dto';
-import { SubCategoryDto } from '../../category/dto/sub-category-dto';
+import { CategoryDto } from 'src/app/company/category/dto/category-dto';
+import { SubCategoryDto } from 'src/app/company/category/dto/sub-category-dto';
 import { UnitOfMeasureDto } from '../../measure/dto/unit-of-measure';
 import { ProductInsertService } from '../services/product-insert.service';
 

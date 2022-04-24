@@ -9,8 +9,8 @@ using Repository.Data;
 namespace Repository.Migrations
 {
     [DbContext(typeof(OSDbContext))]
-    [Migration("20220410144149_Validation BackEnd")]
-    partial class ValidationBackEnd
+    [Migration("20220423214548_Magrela21")]
+    partial class Magrela21
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -359,19 +359,19 @@ namespace Repository.Migrations
                     b.HasOne("Domain.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.SubCategory", "SubCategory")
                         .WithMany("Products")
                         .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.UnitOfMeasure", "UnitOfMeasure")
                         .WithMany("Products")
                         .HasForeignKey("UnitOfMeasureId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");

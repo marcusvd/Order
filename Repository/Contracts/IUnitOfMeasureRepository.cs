@@ -12,6 +12,7 @@ namespace Repository.Contracts
     {
         Task<List<UnitOfMeasure>> GeAllCategories();
         Task<UnitOfMeasure> GetByIdAsync(int id);
+     
     }
 
 }

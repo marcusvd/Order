@@ -18,13 +18,13 @@ import { ProductInfoComponent } from "../product-info/product-info.component";
 export class ProductListService extends CrudService<ProductDto, number> {
 
   constructor(
-    override _Http: HttpClient,
+    override Http: HttpClient,
     private _Fb: FormBuilder,
     _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
     private _BsModalService: BsModalService
   ) {
-    super(_Http, Url._PRODUCTS);
+    super(Http, Url._PRODUCTS);
   }
 
   bsModalRef?: BsModalRef;
@@ -83,7 +83,7 @@ export class ProductListService extends CrudService<ProductDto, number> {
     if (terms !== null && terms !== '') {
       params = params.append('term', terms)
     }
-    return this._Http.get<ProductDto[]>(Url._PRODUCTS, { observe: 'response', params })
+    return this.Http.get<ProductDto[]>(Url._PRODUCTS, { observe: 'response', params })
       .pipe(
         take(1),
         map((response) => {
@@ -96,7 +96,8 @@ export class ProductListService extends CrudService<ProductDto, number> {
       );
   }
 
-  toDelete(record: ProductDto) {
+  toDelete(record: any) {
+    record.who = 'product'
     const initState: ModalOptions = {
       initialState: {
         list: { record },

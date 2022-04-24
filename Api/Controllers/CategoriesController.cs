@@ -9,10 +9,10 @@ using Newtonsoft.Json;
 
 namespace Api.Controllers
 {
-    
-     [AllowAnonymous]
+
+    //  [AllowAnonymous]
     //    (AuthenticationSchemes = "Bearer")
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CategoriesController : ControllerBase
@@ -21,6 +21,21 @@ namespace Api.Controllers
         public CategoriesController(ICategoryApplication CAT_APPLICATION)
         {
             _CAT_APPLICATION = CAT_APPLICATION;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var returnFromDb = await _CAT_APPLICATION.GetAllAsync();
+                if (returnFromDb == null) return null;
+                return Ok(returnFromDb);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: {ex.Message}");
+            }
         }
 
         [HttpPost]
@@ -38,20 +53,6 @@ namespace Api.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            try
-            {
-                var returnFromDb = await _CAT_APPLICATION.GetAllAsync();
-                if (returnFromDb == null) return null;
-                return Ok(returnFromDb);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro: {ex.Message}");
-            }
-        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryByIdAsync(int id)
         {
@@ -66,7 +67,24 @@ namespace Api.Controllers
                 throw new Exception($"Erro: {ex.Message}");
             }
         }
-       [HttpDelete("{id}")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] CategoryDto ViewDto)
+        {
+            try
+            {
+                if (id != ViewDto.Id) return BadRequest("Id that was indicated for update don't equal of the viewDto");
+                if (id == 0) return NoContent();
+
+                var result = await _CAT_APPLICATION.UpdateAsync(ViewDto);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+        }
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveOne(int id)
         {
             try

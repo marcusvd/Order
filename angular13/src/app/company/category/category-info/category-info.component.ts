@@ -3,30 +3,35 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CategoryDto } from 'src/app/company/category/dto/category-dto';
-import { ProductDto } from '../dto/product-dto';
-import { ProductInfoService } from '../services/product-info.service';
 
-import { ProductListService } from '../services/product-list.service';
+
+
+import { CategoryListService } from 'src/app/company/category/services/category-list.service';
+import { SubCategoryDto } from '../dto/sub-category-dto';
+import { CategoryEditService } from '../services/category-edit.service';
 
 
 
 @Component({
-  selector: 'product-info',
-  templateUrl: './product-info.component.html',
-  styleUrls: ['./product-info.component.css']
+  selector: 'category-info',
+  templateUrl: './category-info.component.html',
+  styleUrls: ['./category-info.component.css']
 })
-export class ProductInfoComponent implements OnInit {
+export class CategoryInfoComponent implements OnInit {
 
 
   constructor(
-    private _ProductServices: ProductInfoService,
+    private _CategoryListServices: CategoryListService,
+    public CategoryEditServices: CategoryEditService,
     private _ActRouter: ActivatedRoute,
     private _BsModalService: BsModalService,
    public _ModalRef: BsModalRef
   ) { }
 
-  prodInfo: ProductDto;
-  _cat: CategoryDto;
+
+
+  category: CategoryDto;
+  subCategoryInfo: SubCategoryDto;
 
   // loadProductById() {
   //   this._ActRouter.params.pipe(map((params: any) => params['id']),
@@ -52,9 +57,9 @@ export class ProductInfoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.prodInfo = this._BsModalService.config.initialState['list']['record'] as ProductDto;
+    this.category = this._BsModalService.config.initialState['list']['record'] as CategoryDto;
 
-    this._ProductServices.productGetInfo(this.prodInfo);
+    // this._ProductServices.productGetInfo(this.prodInfo);
 
     //this._ProductServices.loadProductsToView();
     // this.loadProductById();

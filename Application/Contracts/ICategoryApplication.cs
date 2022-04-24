@@ -9,7 +9,7 @@ namespace Application.Contracts
     {
         Task<CategoryDto> AddAsync(CategoryDto DtoView);
          Task<bool> DeleteAsync(int id);
-        Task<CategoryDto> EditAsync(int id, CategoryDto DtoView);
+        Task<CategoryDto> UpdateAsync(CategoryDto DtoView);
         Task<CategoryDto> GetByIdAsync(int id);
         Task<List<CategoryDto>> GetAllAsync();
         Task<bool> DeleteAsync(int id, CategoryDto DtoView);

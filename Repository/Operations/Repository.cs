@@ -43,7 +43,7 @@ namespace Repository.Operations
         }
         public async Task<bool> Save()
         {
-            if (await _CONTEXT.SaveChangesAsync() > 1)
+            if (await _CONTEXT.SaveChangesAsync() > 0)
             {
                 return true;
             }

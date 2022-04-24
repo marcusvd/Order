@@ -6,13 +6,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { map, Observable, take } from "rxjs";
 import { PaginatedResult, Pagination } from "../../shared/dto/pagination";
 import { Url } from "../../back-end/back-end";
-import { CategoryDto } from "../../category/dto/category-dto";
+import { CategoryDto } from "src/app/company/category/dto/category-dto";
 import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
 import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
-import { SubCategoryDto } from "../../category/dto/sub-category-dto";
+import { SubCategoryDto } from "src/app/company/category/dto/sub-category-dto";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -20,13 +20,13 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class ProductInsertService extends CrudService<ProductDto, number> {
 
   constructor(
-    override _Http: HttpClient,
+    override Http: HttpClient,
     private _Fb: FormBuilder,
     public _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
     private _Navigation: Router
   ) {
-    super(_Http, Url._PRODUCTS);
+    super(Http, Url._PRODUCTS);
   }
 
   bsModalRef?: BsModalRef;
@@ -179,10 +179,10 @@ formInsert() {
   }
 
   loadCats(): Observable<CategoryDto[]> {
-    return this._Http.get<CategoryDto[]>(Url._CATEGORIES).pipe(take(1));
+    return this.Http.get<CategoryDto[]>(Url._CATEGORIES).pipe(take(1));
   }
   loadMeasures() {
-    return this._Http.get<UnitOfMeasureDto[]>(Url._UNITOFMEASURES).pipe(take(1));
+    return this.Http.get<UnitOfMeasureDto[]>(Url._UNITOFMEASURES).pipe(take(1));
   }
   loadProducts() {
     return this.getAll<ProductDto[]>().pipe(take(1));
@@ -200,7 +200,7 @@ formInsert() {
     }
 
 
-    return this._Http.get<ProductDto[]>(Url._PRODUCTS, { observe: 'response', params })
+    return this.Http.get<ProductDto[]>(Url._PRODUCTS, { observe: 'response', params })
       .pipe(
         take(1),
         map((response) => {

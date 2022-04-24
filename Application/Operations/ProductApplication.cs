@@ -79,18 +79,24 @@ namespace Application.Operations
 
         public async Task<bool> DeleteAsync(int id)
         {
-            if (id == 0) throw new Exception("Is null.");
+            try
+            {
+                if (id == 0) throw new Exception("Is null.");
 
-            var fromDb = _WORKER.PRO_REPO.GetAById(_id => _id.Id == id);
+                var fromDb = _WORKER.PRO_REPO.GetAById(_id => _id.Id == id);
 
-            if (fromDb == null) throw new Exception("Sorry, null.");
+                if (fromDb == null) throw new Exception("Sorry, null.");
 
-            _WORKER.PRO_REPO.Delete(fromDb.Result);
+                _WORKER.PRO_REPO.Delete(fromDb.Result);
 
-            await _WORKER.PRO_REPO.Save();
+                await _WORKER.PRO_REPO.Save();
 
-            return true;
-
+                return true;
+            }
+            catch 
+            {
+                return false;
+            }
         }
 
         public async Task<ProductDto> GetByIdAsync(int id)

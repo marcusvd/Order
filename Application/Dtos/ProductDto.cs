@@ -41,9 +41,8 @@ namespace Application.Dtos
         [StringLength(25, ErrorMessage = ("{0} deve conter o máximo de 25 carácteres."))]
         public string Format { get; set; }
 
-        [Range(0, 100000, ErrorMessage = ("{0} Máximo aceito é 100000."))]
         public int Maxstacked { get; set; }
-        [Range(0, 100000, ErrorMessage = ("{0} Máximo aceito é 100000."))]
+        
         public int Weight { get; set; }
 
         public int UnitOfMeasureId { get; set; }

@@ -17,10 +17,10 @@ export class AuthenticationService extends CrudService<UserDto, number> {
   //  public StoredToken: UserDto;
 
   constructor(
-    override _Http: HttpClient,
+    override Http: HttpClient,
     private _Fb: FormBuilder,
   ) {
-    super(_Http, Url._ACCESSCONTROL)
+    super(Http, Url._ACCESSCONTROL)
     //  this.currentUserSubject = new BehaviorSubject<UserDto>(this.StoredToken);
     this.currentUserSubject = new BehaviorSubject<UserDto>(JSON.parse(localStorage.getItem('usr')));
  //   this.currentUserSubject = new BehaviorSubject<UserDto>(JSON.parse(sessionStorage.getItem('usr')));
@@ -31,7 +31,7 @@ export class AuthenticationService extends CrudService<UserDto, number> {
     // const u: UserDto = new UserDto();
     // this.StoredToken = new UserDto();
 
-    return this._Http.post<UserDto>(`${Url._ACCESSCONTROL}/login`, user)
+    return this.Http.post<UserDto>(`${Url._ACCESSCONTROL}/login`, user)
       .pipe(map(usr => {
 
         localStorage.setItem('usr', JSON.stringify(usr))

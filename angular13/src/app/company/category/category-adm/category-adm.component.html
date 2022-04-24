@@ -13,14 +13,14 @@
                         </div>
                     </td>
                     <td class="col-6 ">
-                        <button tooltip="Cadastrar um novo Produto." class="btn btn-outline-warning bi bi-plus" style="font-size: 35px; float: right;" (click)="_CatServices.catShowHide()"></button>
+                        <button tooltip="Cadastrar um novo Produto." class="btn btn-outline-warning bi bi-plus" style="font-size: 35px; float: right;" (click)="CatListServices.catShowHide()"></button>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
 
-    <div class="container" *ngIf="_CatServices.catInsertShow">
+    <div class="container" *ngIf="CatListServices.catInsertShow">
         <div>
             <category-insert>
             </category-insert>
@@ -43,17 +43,17 @@
                     </section>
                     <div class="col-3"></div>
                     <section class="col-2 pr-5 pt-2 pb-2 ">
-                        <button tooltip="Deletar {{cat.name}}" class="btn btn-outline-dark bi bi-trash" (click)="_CatServices.toDelete(cat)"></button>
-                        <button tooltip="Editar {{cat.name}}" class="btn btn-outline-dark bi bi-pen " (click)="editShow(i)"></button>
-                        <button tooltip="Detalhes {{cat.name}}" class="btn btn-outline-dark bi bi-info-square "></button>
+                        <button tooltip="Deletar {{cat.name}}" class="btn btn-outline-dark bi bi-trash" (click)="CatListServices.toDelete(cat)"></button>
+                        <button tooltip="Editar {{cat.name}}" class="btn btn-outline-dark bi bi-pen" (click)="this.CatEditServices.toEdit(cat)"> </button>
+                        <button tooltip="Detalhes {{cat.name}}" class="btn btn-outline-dark bi bi-info-square" (click)="this.CatListServices.toInfo(cat)"></button>
                     </section>
-                    <div [id]="i" [style.display]="isVisible">
-                        <!--[id]="i" [style.visibility]="isVisible" -->
+                    <div [id]="i " [style.display]="isVisible ">
+                        <!--[id]="i " [style.visibility]="isVisible " -->
                         <div>
-                            <category-edit [category]="this.categories[i]">
-                            </category-edit>
+                            <router-outlet></router-outlet>
                         </div>
-                        <div class="pb-5"></div>
+
+                        <div class="pb-5 "></div>
                     </div>
 
 
@@ -62,7 +62,7 @@
 
             </div>
         </ul>
-        <div style="height:30px; background-color: white;"></div>
+        <div style="height:30px; background-color: white; "></div>
 
     </section>
 </section>

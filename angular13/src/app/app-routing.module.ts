@@ -16,6 +16,7 @@ import { Auth0Guard } from './company/guards/auth-0.guard';
 import { ProductEditComponent } from './company/product/product-edit/product-edit.component';
 import { ProductInfoComponent } from './company/product/product-info/product-info.component';
 import { ProductResolver } from './company/product/resolvers/products.resolver';
+import { CategoryEditComponent } from './company/category/category-edit/category-edit.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,23 +24,25 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent }, //, canActivate: [Auth0Guard]
   { path: 'notfound', component: NotFoundComponent },
   { path: 'welcome', component: WelcomeComponent, canActivate: [Auth0Guard] },
+  { path: 'insert', component: CategoryInsertComponent, canActivate: [Auth0Guard] },
+  { path: 'cat/:id/edit', component: CategoryEditComponent, canActivate: [Auth0Guard] },
 
-  {
-    path: 'catlist', component: CategoryAdmComponent, canActivate: [Auth0Guard], children:
-      [
-        { path: 'insert', component: CategoryInsertComponent, canActivate: [Auth0Guard] },
 
-      ]
-  },
-  // {path:'catadmUpd', component: CategoryAdmComponent, canActivate: [Auth0Guard]},
+
+  { path: 'catlist', component: CategoryAdmComponent, canActivate: [Auth0Guard] },
+   {path:'catUpd', component: CategoryAdmComponent, canActivate: [Auth0Guard]},
 
   { path: 'measureinsert', component: MeasureInsertComponent, canActivate: [Auth0Guard] },
+
   { path: 'measureadm', component: MeasureAdmComponent, canActivate: [Auth0Guard] },
-  { path: 'product/:id/edit', component: ProductEditComponent, canActivate: [Auth0Guard], resolve: { loaded: ProductResolver } },
-  { path: 'product/:id/info', component: ProductInfoComponent, canActivate: [Auth0Guard] },
+  { path: 'measureadmUpd', component: MeasureAdmComponent, canActivate: [Auth0Guard] },
 
   { path: 'prodpagelist', component: ProductPagelistComponent, canActivate: [Auth0Guard] },
   { path: 'prodpagelistUpd', component: ProductPagelistComponent, canActivate: [Auth0Guard] },
+
+  { path: 'product/:id/edit', component: ProductEditComponent, canActivate: [Auth0Guard], resolve: { loaded: ProductResolver } },
+  { path: 'product/:id/info', component: ProductInfoComponent, canActivate: [Auth0Guard] },
+
 
   { path: 'prodinsert', component: ProductInsertComponent, canActivate: [Auth0Guard] },
 
