@@ -80,7 +80,7 @@
             <table>
                 <tr class="col-12">
                     <td class="col-6 pull-left">
-                        <button tooltip="Deletar {{category.name}}" class="btn btn-outline-dark bi bi-trash"></button>
+                        <button tooltip="Deletar {{category.name}}" class="btn btn-outline-dark bi bi-trash" (click)="_ModalRef.hide()" (click)="delete(category)"></button>
                         <button tooltip="Editar {{category.name}}" class="btn btn-outline-dark bi bi-pen " (click)="_ModalRef.hide()" (click)="this.CategoryEditServices.toEdit(category)"></button>
                     </td>
                     <td>

@@ -32,7 +32,7 @@ export class ProductInsertService extends CrudService<ProductDto, number> {
   bsModalRef?: BsModalRef;
 
   //#region Create Insert
-  public category: CategoryDto[] = [];
+  public categories: CategoryDto[] = [];
   public uOfMeasures: UnitOfMeasureDto[] = [];
   public uom: UnitOfMeasureDto;
   public cat: CategoryDto;
@@ -58,11 +58,11 @@ export class ProductInsertService extends CrudService<ProductDto, number> {
   }
   loadCategories() {
     this.loadCats().subscribe((item: CategoryDto[]) => {
-      this.category = item
+      this.categories = item
     })
   }
   OnChangeCategory($event: any) {
-    let ghy = this.category.forEach((catId) => {
+    let ghy = this.categories.forEach((catId) => {
       if (catId.id == $event.target.value) {
         this.subCat = catId.subCategories;
       }
@@ -98,10 +98,10 @@ addSelectMeasure()
 addSelectCat()
 {
   this.loadCats().subscribe({next:(item: CategoryDto[]) => {
-    this.category = item
+    this.categories = item
     const cat: CategoryDto = new CategoryDto();
     cat.name = 'Selecione';
-    this.category.push(cat);
+    this.categories.push(cat);
   }, error: (err)=>{
     console.log(err);
   }})
@@ -184,39 +184,39 @@ formInsert() {
   loadMeasures() {
     return this.Http.get<UnitOfMeasureDto[]>(Url._UNITOFMEASURES).pipe(take(1));
   }
-  loadProducts() {
-    return this.getAll<ProductDto[]>().pipe(take(1));
-  }
-  loadProductsPagination(pg?: number, record?: number, terms?: string): Observable<PaginatedResult<ProductDto[]>> {
-    const paginatedResult: PaginatedResult<ProductDto[]> = new PaginatedResult<ProductDto[]>();
-    let params = new HttpParams;
-    if (pg != null && record != null) {
-      params = params.append('pgnumber', pg.toString());
-      params = params.append('pgsize', record.toString());
-    }
+  // loadProducts() {
+  //   return this.getAll<ProductDto[]>().pipe(take(1));
+  // }
+  // loadProductsPagination(pg?: number, record?: number, terms?: string): Observable<PaginatedResult<ProductDto[]>> {
+  //   const paginatedResult: PaginatedResult<ProductDto[]> = new PaginatedResult<ProductDto[]>();
+  //   let params = new HttpParams;
+  //   if (pg != null && record != null) {
+  //     params = params.append('pgnumber', pg.toString());
+  //     params = params.append('pgsize', record.toString());
+  //   }
 
-    if (terms !== null && terms !== '') {
-      params = params.append('term', terms)
-    }
+  //   if (terms !== null && terms !== '') {
+  //     params = params.append('term', terms)
+  //   }
 
 
-    return this.Http.get<ProductDto[]>(Url._PRODUCTS, { observe: 'response', params })
-      .pipe(
-        take(1),
-        map((response) => {
+  //   return this.Http.get<ProductDto[]>(Url._PRODUCTS, { observe: 'response', params })
+  //     .pipe(
+  //       take(1),
+  //       map((response) => {
 
-          paginatedResult.result = response.body;
-          //  console.log('Body', this.products)
-          //  console.log('Headers', this.pgnation)
-          if (response.headers.has('pagination')) {
+  //         paginatedResult.result = response.body;
+  //         //  console.log('Body', this.products)
+  //         //  console.log('Headers', this.pgnation)
+  //         if (response.headers.has('pagination')) {
 
-            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+  //           paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
 
-          }
-          return paginatedResult;
-        })
-      );
-  }
+  //         }
+  //         return paginatedResult;
+  //       })
+  //     );
+  // }
 
 
 

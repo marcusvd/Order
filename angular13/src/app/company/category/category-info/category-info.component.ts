@@ -33,36 +33,13 @@ export class CategoryInfoComponent implements OnInit {
   category: CategoryDto;
   subCategoryInfo: SubCategoryDto;
 
-  // loadProductById() {
-  //   this._ActRouter.params.pipe(map((params: any) => params['id']),
-
-
-  //     switchMap(id => this._ProductServices.loadProductByIdAsync(id))).subscribe({
-  //       next: (prod: ProductDto) => {
-  //         this.prodInfo = new ProductDto();
-  //         this.prodInfo = prod;
-  //         console.log(prod)
-  //       },
-  //       error: (err) => {
-
-  //       }
-  //     })
-  //   {
-
-  //   }
-  // }
-
-
-
+ delete(cat: CategoryDto){
+  this._CategoryListServices.toDelete(cat)
+ }
 
 
   ngOnInit(): void {
     this.category = this._BsModalService.config.initialState['list']['record'] as CategoryDto;
-
-    // this._ProductServices.productGetInfo(this.prodInfo);
-
-    //this._ProductServices.loadProductsToView();
-    // this.loadProductById();
   }
 
 }

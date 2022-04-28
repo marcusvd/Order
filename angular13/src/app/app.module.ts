@@ -17,6 +17,7 @@ import { AuthenticationService } from './company/shared/services/authentication.
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,7 @@ import { AuthenticationService } from './company/shared/services/authentication.
     SharedModule,
     LoginModule,
     RecordsModule,
+    // BsDatepickerModule.forRoot(),
 
   ],
   providers: [AuthenticationService,

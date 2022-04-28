@@ -2,15 +2,16 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable, take } from "rxjs";
+
 import { Url } from "../../back-end/back-end";
 import { CategoryDto } from "src/app/company/category/dto/category-dto";
+import { ProductDto } from "../dto/product-dto";
+import { SubCategoryDto } from "src/app/company/category/dto/sub-category-dto";
+import { ProductEditDto } from "../dto/product-edit-dto";
 import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
 import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
-import { ProductDto } from "../dto/product-dto";
-import { SubCategoryDto } from "src/app/company/category/dto/sub-category-dto";
-import { MeasureDto } from "../../measure/dto/measure-dto";
 
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +20,6 @@ export class ProductEditService extends CrudService<ProductDto, number> {
   constructor(
     override Http: HttpClient,
     private _Fb: FormBuilder,
-    public _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
   ) {
     super(Http, Url._PRODUCTS);
@@ -35,21 +35,18 @@ export class ProductEditService extends CrudService<ProductDto, number> {
   categories: CategoryDto[] = [];
   subCat: SubCategoryDto[] = [];
   uOfMeasures: UnitOfMeasureDto[] = [];
-  prod: ProductDto = new ProductDto();
+  prod: ProductEditDto = new ProductEditDto();
   formProductEdit: FormGroup;
   height: string;
   width: string;
   depth: string;
-
   strHeightCompare: string;
   strWidthCompare: string;
   strDepthCompare: string;
   CategoryIdCompare: number;
   SubCategoryIdCompare: number;
-  _idMeasure: number;
-  prodToLoad: ProductDto = new ProductDto();
-
-
+  MeasureIdCompare: number;
+  prodToLoad: ProductEditDto = new ProductEditDto();
 
   formEdit() {
     this.formProductEdit = this._Fb.group({
@@ -99,7 +96,6 @@ export class ProductEditService extends CrudService<ProductDto, number> {
       this.subCat = _CatItem.subCategories;
     })
   }
-
   OnChangeCategory($event: any) {
     let ghy = this.categories.forEach((catId) => {
       if (catId.id == $event.target.value) {
@@ -119,14 +115,13 @@ export class ProductEditService extends CrudService<ProductDto, number> {
   loadCatById(id: number): Observable<CategoryDto> {
     return this.Http.get<CategoryDto>(`${Url._CATEGORIES}/${id}`).pipe(take(1));
   }
-
-  productEditing(item: ProductDto, cat: CategoryDto[], mse: UnitOfMeasureDto[]) {
+  productEditing(item: ProductEditDto, cat: CategoryDto[], mes: UnitOfMeasureDto[]) {
 
     this.loadCategories(cat);
 
     this.state = item.state
-    this.storage= item.storage;
-    this.format= item.format;
+    this.storage = item.storage;
+    this.format = item.format;
 
     this.measureArray.forEach((itemFor: string) => {
       if (itemFor.split('-')[1] === item.height.split('-')[1]) {
@@ -170,29 +165,24 @@ export class ProductEditService extends CrudService<ProductDto, number> {
       description: item.description,
       comments: item.comments,
     });
-
     this.prodToLoad = { ...item }
     this.CategoryIdCompare = item.categoryId;
     this.SubCategoryIdCompare = item.subCategoryId;
-
     cat.find((singleCat: CategoryDto) => {
       if (singleCat.id === item.categoryId) {
         this.subCat = singleCat.subCategories;
       }
     })
-
-    this.uOfMeasures = mse;
-    mse.forEach((_unit: UnitOfMeasureDto) => {
+    this.uOfMeasures = mes;
+    mes.forEach((_unit: UnitOfMeasureDto) => {
       if (_unit.id === item.unitOfMeasureId) {
-        this._idMeasure = _unit.id;
+        this.MeasureIdCompare = _unit.id;
       }
     })
-
     const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
     unit.name = 'Selecione';
     unit.description = 'Selecione';
-    mse.push(unit);
-
+    mes.push(unit);
   }
   updateProduct() {
     if (this.height === undefined) {
@@ -213,11 +203,21 @@ export class ProductEditService extends CrudService<ProductDto, number> {
     else {
       this.formProductEdit.value.depth += ' ' + this.depth
     }
-
     if (!this.formProductEdit.value.maxstacked) {
       this.formProductEdit.value.maxstacked = 0;
     }
     const toSave: ProductDto = { ...this.formProductEdit.value }
+//if you dont chnage the date and update, will try to save as a string and it will generate some error, the code  below handler this.
+   if(typeof(this.formProductEdit.value.date) === 'string'){
+    const dateToSave: string = this.formProductEdit.value.date
+    const month: string = dateToSave.slice(3, 5);
+    const day: string = dateToSave.slice(0, 2);
+    const year: string = dateToSave.slice(6, 10);
+    const stringDate = year + '-' + month + '-' + day;
+    toSave.date = new Date(Date.parse(stringDate))
+   }
+
+
     this.update(toSave).subscribe({
       next: ((prod: ProductDto) => {
         console.log(prod);
@@ -226,7 +226,7 @@ export class ProductEditService extends CrudService<ProductDto, number> {
       }),
       error: (error) => {
         alert('deu ruim')
-        this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formProductEdit);
+
       },
     });
   }

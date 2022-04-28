@@ -6,16 +6,16 @@
             </div>
             <div>
                 <div>
-                    <form [formGroup]="_CatService.formCategoryInsert" class="form-group" class="col-12">
+                    <form [formGroup]="form" class="form-group" class="col-12">
                         <div id="hr"></div>
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
 
                                     <label>Nome:</label>
-                                    <input class="form-control" type="text" formControlName="name" [ngClass]="{'is-invalid': _CatService._ValidatorsSrv.touchedErrors('name', _CatService.formCategoryInsert)}">
+                                    <input class="form-control" type="text" formControlName="name" [ngClass]="{'is-invalid': touchedErrors('name', form)}">
                                     <div class="invalid-feedback">
-                                        {{_CatService._ValidatorsSrv.required2(this._CatService.formCategoryInsert, 'name', 'Nome', 3, 250)}}
+                                        {{required(form, 'name', 'Nome', 3, 250)}}
                                     </div>
 
                                 </div>
@@ -25,7 +25,7 @@
                         <div class="container">
                             <div class="row" formArrayName="subcategories">
                                 <label>Sub Categoria</label>
-                                <div *ngFor="let sub of _CatService.RetSubCatArrays.controls; let i=index">
+                                <div *ngFor="let sub of RetSubCatArrays.controls; let i=index">
                                     <div [formGroupName]="i">
 
                                         <div class="col-12">
@@ -33,16 +33,16 @@
                                             <table class="col-12">
                                                 <tr class="col-12">
                                                     <td class="col-10">
-                                                        <input [ngClass]="{'is-invalid': _CatService._ValidatorsSrv.touchedErrorsArray(_CatService.RetSubCatArrays, i+'.name')}" type="text" #Val class="form-control" [id]="i" name="subs" placeholder="{{(i + 1)+'º' + ' ' + 'Subcategoria'}}" formControlName="name">
+                                                        <input [ngClass]="{'is-invalid': touchedErrorsArray(RetSubCatArrays, i+'.name')}" type="text" #Val class="form-control" [id]="i" name="subs" placeholder="{{(i + 1)+'º' + ' ' + 'Subcategoria'}}" formControlName="name">
                                                         <div class="invalid-feedback">
-                                                            {{_CatService._ValidatorsSrv.requiredArray(_CatService.RetSubCatArrays, i+'.name', 'Nome', 3, 150)}}
+                                                            {{requiredArray(RetSubCatArrays, i+'.name', 'Nome', 3, 150)}}
                                                         </div>
                                                     </td>
                                                     <div class="p-3">
 
                                                     </div>
                                                     <td class="col">
-                                                        <button class="btn btn-danger" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1;" (click)="_CatService.removeSub(i)">Remover </button>
+                                                        <button class="btn btn-danger" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1;" (click)="removeSub(i)">Remover </button>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -59,9 +59,9 @@
                             <div id="hr"></div>
                         </div>
                         <div class="p-3">
-                            <button [disabled]="!_CatService.formCategoryInsert.valid" id="label" class="btn btn-success btn-lg" style="color:rgb(255, 255, 255); float: right;" (click)="_CatService.save()">Cadastrar</button>
+                            <button [disabled]="!form.valid" id="label" class="btn btn-success btn-lg" style="color:rgb(255, 255, 255); float: right;" (click)="save()">Cadastrar</button>
                             <div>
-                                <button class="btn btn-success" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1; float: left;" (click)="this._CatService.addSubCatArrays()">Adicionar </button>
+                                <button class="btn btn-success" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1; float: left;" (click)="addSubCatArrays()">Adicionar </button>
                             </div>
                             <br>
                             <br>
@@ -78,5 +78,5 @@
 </div>
 
 <div>
-    <!-- {{_CatService.formCategoryInsert.value | json}}} -->
+    <!-- {{form.value | json}}} -->
 </div>

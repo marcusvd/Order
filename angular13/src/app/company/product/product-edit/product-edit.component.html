@@ -6,7 +6,7 @@
             </div>
             <div>
                 <div>
-                    <form [formGroup]="_ProductService.formProductEdit" class="form-group" class="col-12">
+                    <form [formGroup]="form" class="form-group" class="col-12">
                         <div class="p-2"></div>
                         <div class="container">
                             <div class="row">
@@ -15,23 +15,23 @@
                                 </div>
                                 <div class="col-4">
                                     <label>Nome</label>
-                                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('name', _ProductService.formProductEdit)}">
+                                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': touchedErrors('name', form)}">
                                     <div class="invalid-feedback">
-                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'name', 'Nome', 3, 150)}}
+                                        {{Required(form, 'name', 'Nome', 3, 150)}}
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <label>Fabricante</label>
-                                    <input type="text" class="form-control" formControlName="manufacturer" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('manufacturer', _ProductService.formProductEdit)}">
+                                    <input type="text" class="form-control" formControlName="manufacturer" [ngClass]="{'is-invalid': touchedErrors('manufacturer', form)}">
                                     <div class="invalid-feedback">
-                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'manufacturer', 'Fabricante', 3, 150)}}
+                                        {{Required(form, 'manufacturer', 'Fabricante', 3, 150)}}
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <label>Compra</label>
-                                    <input bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" type="text" class="form-control" formControlName="date" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('date', _ProductService.formProductEdit)}">
+                                    <input bsDatepicker [bsConfig]="dpConfig" type="text" class="form-control" formControlName="date" [ngClass]="{'is-invalid': touchedErrors('date', form)}">
                                     <div class="invalid-feedback">
-                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'date', 'date', null, null)}}
+                                        {{Required(form, 'date', 'date', null, null)}}
                                     </div>
                                 </div>
 
@@ -40,30 +40,30 @@
                                 <div class="pt-3">
                                     <h6 style="color: black;">Classificação</h6>
                                 </div>
-                                <div class="col-6" *ngIf="_ProductService.categories">
+                                <div class="col-6" *ngIf="categories">
                                     <label>Categorias</label>
-                                    <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeCategory($event)">
-                    <option class="btn btn-warning" *ngFor="let cat of _ProductService.categories" [value]="cat.id"
-                      [selected]="cat.id === this._ProductService.CategoryIdCompare">
+                                    <select class="form-select btn btn-warning" (change)="onChangeCategory($event)">
+                    <option class="btn btn-warning" *ngFor="let cat of categories" [value]="cat.id"
+                      [selected]="cat.id === compareCat">
                       {{cat.name}}
                     </option>
                   </select>
                                 </div>
 
-                                <div class="col-6" *ngIf="_ProductService.subCat">
+                                <div class="col-6" *ngIf="SubCategories">
                                     <label>Sub-categorias</label>
-                                    <select class="form-select btn btn-warning " formControlName="subCategoryId" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('subCategoryId', _ProductService.formProductEdit)}">
+                                    <select class="form-select btn btn-warning " formControlName="subCategoryId" [ngClass]="{'is-invalid': touchedErrors('subCategoryId', form)}">
 
                     <div class="invalid-feedback">
-                      {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit,
+                      {{Required(form,
                       'subCategoryId',
                       'Categoria', null, null)}}
                     </div>
                     <option class="btn btn-warning">
                       {{'Selecione'}}
                     </option>
-                    <option class="btn btn-warning" *ngFor="let sub of _ProductService.subCat" [value]="sub.id"
-                      [selected]="sub.id == this._ProductService.SubCategoryIdCompare">
+                    <option class="btn btn-warning" *ngFor="let sub of SubCategories" [value]="sub.id"
+                      [selected]="sub.id == compareSub">
                       {{sub.name}}
                     </option>
                   </select>
@@ -78,24 +78,24 @@
                                     <div class="row">
                                         <div class="col">
                                             <label>Custo</label>
-                                            <input type="text" currencyMask class="form-control" formControlName="cost" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('cost', _ProductService.formProductEdit)}">
+                                            <input type="text" currencyMask class="form-control" formControlName="cost" [ngClass]="{'is-invalid': touchedErrors('cost', form)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'cost', 'Custo', 1, null)}}
+                                                {{Required(form, 'cost', 'Custo', 1, null)}}
                                             </div>
                                         </div>
 
                                         <div class="col">
                                             <label>Preço</label>
-                                            <input currencyMask type="text" class="form-control" formControlName="price" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('price', _ProductService.formProductEdit)}">
+                                            <input currencyMask type="text" class="form-control" formControlName="price" [ngClass]="{'is-invalid': touchedErrors('price', form)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'price', 'Preço', 1, null)}}
+                                                {{Required(form, 'price', 'Preço', 1, null)}}
                                             </div>
                                         </div>
                                         <div class="col">
                                             <label>Quantidade</label>
-                                            <input type="number" class="form-control" formControlName="quantity" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('quantity', _ProductService.formProductEdit)}">
+                                            <input type="number" class="form-control" formControlName="quantity" [ngClass]="{'is-invalid': touchedErrors('quantity', form)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'quantity', 'Quantidade', null, null)}}
+                                                {{Required(form, 'quantity', 'Quantidade', null, null)}}
                                             </div>
 
                                         </div>
@@ -109,20 +109,20 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <label>Altura</label>
-                                            <input type="number" class="form-control" formControlName="height" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('height', _ProductService.formProductEdit)}">
+                                            <input type="number" class="form-control" formControlName="height" [ngClass]="{'is-invalid': touchedErrors('height', form)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'height', 'Altura', 1, null)}}
+                                                {{Required(form, 'height', 'Altura', 1, null)}}
                                             </div>
 
                                             <div>
                                                 <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeHeigth($event)">
+                                                <select class="form-select btn btn-warning" (change)="OnChangeHeigth($event)">
 
                           <option class="btn btn-warning">
                             {{'Selecione'}}
                           </option>
-                          <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
-                            [value]="measure" [selected]="measure === this._ProductService.strHeightCompare">
+                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
+                            [value]="measure" [selected]="measure === strHeightCompare">
                             {{measure}}
 
                           </option>
@@ -132,20 +132,20 @@
 
                                         <div class="col-4">
                                             <label>Largura</label>
-                                            <input type="number" class="form-control" formControlName="width" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('width', _ProductService.formProductEdit)}">
+                                            <input type="number" class="form-control" formControlName="width" [ngClass]="{'is-invalid': touchedErrors('width', form)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'width', 'Custo', 1, null)}}
+                                                {{Required(form, 'width', 'Custo', 1, null)}}
                                             </div>
 
                                             <div>
                                                 <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeWidth($event)">
+                                                <select class="form-select btn btn-warning" (change)="OnChangeWidth($event)">
 
                           <option class="btn btn-warning">
                             {{'Selecione'}}
                           </option>
-                          <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
-                            [value]="measure" [selected]="measure ===   _ProductService.strWidthCompare">
+                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
+                            [value]="measure" [selected]="measure ===   strWidthCompare">
                             {{measure}}
                           </option>
                         </select>
@@ -156,20 +156,20 @@
 
                                         <div class="col-4">
                                             <label>Profundidade</label>
-                                            <input type="number" class="form-control" formControlName="depth" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('depth', _ProductService.formProductEdit)}">
+                                            <input type="number" class="form-control" formControlName="depth" [ngClass]="{'is-invalid': touchedErrors('depth', form)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'depth', 'Profundidade', 1, null)}}
+                                                {{Required(form, 'depth', 'Profundidade', 1, null)}}
                                             </div>
 
                                             <div>
                                                 <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeDepth($event)">
+                                                <select class="form-select btn btn-warning" (change)="OnChangeDepth($event)">
 
                           <option class="btn btn-warning">
                             {{'Selecione'}}
                           </option>
-                          <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
-                            [value]="measure" [selected]="measure === _ProductService.strDepthCompare">
+                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
+                            [value]="measure" [selected]="measure === strDepthCompare">
                             {{measure}}
                           </option>
                         </select>
@@ -192,8 +192,8 @@
                                                     <select class="form-select btn btn-warning" formControlName="state">
 
 
-                            <option class="btn btn-warning" *ngFor="let state of _ProductService.stateArray"
-                              [value]="state" [selected]="state === _ProductService.state">
+                            <option class="btn btn-warning" *ngFor="let state of stateStrArray"
+                              [value]="state" [selected]="state === stateStr">
                               {{state}}
                             </option>
                           </select>
@@ -204,8 +204,8 @@
                                                     <label>Armazenamento</label>
                                                     <select class="form-select btn btn-warning" formControlName="storage">
 
-                            <option class="btn btn-warning" *ngFor="let storage of _ProductService.storageArray"
-                              [value]="storage" [selected]="storage === this._ProductService.storage">
+                            <option class="btn btn-warning" *ngFor="let storage of storageStrArray"
+                              [value]="storage" [selected]="storage === this.storageStr">
 
                               {{storage}}
                             </option>
@@ -213,9 +213,9 @@
                                                 </div>
                                                 <div class="col">
                                                     <label>Empilhamento Máximo</label>
-                                                    <input type="number" class="form-control" formControlName="maxstacked" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('maxstacked', _ProductService.formProductEdit)}">
+                                                    <input type="number" class="form-control" formControlName="maxstacked" [ngClass]="{'is-invalid': touchedErrors('maxstacked', form)}">
                                                     <div class="invalid-feedback">
-                                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'maxstacked', 'maxstacked', null, null)}}
+                                                        {{Required(form, 'maxstacked', 'maxstacked', null, null)}}
                                                     </div>
 
                                                 </div>
@@ -224,8 +224,8 @@
                                                     <label>Formato:</label>
                                                     <select class="form-select btn btn-warning" formControlName="format">
 
-                            <option class="btn btn-warning" *ngFor="let format of _ProductService.formatArray"
-                              [value]="format" [selected]="format  === this._ProductService.format">
+                            <option class="btn btn-warning" *ngFor="let format of formatStrArray"
+                              [value]="format" [selected]="format  === formatStr">
                               {{format}}
                             </option>
                           </select>
@@ -237,20 +237,20 @@
                                         </div>
                                         <div class="col-6">
                                             <label>Medido em:</label>
-                                            <input type="number" class="form-control" formControlName="weight" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('weight', _ProductService.formProductEdit)}">
+                                            <input type="number" class="form-control" formControlName="weight" [ngClass]="{'is-invalid': touchedErrors('weight', form)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'weight', 'Peso', 1, null)}}
+                                                {{Required(form, 'weight', 'Peso', 1, null)}}
                                             </div>
                                         </div>
-                                        <div class="col-6" *ngIf="this._ProductService._idMeasure">
+                                        <div class="col-6" *ngIf="compareMes">
                                             <label>Medida</label>
-                                            <select class="form-select btn btn-warning" formControlName="unitOfMeasureId" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('unitOfMeasureId', _ProductService.formProductEdit)}">
+                                            <select class="form-select btn btn-warning" formControlName="unitOfMeasureId" [ngClass]="{'is-invalid': touchedErrors('unitOfMeasureId', form)}">
                         <div class="invalid-feedback">
-                          {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit,
+                          {{Required(form,
                           'unitOfMeasureId', 'Unidade de medida', 1, null)}}
                         </div>
-                        <option class="btn btn-warning" *ngFor="let measure of _ProductService.uOfMeasures"
-                          [value]="measure.id" [selected]="measure.id === this._ProductService._idMeasure">
+                        <option class="btn btn-warning" *ngFor="let measure of Measures"
+                          [value]="measure.id" [selected]="measure.id === compareMes">
                           {{measure.name}}
                         </option>
                       </select>
@@ -264,14 +264,14 @@
                                         <h6 style="color: black;">Detalhamento peculiaridade</h6>
                                     </div>
                                     <label>Descrição</label>
-                                    <textarea type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('description', _ProductService.formProductEdit)}"></textarea>
+                                    <textarea type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': touchedErrors('description', form)}"></textarea>
                                     <label>Observações</label>
-                                    <textarea type="text" class="form-control" formControlName="comments" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('comments', _ProductService.formProductEdit)}"></textarea>
+                                    <textarea type="text" class="form-control" formControlName="comments" [ngClass]="{'is-invalid': touchedErrors('comments', form)}"></textarea>
                                     <div class="invalid-feedback">
-                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductEdit, 'description', 'Descrição', 3, 500)}}
+                                        {{Required(form, 'description', 'Descrição', 3, 500)}}
                                     </div>
                                     <div class="p-3">
-                                        <button [disabled]="!_ProductService.formProductEdit.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="_ProductService.updateProduct()">Atualizar</button>
+                                        <button [disabled]="!form.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="update()">Atualizar</button>
                                         <br>
                                         <br>
                                     </div>
@@ -286,7 +286,7 @@
         </div>
 
         <!-- <div>
-            {{_ProductService.formProductEdit.value | json}}
+            {{form.value | json}}
         </div> -->
     </div>
 </div>

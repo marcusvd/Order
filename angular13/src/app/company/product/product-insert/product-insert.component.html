@@ -6,7 +6,7 @@
             </div>
             <div>
                 <div>
-                    <form [formGroup]="_ProductService.formProductInsert" class="form-group" class="col-12">
+                    <form [formGroup]="formProductInsert" class="form-group" class="col-12">
 
 
                         <div class="p-2"></div>
@@ -17,26 +17,25 @@
                                 </div>
                                 <div class="col-4">
                                     <label>Nome</label>
-                                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('name', _ProductService.formProductInsert)}">
+                                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': touchedErrors('name', formProductInsert)}">
                                     <div class="invalid-feedback">
-                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'name', 'Nome', 3, 150)}}
+                                        {{required(formProductInsert, 'name', 'Nome', 3, 150)}}
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <label>Fabricante</label>
-                                    <input type="text" class="form-control" formControlName="manufacturer" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('manufacturer', _ProductService.formProductInsert)}">
+                                    <input type="text" class="form-control" formControlName="manufacturer" [ngClass]="{'is-invalid': touchedErrors('manufacturer', formProductInsert)}">
                                     <div class="invalid-feedback">
-                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'manufacturer', 'Fabricante', 3, 150)}}
+                                        {{required(formProductInsert, 'manufacturer', 'Fabricante', 3, 150)}}
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <label>Compra</label>
-                                    <input bsDatepicker type="text" class="form-control" formControlName="date" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('date', _ProductService.formProductInsert)}">
+                                    <input bsDatepicker [bsConfig]={} type="text" class="form-control" formControlName="date" [ngClass]="{'is-invalid': touchedErrors('date', formProductInsert)}">
                                     <div class="invalid-feedback">
-                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'date', 'date', null, null)}}
+                                        {{required(formProductInsert, 'date', 'date', null, null)}}
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row">
                                 <div class="pt-3">
@@ -44,33 +43,33 @@
                                 </div>
                                 <div class="col-6">
                                     <label>Categorias</label>
-                                    <select class="form-select btn btn-warning" formControlName="CategoryId" (change)="_ProductService.OnChangeCategory($event)">
+                                    <select class="form-select btn btn-warning" formControlName="CategoryId" (change)="onChangeCategory($event)">
 
                     <!-- <div class="invalid-feedback">
-                                            {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                                            {{required(formProductInsert,
                                             'categoryId',
                                             'Categoria', null, null)}}
                                         </div> -->
 
-                    <option class="btn btn-warning" *ngFor="let cat of _ProductService.category" [value]="cat.id" [selected]="cat">
+                    <option class="btn btn-warning" *ngFor="let cat of categories" [value]="cat.id" [selected]="cat">
                       {{cat.name}}
                     </option>
                   </select>
                                 </div>
 
                                 <div class="col-6">
-                                    <label>Sub-categorias</label>
-                                    <select class="form-select btn btn-warning " formControlName="subCategoryId" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('subCategoryId', _ProductService.formProductInsert)}">
+                                    <label>Subcategorias</label>
+                                    <select class="form-select btn btn-warning " formControlName="subCategoryId" [ngClass]="{'is-invalid': touchedErrors('subCategoryId', formProductInsert)}">
 
                     <div class="invalid-feedback">
-                      {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                      {{required(formProductInsert,
                       'subCategoryId',
                       'Categoria', null, null)}}
                     </div>
                     <option class="btn btn-warning">
                       {{'Selecione'}}
                     </option>
-                    <option class="btn btn-warning" *ngFor="let sub of _ProductService.subCat" [value]="sub.id">
+                    <option class="btn btn-warning" *ngFor="let sub of subCategories" [value]="sub.id">
                       {{sub.name}}
                     </option>
                   </select>
@@ -88,27 +87,27 @@
                                     <div class="row">
                                         <div class="col">
                                             <label>Custo</label>
-                                            <input type="text" currencyMask class="form-control" formControlName="cost" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('cost', _ProductService.formProductInsert)}">
+                                            <input type="text" currencyMask class="form-control" formControlName="cost" [ngClass]="{'is-invalid': touchedErrors('cost', formProductInsert)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'cost', 'Custo', 1, null)}}
+                                                {{required(formProductInsert, 'cost', 'Custo', 1, null)}}
                                             </div>
                                         </div>
 
                                         <div class="col">
                                             <label>Preço</label>
-                                            <input currencyMask type="text" class="form-control" formControlName="price" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('price', _ProductService.formProductInsert)}">
+                                            <input currencyMask type="text" class="form-control" formControlName="price" [ngClass]="{'is-invalid': touchedErrors('price', formProductInsert)}">
                                             <!-- [(ngModel)]="value"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" -->
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'price', 'Preço', 1, null)}}
+                                                {{required(formProductInsert, 'price', 'Preço', 1, null)}}
                                             </div>
                                         </div>
 
 
                                         <div class="col">
                                             <label>Quantidade</label>
-                                            <input type="number" class="form-control" formControlName="quantity" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('quantity', _ProductService.formProductInsert)}">
+                                            <input type="number" class="form-control" formControlName="quantity" [ngClass]="{'is-invalid': touchedErrors('quantity', formProductInsert)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'quantity', 'Quantidade', null, null)}}
+                                                {{required(formProductInsert, 'quantity', 'Quantidade', null, null)}}
                                             </div>
 
                                         </div>
@@ -126,22 +125,22 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <label>Altura</label>
-                                            <input type="number" class="form-control" formControlName="height" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('height', _ProductService.formProductInsert)}">
+                                            <input type="number" class="form-control" formControlName="height" [ngClass]="{'is-invalid': touchedErrors('height', formProductInsert)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'height', 'Altura', 1, null)}}
+                                                {{required(formProductInsert, 'height', 'Altura', 1, null)}}
                                             </div>
 
                                             <div>
                                                 <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeHeigth($event)">
+                                                <select class="form-select btn btn-warning" (change)="OnChangeHeigth($event)">
                           <!-- <div class="invalid-feedback">
-                                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                                                        {{required(formProductInsert,
                                                         'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                     </div> -->
                           <option class="btn btn-warning">
                             {{'Selecione'}}
                           </option>
-                          <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
+                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
                             [value]="measure">
                             {{measure}}
 
@@ -152,22 +151,22 @@
 
                                         <div class="col-4">
                                             <label>Largura</label>
-                                            <input type="number" class="form-control" formControlName="width" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('width', _ProductService.formProductInsert)}">
+                                            <input type="number" class="form-control" formControlName="width" [ngClass]="{'is-invalid': touchedErrors('width', formProductInsert)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'width', 'Custo', 1, null)}}
+                                                {{required(formProductInsert, 'width', 'Custo', 1, null)}}
                                             </div>
 
                                             <div>
                                                 <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeWidth($event)">
+                                                <select class="form-select btn btn-warning" (change)="OnChangeWidth($event)">
                           <!-- <div class="invalid-feedback">
-                                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                                                        {{required(formProductInsert,
                                                         'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                     </div> -->
                           <option class="btn btn-warning">
                             {{'Selecione'}}
                           </option>
-                          <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
+                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
                             [value]="measure">
                             {{measure}}
                           </option>
@@ -179,22 +178,22 @@
 
                                         <div class="col-4">
                                             <label>Profundidade</label>
-                                            <input type="number" class="form-control" formControlName="depth" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('depth', _ProductService.formProductInsert)}">
+                                            <input type="number" class="form-control" formControlName="depth" [ngClass]="{'is-invalid': touchedErrors('depth', formProductInsert)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'depth', 'Profundidade', 1, null)}}
+                                                {{required(formProductInsert, 'depth', 'Profundidade', 1, null)}}
                                             </div>
 
                                             <div>
                                                 <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="_ProductService.OnChangeDepth($event)">
+                                                <select class="form-select btn btn-warning" (change)="OnChangeDepth($event)">
                           <!-- <div class="invalid-feedback">
-                                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                                                        {{required(formProductInsert,
                                                         'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                     </div> -->
                           <option class="btn btn-warning">
                             {{'Selecione'}}
                           </option>
-                          <option class="btn btn-warning" *ngFor="let measure of _ProductService.measureArray"
+                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
                             [value]="measure">
                             {{measure}}
                           </option>
@@ -217,11 +216,11 @@
                                                     <label>Estado</label>
                                                     <select class="form-select btn btn-warning" formControlName="state">
                             <!-- <div class="invalid-feedback">
-                                                      {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                                                      {{required(formProductInsert,
                                                       'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                   </div> -->
 
-                            <option class="btn btn-warning" *ngFor="let state of _ProductService.stateArray"
+                            <option class="btn btn-warning" *ngFor="let state of stateStrArray"
                               [value]="state" [selected]="state">
                               {{state}}
                             </option>
@@ -233,10 +232,10 @@
                                                     <label>Armazenamento</label>
                                                     <select class="form-select btn btn-warning" formControlName="storage">
                             <!-- <div class="invalid-feedback">
-                                                    {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                                                    {{required(formProductInsert,
                                                     'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                 </div> -->
-                            <option class="btn btn-warning" *ngFor="let storage of _ProductService.storageArray"
+                            <option class="btn btn-warning" *ngFor="let storage of storageStrArray"
                               [value]="storage" [selected]="storage">
 
                               {{storage}}
@@ -258,9 +257,9 @@
 
                                                 <div class="col">
                                                     <label>Empilhamento Máximo</label>
-                                                    <input type="number" class="form-control" formControlName="maxstacked" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('maxstacked', _ProductService.formProductInsert)}">
+                                                    <input type="number" class="form-control" formControlName="maxstacked" [ngClass]="{'is-invalid': touchedErrors('maxstacked', formProductInsert)}">
                                                     <div class="invalid-feedback">
-                                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'maxstacked', 'maxstacked', null, null)}}
+                                                        {{required(formProductInsert, 'maxstacked', 'maxstacked', null, null)}}
                                                     </div>
 
                                                 </div>
@@ -269,10 +268,10 @@
                                                     <label>Formato:</label>
                                                     <select class="form-select btn btn-warning" formControlName="format">
                             <!-- <div class="invalid-feedback">
-                                                          {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                                                          {{required(formProductInsert,
                                                           'unitofmeasureid', 'Unidade de medida', 1, null)}}
                                                       </div> -->
-                            <option class="btn btn-warning" *ngFor="let format of _ProductService.formatArray"
+                            <option class="btn btn-warning" *ngFor="let format of formatStrArray"
                               [value]="format" [selected]="format">
                               {{format}}
                             </option>
@@ -285,19 +284,19 @@
                                         </div>
                                         <div class="col-6">
                                             <label>Medido em:</label>
-                                            <input type="number" class="form-control" formControlName="weight" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('weight', _ProductService.formProductInsert)}">
+                                            <input type="number" class="form-control" formControlName="weight" [ngClass]="{'is-invalid': touchedErrors('weight', formProductInsert)}">
                                             <div class="invalid-feedback">
-                                                {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'weight', 'Peso', 1, null)}}
+                                                {{required(formProductInsert, 'weight', 'Peso', 1, null)}}
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <label>Medida</label>
-                                            <select class="form-select btn btn-warning" formControlName="unitofmeasureId" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('unitofmeasureId', _ProductService.formProductInsert)}">
+                                            <select class="form-select btn btn-warning" formControlName="unitofmeasureId" [ngClass]="{'is-invalid': touchedErrors('unitofmeasureId', formProductInsert)}">
                         <div class="invalid-feedback">
-                          {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert,
+                          {{required(formProductInsert,
                           'unitofmeasureId', 'Unidade de medida', 1, null)}}
                         </div>
-                        <option class="btn btn-warning" *ngFor="let measure of _ProductService.uOfMeasures"
+                        <option class="btn btn-warning" *ngFor="let measure of Measures"
                           [value]="measure.id" [selected]="measure">
                           {{measure.name}}
                         </option>
@@ -326,14 +325,14 @@
                                         <h6 style="color: black;">Detalhamento peculiaridade</h6>
                                     </div>
                                     <label>Descrição</label>
-                                    <input type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('description', _ProductService.formProductInsert)}">
+                                    <input type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': touchedErrors('description', formProductInsert)}">
                                     <label>Observações</label>
-                                    <input type="text" class="form-control" formControlName="comments" [ngClass]="{'is-invalid': _ProductService._ValidatorsSrv.touchedErrors('comments', _ProductService.formProductInsert)}">
+                                    <input type="text" class="form-control" formControlName="comments" [ngClass]="{'is-invalid': touchedErrors('comments', formProductInsert)}">
                                     <div class="invalid-feedback">
-                                        {{_ProductService._ValidatorsSrv.required2(this._ProductService.formProductInsert, 'description', 'Descrição', 3, 500)}}
+                                        {{required(formProductInsert, 'description', 'Descrição', 3, 500)}}
                                     </div>
                                     <div class="p-3">
-                                        <button [disabled]="!_ProductService.formProductInsert.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="_ProductService.save()">Cadastrar</button>
+                                        <button [disabled]="!formProductInsert.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="save()">Cadastrar</button>
                                         <br>
                                         <br>
                                     </div>
@@ -352,5 +351,5 @@
         </div>
 
         <div>
-            {{_ProductService.formProductInsert.value | json}}
+            {{formProductInsert.value | json}}
         </div>
