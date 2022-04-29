@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../../shared/module/shared.module';
 import { MeasureInsertService } from '../services/measure-insert.service';
-// import { MeasureRoutingModule } from './measure-routing.module';
 import { MeasureInsertComponent } from 'src/app/company/measure/measure-insert/measure-insert.component';
 import { MeasureEditComponent } from 'src/app/company/measure/measure-edit/measure-edit.component';
-import { MeasureAdmComponent } from '../measure-adm/measure-adm.component';
-import { RouterModule } from '@angular/router';
+import { MeasureListComponent } from '../measure-list/measure-list.component';
 import { MeasureEditService } from '../services/measure-edit.service';
 
 
@@ -18,7 +16,7 @@ import { MeasureEditService } from '../services/measure-edit.service';
   declarations: [
     MeasureInsertComponent,
     MeasureEditComponent,
-    MeasureAdmComponent,
+    MeasureListComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +28,7 @@ import { MeasureEditService } from '../services/measure-edit.service';
   ],
   exports:[
 
-    MeasureAdmComponent,
+    MeasureListComponent,
   ],
   providers:[
     MeasureInsertService,

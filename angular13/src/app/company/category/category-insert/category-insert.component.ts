@@ -19,7 +19,6 @@ export class CategoryInsertComponent implements OnInit {
   get form(): FormGroup {
     return this._CatService.formCategoryInsert
   }
-
   required(form: FormGroup, ctrl: string, ctrlToShow: string, lengthMin?: number, lengthMax?: number) {
     return this._ValidatorsSrv.required2(form,
       ctrl,
@@ -44,7 +43,6 @@ export class CategoryInsertComponent implements OnInit {
   public touchedErrorsArray(formArray: FormArray, ctrl: string) {
     return this._ValidatorsSrv.touchedErrorsArray(formArray, ctrl);
   }
-
   get RetSubCatArrays(): FormArray {
     return <FormArray>this._CatService.RetSubCatArrays;
   }

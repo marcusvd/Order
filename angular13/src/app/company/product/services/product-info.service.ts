@@ -1,16 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable, take } from "rxjs";
 import { Url } from "../../back-end/back-end";
+
 import { CategoryDto } from "src/app/company/category/dto/category-dto";
 import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
 import { CrudService } from "../../shared/services/crud.service";
-import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
-import { SubCategoryDto } from "src/app/company/category/dto/sub-category-dto";
-import { MeasureDto } from "../../measure/dto/measure-dto";
+
 
 
 @Injectable({ providedIn: 'root' })
@@ -18,35 +16,14 @@ export class ProductInfoService extends CrudService<ProductDto, number> {
 
   constructor(
     override Http: HttpClient,
-    private _Fb: FormBuilder,
     public _ValidatorsSrv: ValidatorsService,
-    private _AlertsToastr: AlertsToastr,
   ) {
     super(Http, Url._PRODUCTS);
   }
-  // subCat: SubCategoryDto[] = [];
+
   categories: CategoryDto = new CategoryDto();
   uOfMeasures: UnitOfMeasureDto = new  UnitOfMeasureDto();
 
-  // measureArray: string[];
-  // storageArray: string[];
-  // storage: string;
-  // formatArray: string[];
-  // format: string;
-  // stateArray: string[];
-  // state: string;
-  // prod: ProductDto = new ProductDto();
-  // formProductEdit: FormGroup;
-  // height: string;
-  // width: string;
-  // depth: string;
-
-  // strHeightCompare: string;
-  // strWidthCompare: string;
-  // strDepthCompare: string;
-  // CategoryIdCompare: number;
-  // SubCategoryIdCompare: number;
-  // _idMeasure: number;
   prodToLoad: ProductDto = new ProductDto();
 
   loadCatById(id: number): Observable<CategoryDto> {

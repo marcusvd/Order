@@ -28,9 +28,9 @@ export class CategoryListService extends CrudService<CategoryDto, number>{
 
   //#region insertShow
 
-  public catInsertShow: boolean = false;
+  private _catInsertShow: boolean = false;
   public catShowHide() {
-    this.catInsertShow = !this.catInsertShow;
+    this._catInsertShow = !this._catInsertShow;
   }
 
 
@@ -48,6 +48,9 @@ export class CategoryListService extends CrudService<CategoryDto, number>{
 
   bsModalRef: BsModalRef;
 
+  get catInsertShow(): boolean {
+    return this._catInsertShow;
+  }
 
   toDelete(record: any) {
     record.who = 'category'

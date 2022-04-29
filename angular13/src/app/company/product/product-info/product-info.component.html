@@ -19,7 +19,7 @@
 
 
             </h4>
-            <button tooltip="Fecha essa tela." type="button" class="btn-close close pull-right" aria-label="Close" (click)="_ModalRef.hide()">
+            <button tooltip="Fecha essa tela." type="button" class="btn-close close pull-right" aria-label="Close" (click)="ModalRef.hide()">
         <span aria-hidden="true" class="visually-hidden">&times;</span>
       </button>
         </div>
@@ -179,10 +179,10 @@
                 <tr class="col-12">
                     <td class="col-6 pull-left">
                         <button tooltip="Deletar {{prodInfo.name}}" class="btn btn-outline-dark bi bi-trash"></button>
-                        <button tooltip="Editar {{prodInfo.name}}" class="btn btn-outline-dark bi bi-pen " (click)="_ModalRef.hide()" [routerLink]="['/product', prodInfo.id, 'edit']"></button>
+                        <button tooltip="Editar {{prodInfo.name}}" class="btn btn-outline-dark bi bi-pen " (click)="ModalRef.hide()" [routerLink]="['/product', prodInfo.id, 'edit']"></button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-dark bi-door-open-fill" (click)="_ModalRef.hide()">  Fechar</button>
+                        <button type="button" class="btn btn-outline-dark bi-door-open-fill" (click)="ModalRef.hide()">  Fechar</button>
                     </td>
                 </tr>
             </table>

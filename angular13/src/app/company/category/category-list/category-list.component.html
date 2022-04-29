@@ -13,14 +13,14 @@
                         </div>
                     </td>
                     <td class="col-6 ">
-                        <button tooltip="Cadastrar um novo Produto." class="btn btn-outline-warning bi bi-plus" style="font-size: 35px; float: right;" (click)="CatListServices.catShowHide()"></button>
+                        <button tooltip="Cadastrar um novo Produto." class="btn btn-outline-warning bi bi-plus" style="font-size: 35px; float: right;" (click)="catShowHide()"></button>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
 
-    <div class="container" *ngIf="CatListServices.catInsertShow">
+    <div class="container" *ngIf="catInsertShow">
         <div>
             <category-insert>
             </category-insert>
@@ -43,9 +43,9 @@
                     </section>
                     <div class="col-3"></div>
                     <section class="col-2 pr-5 pt-2 pb-2 ">
-                        <button tooltip="Deletar {{cat.name}}" class="btn btn-outline-dark bi bi-trash" (click)="CatListServices.toDelete(cat)"></button>
-                        <button tooltip="Editar {{cat.name}}" class="btn btn-outline-dark bi bi-pen" (click)="this.CatEditServices.toEdit(cat)"> </button>
-                        <button tooltip="Detalhes {{cat.name}}" class="btn btn-outline-dark bi bi-info-square" (click)="this.CatListServices.toInfo(cat)"></button>
+                        <button tooltip="Deletar {{cat.name}}" class="btn btn-outline-dark bi bi-trash" (click)="toDelete(cat)"></button>
+                        <button tooltip="Editar {{cat.name}}" class="btn btn-outline-dark bi bi-pen" (click)="toEdit(cat)"> </button>
+                        <button tooltip="Detalhes {{cat.name}}" class="btn btn-outline-dark bi bi-info-square" (click)="this.toInfo(cat)"></button>
                     </section>
                     <div [id]="i " [style.display]="isVisible ">
                         <!--[id]="i " [style.visibility]="isVisible " -->

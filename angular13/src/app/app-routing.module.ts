@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from "src/app/company/shared/components/login/entrance/login.component";
-import { CategoryAdmComponent } from './company/category/category-adm/category-adm.component';
+import { CategoryListComponent } from './company/category/category-list/category-list.component';
 import { CategoryInsertComponent } from './company/category/category-insert/category-insert.component';
 import { AuthGuard } from './company/guards/auth.guard';
-import { MeasureAdmComponent } from './company/measure/measure-adm/measure-adm.component';
+import { MeasureListComponent } from './company/measure/measure-list/measure-list.component';
 import { MeasureInsertComponent } from './company/measure/measure-insert/measure-insert.component';
 import { ProductInsertComponent } from './company/product/product-insert/product-insert.component';
 import { ProductPagelistComponent } from './company/product/product-pagelist/product-pagelist.component';
@@ -29,13 +29,13 @@ const routes: Routes = [
 
 
 
-  { path: 'catlist', component: CategoryAdmComponent, canActivate: [Auth0Guard] },
-   {path:'catUpd', component: CategoryAdmComponent, canActivate: [Auth0Guard]},
+  { path: 'catlist', component: CategoryListComponent, canActivate: [Auth0Guard] },
+   {path:'catUpd', component: CategoryListComponent, canActivate: [Auth0Guard]},
 
   { path: 'measureinsert', component: MeasureInsertComponent, canActivate: [Auth0Guard] },
 
-  { path: 'measureadm', component: MeasureAdmComponent, canActivate: [Auth0Guard] },
-  { path: 'measureadmUpd', component: MeasureAdmComponent, canActivate: [Auth0Guard] },
+  { path: 'measureadm', component: MeasureListComponent, canActivate: [Auth0Guard] },
+  { path: 'measureadmUpd', component: MeasureListComponent, canActivate: [Auth0Guard] },
 
   { path: 'prodpagelist', component: ProductPagelistComponent, canActivate: [Auth0Guard] },
   { path: 'prodpagelistUpd', component: ProductPagelistComponent, canActivate: [Auth0Guard] },

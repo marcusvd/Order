@@ -20,14 +20,14 @@
                         </div>
                     </td>
                     <td class="col-6 ">
-                        <button tooltip="Cadastrar uma nova medida." class="btn btn-outline-warning bi bi-plus" style="font-size: 35px; float: right;" (click)="MeasureServices.measureShowHide()"></button>
+                        <button tooltip="Cadastrar uma nova medida." class="btn btn-outline-warning bi bi-plus" style="font-size: 35px; float: right;" (click)="measureShowHide()"></button>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
 
-    <div class="container" *ngIf="MeasureServices.measureInsertShow">
+    <div class="container" *ngIf="measureInsertShow">
         <div>
             <measure-insert>
             </measure-insert>
@@ -50,8 +50,8 @@
                                     <h3>{{mes.description | uppercase}}</h3>
                                 </td>
                                 <td class="pt-2 pb-2 pl-5" style="float: right;">
-                                    <button tooltip="Deletar {{mes.name}}" class="btn btn-outline-dark bi bi-trash" (click)="MeasureServices.toDelete(mes)"></button>
-                                    <button tooltip="Editar {{mes.name}}" class="btn btn-outline-dark bi bi-pen " (click)="MeasureEditServices.toEdit(mes)"></button>
+                                    <button tooltip="Deletar {{mes.name}}" class="btn btn-outline-dark bi bi-trash" (click)="toDelete(mes)"></button>
+                                    <button tooltip="Editar {{mes.name}}" class="btn btn-outline-dark bi bi-pen " (click)="toEdit(mes)"></button>
                                     <!-- <button tooltip="Detalhes {{mes.name}}" class="btn btn-outline-dark bi bi-info-square "></button> -->
                                 </td>
                             </tr>

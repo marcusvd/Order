@@ -16,7 +16,7 @@
                             <span id="searchbadge" class="badge bg-warning">
 
                               <input  id="searchinput" class="form-control"
-                  (input)="this._ProductServices.filterProducts($event)">
+                  (input)="filterProducts($event)">
               </span>
                         </td>
                         <td class="col-6 ">
@@ -29,7 +29,7 @@
     </div>
     <div class="mt-3"></div>
     <div class="row">
-        <section *ngFor="let prod of this._ProductServices.products">
+        <section *ngFor="let prod of products">
             <ul class="list-group">
                 <div class="row">
                     <ol class="col-12 list-group-item " style="background-color: rgb(211, 162, 2);">
@@ -44,9 +44,9 @@
                             </div>
 
                             <section class="col-3 pt-2 pb-2 align-self-center">
-                                <button tooltip="Deletar {{prod.name}}" class="btn btn-outline-dark bi bi-trash" (click)="_ProductServices.toDelete(prod)"></button>
+                                <button tooltip="Deletar {{prod.name}}" class="btn btn-outline-dark bi bi-trash" (click)="toDelete(prod)"></button>
                                 <button tooltip="Editar {{prod.name}}" class="btn btn-outline-dark bi bi-pen " [routerLink]="['/product', prod.id, 'edit']"></button>
-                                <button tooltip="Detalhes {{prod.name}}" class="btn btn-outline-dark bi bi-info-square" (click)="_ProductServices.toInfo(prod)"></button>
+                                <button tooltip="Detalhes {{prod.name}}" class="btn btn-outline-dark bi bi-info-square" (click)="toInfo(prod)"></button>
                             </section>
 
                         </div>
@@ -72,8 +72,7 @@
     </div>
     <div class="pb-4"></div>
     <div>
-        <pagination class="justify-content-center paginationstyle" [boundaryLinks]="true" [totalItems]=this._ProductServices.pagination.amountItems [itemsPerPage]=this._ProductServices.pagination.itemsPerPg [(ngModel)]=this._ProductServices.pagination.currentPg
-            (pageChanged)="this._ProductServices.pageChanged($event) " pageBtnClass="btn" previousText="Anterior
+        <pagination class="justify-content-center paginationstyle" [boundaryLinks]="true" [totalItems]=amountItems [itemsPerPage]=itemsPerPg [ngModel]=currentPg (pageChanged)="pageChanged($event) " pageBtnClass="btn" previousText="Anterior
                                 " nextText="Proxímo " firstText="Primeiro " lastText="Último ">
         </pagination>
     </div>

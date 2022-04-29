@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "../../guards/auth.guard";
 import { LoginComponent } from "../../shared/components/login/entrance/login.component";
-import { MeasureAdmComponent } from "../measure-adm/measure-adm.component";
+import { MeasureListComponent } from "../measure-list/measure-list.component";
 
 import { MeasureInsertComponent } from "../measure-insert/measure-insert.component";
 

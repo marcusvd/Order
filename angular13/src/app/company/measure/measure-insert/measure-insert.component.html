@@ -6,17 +6,17 @@
             </div>
             <div>
 
-                <form [formGroup]="this.MeaServices.formInsert" class="form-group" class="col-12">
+                <form [formGroup]="form" class="form-group" class="col-12">
 
                     <div class="col">
                         <label>Medida</label>
                         <div class="container">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': MeaServices._ValidatorsSrv.touchedErrors('name', MeaServices.formInsert)}">
+                                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': touchedErrors('name', form)}">
                                     <div class="invalid-feedback">
-                                        {{MeaServices._ValidatorsSrv.required2(this.MeaServices.formInsert, 'name', 'Nome', 3, 50)}}
-                                        <!-- OLD VERSION  {{MeaServices._ValidatorsSrv.required(this.MeaServices.formInsert,'name', 'Preenchimento, mínimo de pelo menos 3 caracteres', 'Preenchimento não pode ultrapassar 50 caracteres.', 'Nome é de preenchimento obrigatório')}} -->
+                                        {{required(form, 'name', 'Nome', 3, 50)}}
+                                        <!-- OLD VERSION  {{required(form,'name', 'Preenchimento, mínimo de pelo menos 3 caracteres', 'Preenchimento não pode ultrapassar 50 caracteres.', 'Nome é de preenchimento obrigatório')}} -->
                                     </div>
                                 </div>
                             </div>
@@ -27,10 +27,10 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': MeaServices._ValidatorsSrv.touchedErrors('description', MeaServices.formInsert)}">
+                                    <input type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': touchedErrors('description', form)}">
                                     <div class="invalid-feedback">
-                                        {{MeaServices._ValidatorsSrv.required2(this.MeaServices.formInsert, 'description', 'Descrição', 3, 250)}}
-                                        <!-- OLD VERSION  {{MeaServices._ValidatorsSrv.required(this.MeaServices.formInsert,'name', 'Preenchimento, mínimo de pelo menos 3 caracteres', 'Preenchimento não pode ultrapassar 50 caracteres.', 'Nome é de preenchimento obrigatório')}} -->
+                                        {{required(form, 'description', 'Descrição', 3, 250)}}
+                                        <!-- OLD VERSION  {{required(form,'name', 'Preenchimento, mínimo de pelo menos 3 caracteres', 'Preenchimento não pode ultrapassar 50 caracteres.', 'Nome é de preenchimento obrigatório')}} -->
                                     </div>
 
                                 </div>
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="pt-3"></div>
-                    <button [disabled]="!this.MeaServices.formInsert.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="MeaServices.save()">Cadastrar</button>
+                    <button [disabled]="!form.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="save()">Cadastrar</button>
                     <div class="pt-3"></div>
 
                 </form>

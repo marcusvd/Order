@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/module/shared.module';
 import { CategoryListService } from '../services/category-list.service';
 //import { CategoryRoutingModule } from './category-routing.module';
-import { CategoryAdmComponent } from '../category-adm/category-adm.component';
+import { CategoryListComponent } from '../category-list/category-list.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { RouterModule } from '@angular/router';
 import { CategoryEditService } from '../services/category-edit.service';
@@ -20,7 +20,7 @@ import { Auth0Guard } from '../../guards/auth-0.guard';
 
 @NgModule({
   declarations: [
-    CategoryAdmComponent,
+    CategoryListComponent,
     CategoryInsertComponent,
     CategoryEditComponent,
     CategoryInfoComponent
@@ -35,7 +35,7 @@ import { Auth0Guard } from '../../guards/auth-0.guard';
   ],
   exports:[
     // CategoryInsertComponent,
-    CategoryAdmComponent
+    CategoryListComponent
   ],
   providers:[CategoryListService, CategoryEditService, CategoryInsertService ]
 })

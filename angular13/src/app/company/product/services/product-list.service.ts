@@ -1,15 +1,10 @@
-
-
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { FormBuilder, } from "@angular/forms";
 import { map, Observable, take } from "rxjs";
 import { PaginatedResult, Pagination } from "../../shared/dto/pagination";
 import { Url } from "../../back-end/back-end";
 
 import { CrudService } from "../../shared/services/crud.service";
-import { AlertsToastr } from "../../shared/services/alerts-toastr";
-import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
 import { DeleteComponent } from "../../shared/components/delete/delete.component";
@@ -19,16 +14,12 @@ export class ProductListService extends CrudService<ProductDto, number> {
 
   constructor(
     override Http: HttpClient,
-    private _Fb: FormBuilder,
-    _ValidatorsSrv: ValidatorsService,
-    private _AlertsToastr: AlertsToastr,
     private _BsModalService: BsModalService
   ) {
     super(Http, Url._PRODUCTS);
   }
 
   bsModalRef?: BsModalRef;
-
   pagination = {} as Pagination;
   pgResulted: PaginatedResult<ProductDto[]>;
   products: ProductDto[] = [];

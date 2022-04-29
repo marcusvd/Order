@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Routes } from '@angular/router';
+
+import { ProductDto } from '../dto/product-dto';
 import { ProductListService } from '../services/product-list.service';
 
 
@@ -13,12 +14,34 @@ export class ProductPagelistComponent implements OnInit {
 
 
   constructor(
-    public _RouteData: ActivatedRoute,
-    public _ProductServices: ProductListService
+    private _ProductServices: ProductListService
   ) { }
 
+  get products(): ProductDto[] {
+    return this._ProductServices.products;
+  }
+  toDelete(p: ProductDto) {
+    this._ProductServices.toDelete(p);
+  }
+  toInfo(p: ProductDto) {
+    this._ProductServices.toInfo(p);
+  }
+  pageChanged($event) {
+    this._ProductServices.pageChanged($event);
+  }
+  filterProducts($event) {
+    this._ProductServices.filterProducts($event);
+  }
+  get itemsPerPg(): number {
+    return this._ProductServices.pagination.itemsPerPg;
+  }
+  get amountItems(): number {
+    return this._ProductServices.pagination.amountItems;
+  }
 
-
+  get currentPg(): number {
+    return this._ProductServices.pagination.currentPg;
+  }
 
   ngOnInit(): void {
     this._ProductServices.loadProductsToView();

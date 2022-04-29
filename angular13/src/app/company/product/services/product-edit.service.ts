@@ -11,8 +11,6 @@ import { ProductEditDto } from "../dto/product-edit-dto";
 import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
 import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
-import { ValidatorsService } from "../../shared/services/validators.service";
-
 
 @Injectable({ providedIn: 'root' })
 export class ProductEditService extends CrudService<ProductDto, number> {

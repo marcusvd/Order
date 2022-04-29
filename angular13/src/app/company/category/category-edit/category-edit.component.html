@@ -9,11 +9,11 @@
     <div class="container-fluid;" id="general_container">
         <div class="row">
             <div>
-                <h1 style="text-align: center; margin-top: 20px;">{{this.CatEditServices.category.name}}</h1>
+                <h1 style="text-align: center; margin-top: 20px;">{{categoryName}}</h1>
             </div>
             <div>
                 <div>
-                    <form [formGroup]="CatEditServices.formCategoryEdit" class="form-group" class="col-12">
+                    <form [formGroup]="form" class="form-group" class="col-12">
                         <div id="hr"></div>
                         <div class="container">
                             <div class="row">
@@ -34,7 +34,7 @@
                             <div class="row" formArrayName="subCategories">
                                 <label>SubCategoria</label>
                                 <!-- <div *ngFor="let sub of this.CatEditServices.category.subCategories let i=index"> -->
-                                <div *ngFor="let sub of CatEditServices?.RetSubCatArrays?.controls let i=index">
+                                <div *ngFor="let sub of RetSubCatArrays?.controls let i=index">
                                     <div [formGroupName]="i">
 
                                         <div class="col-12">
@@ -52,7 +52,7 @@
 
                                                     </div>
                                                     <td class="col">
-                                                        <button class="btn btn-danger" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1;" (click)="CatEditServices.removeSub(i)">Remover </button>
+                                                        <button class="btn btn-danger" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1;" (click)="removeSub(i)">Remover </button>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -75,7 +75,7 @@
 
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-success" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1;  float: right;" (click)="this.CatEditServices.addSubCatArrays(CatEditServices.category.id)">Adicionar </button>
+                                    <button class="btn btn-success" style="color: white; border-radius: 30px; text-align: center; box-shadow:3px 1px black 0.1;  float: right;" (click)="addSubCatArrays(categoryId)">Adicionar </button>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                     <button class="btn btn-warning" (click)="doHide()">Cancelar</button>
                 </div>
                 <div class="col-6" style=" float: right;">
-                    <button id="label" class="btn btn-success btn-lg" style="color:rgb(255, 255, 255); float: right;" (click)="CatEditServices.updateAsync()" (click)="doHide()">Atualizar</button>
+                    <button id="label" class="btn btn-success btn-lg" style="color:rgb(255, 255, 255); float: right;" (click)="update()" (click)="doHide()">Atualizar</button>
                 </div>
             </div>
         </div>
@@ -109,6 +109,6 @@
     </div>
 
 
-    <div>
-        {{CatEditServices.formCategoryEdit.value | json}}}
-    </div>
+    <!-- <div>
+        {{form.value | json}}}
+    </div> -->

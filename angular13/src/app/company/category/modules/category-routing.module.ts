@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { AuthGuard } from "../../guards/auth.guard";
-import { CategoryAdmComponent } from "../category-adm/category-adm.component";
+import { CategoryListComponent } from "../category-list/category-list.component";
 import { CategoryInsertComponent } from "../category-insert/category-insert.component";
 
 const catrouting: Routes = [

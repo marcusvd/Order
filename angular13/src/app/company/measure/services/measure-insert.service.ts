@@ -1,18 +1,16 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient  } from "@angular/common/http";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Injectable } from "@angular/core";
+import { map, take } from "rxjs";
+import { Router } from "@angular/router";
 
 import { CrudService } from "../../shared/services/crud.service";
 import { UnitOfMeasureDto } from "../dto/unit-of-measure";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { Url } from "../../back-end/back-end";
-import { map, take } from "rxjs";
-import { CategoryDto } from "../../category/dto/category-dto";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
 import { DeleteComponent } from "../../shared/components/delete/delete.component";
-import { MeasureDto } from "../dto/measure-dto";
-import { Router } from "@angular/router";
 
 
 @Injectable()
@@ -25,7 +23,7 @@ export class MeasureInsertService extends CrudService<UnitOfMeasureDto, number>{
   constructor(
     override Http: HttpClient,
     private _Fb: FormBuilder,
-    public _ValidatorsSrv: ValidatorsService,
+    private _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
     private ModalRef: BsModalRef,
     private ModalService: BsModalService,

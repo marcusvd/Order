@@ -1,10 +1,11 @@
 
 
-import { HttpClient, HttpParams, JsonpClientBackend } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { map, Observable, take } from "rxjs";
-import { PaginatedResult, Pagination } from "../../shared/dto/pagination";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Observable, take } from "rxjs";
+import { Router } from "@angular/router";
+
 import { Url } from "../../back-end/back-end";
 import { CategoryDto } from "src/app/company/category/dto/category-dto";
 import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
@@ -13,8 +14,7 @@ import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { ProductDto } from "../dto/product-dto";
 import { SubCategoryDto } from "src/app/company/category/dto/sub-category-dto";
-import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
-import { ActivatedRoute, Router } from "@angular/router";
+import { BsModalRef } from "ngx-bootstrap/modal";
 
 @Injectable({ providedIn: 'root' })
 export class ProductInsertService extends CrudService<ProductDto, number> {
@@ -68,46 +68,45 @@ export class ProductInsertService extends CrudService<ProductDto, number> {
       }
     })
   }
+  loadSelects() {
+    this.measureArray = [];
+    this.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
 
-loadSelects(){
-  this.measureArray = [];
-  this.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
+    this.storageArray = [];
+    this.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado', 'Selecione');
 
-  this.storageArray = [];
-  this.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado', 'Selecione');
+    this.formatArray = [];
+    this.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido', 'Selecione');
 
-  this.formatArray = [];
-  this.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido', 'Selecione');
-
-  this.stateArray = [];
-  this.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
-}
-
-addSelectMeasure()
-{
-  this.loadMeasures().subscribe({next:(item: UnitOfMeasureDto[]) => {
-    this.uOfMeasures = item
-    const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
-    unit.name = 'Selecione';
-    unit.description = 'Selecione';
-    this.uOfMeasures.push(unit);
-  }, error: (err)=>{
-    console.log(err);
-  }})
-}
-addSelectCat()
-{
-  this.loadCats().subscribe({next:(item: CategoryDto[]) => {
-    this.categories = item
-    const cat: CategoryDto = new CategoryDto();
-    cat.name = 'Selecione';
-    this.categories.push(cat);
-  }, error: (err)=>{
-    console.log(err);
-  }})
-}
-
-formInsert() {
+    this.stateArray = [];
+    this.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
+  }
+  addSelectMeasure() {
+    this.loadMeasures().subscribe({
+      next: (item: UnitOfMeasureDto[]) => {
+        this.uOfMeasures = item
+        const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
+        unit.name = 'Selecione';
+        unit.description = 'Selecione';
+        this.uOfMeasures.push(unit);
+      }, error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+  addSelectCat() {
+    this.loadCats().subscribe({
+      next: (item: CategoryDto[]) => {
+        this.categories = item
+        const cat: CategoryDto = new CategoryDto();
+        cat.name = 'Selecione';
+        this.categories.push(cat);
+      }, error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+  formInsert() {
     this.formProductInsert = this._Fb.group({
       name: ['', [Validators.required, Validators.maxLength(150), Validators.minLength(3)]],
       manufacturer: ['', [Validators.maxLength(150)]],
@@ -134,7 +133,6 @@ formInsert() {
       comments: ['', [Validators.maxLength(1000)]]
     })
   }
-
   save() {
 
     if (this.height === undefined) {
@@ -177,48 +175,10 @@ formInsert() {
 
 
   }
-
   loadCats(): Observable<CategoryDto[]> {
     return this.Http.get<CategoryDto[]>(Url._CATEGORIES).pipe(take(1));
   }
   loadMeasures() {
     return this.Http.get<UnitOfMeasureDto[]>(Url._UNITOFMEASURES).pipe(take(1));
   }
-  // loadProducts() {
-  //   return this.getAll<ProductDto[]>().pipe(take(1));
-  // }
-  // loadProductsPagination(pg?: number, record?: number, terms?: string): Observable<PaginatedResult<ProductDto[]>> {
-  //   const paginatedResult: PaginatedResult<ProductDto[]> = new PaginatedResult<ProductDto[]>();
-  //   let params = new HttpParams;
-  //   if (pg != null && record != null) {
-  //     params = params.append('pgnumber', pg.toString());
-  //     params = params.append('pgsize', record.toString());
-  //   }
-
-  //   if (terms !== null && terms !== '') {
-  //     params = params.append('term', terms)
-  //   }
-
-
-  //   return this.Http.get<ProductDto[]>(Url._PRODUCTS, { observe: 'response', params })
-  //     .pipe(
-  //       take(1),
-  //       map((response) => {
-
-  //         paginatedResult.result = response.body;
-  //         //  console.log('Body', this.products)
-  //         //  console.log('Headers', this.pgnation)
-  //         if (response.headers.has('pagination')) {
-
-  //           paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-
-  //         }
-  //         return paginatedResult;
-  //       })
-  //     );
-  // }
-
-
-
-
 }

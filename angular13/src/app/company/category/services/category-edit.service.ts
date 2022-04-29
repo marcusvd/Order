@@ -16,21 +16,18 @@ import { Router } from "@angular/router";
 @Injectable()
 export class CategoryEditService extends CrudService<CategoryDto, number>{
 
-  formCategoryEdit: FormGroup;
-  subCatsEditFormGroup: FormGroup;
-  bsModalRef: BsModalRef;
-  category: CategoryDto;
+  private _formCategoryEdit: FormGroup;
+  private _bsModalRef: BsModalRef;
+  private _category: CategoryDto;
 
 
   constructor(
     override Http: HttpClient,
-    private Fb: FormBuilder,
-    private ModalService: BsModalService,
-    public ValidatorsSrv: ValidatorsService,
-    public AlertsToastr: AlertsToastr,
-    private Navigation: Router,
-
-
+    private _Fb: FormBuilder,
+    private _ValidatorsSrv: ValidatorsService,
+    private _AlertsToastr: AlertsToastr,
+    private _Navigation: Router,
+    private _ModalService: BsModalService
   ) {
     super(Http, Url._CATEGORIES)
   }
@@ -43,40 +40,47 @@ export class CategoryEditService extends CrudService<CategoryDto, number>{
       },
 
     };
-    this.bsModalRef = this.ModalService.show(CategoryEditComponent, initState);
-    this.bsModalRef.content.closeBtnName = 'Close';
-
-
+    this._bsModalRef = this._ModalService.show(CategoryEditComponent, initState);
+    this._bsModalRef.content.closeBtnName = 'Close';
   }
 
   seedForm(sub: SubCategoryDto[]) {
     sub?.forEach((sub: SubCategoryDto) => {
-      return this.RetSubCatArrays.push(this.Fb.group(sub));
+      return this.RetSubCatArrays.push(this._Fb.group(sub));
     })
 
   }
 
   public formLoad(cat: CategoryDto) {
-    this.formCategoryEdit = this.Fb.group({
+    this._formCategoryEdit = this._Fb.group({
       id: [cat.id, [Validators.required]],
       name: [cat.name, [Validators.required, Validators.maxLength(150), Validators.minLength(3)]],
-      subCategories: this.Fb.array([])
+      subCategories: this._Fb.array([])
     })
     this.seedForm(cat.subCategories);
   }
 
   subCatFormBuilder(categoryId: number): FormGroup {
-    return this.Fb.group({
+    return this._Fb.group({
       name: ['', [Validators.required, Validators.maxLength(150), Validators.minLength(3)]],
-      categoryId:[categoryId, [Validators.required]],
+      categoryId: [categoryId, [Validators.required]],
     })
   }
 
 
   get RetSubCatArrays(): FormArray {
-    return <FormArray>this.formCategoryEdit.controls['subCategories'];
+    return <FormArray>this._formCategoryEdit.controls['subCategories'];
+  }
+  get formEdit(): FormGroup {
+    return this._formCategoryEdit;
+  }
+  get category(): CategoryDto {
+    return this._category;
   }
 
+  public categoryLoad(c: CategoryDto) {
+      this._category = c;
+  }
   public addSubCatArrays(categoryId: number) {
     this.RetSubCatArrays?.push(this.subCatFormBuilder(categoryId));
   }
@@ -87,48 +91,23 @@ export class CategoryEditService extends CrudService<CategoryDto, number>{
     }
   }
 
-
-
   updateAsync() {
-
-    const toSave: CategoryDto = { ...this.formCategoryEdit.value }
-
-    console.log(toSave);
-
+    const toSave: CategoryDto = { ...this._formCategoryEdit.value }
     this.update<CategoryDto>(toSave).subscribe({
       next: (unit: CategoryDto) => {
-        this.ValidatorsSrv.cleanAfters(['contact', 'address'], this.formCategoryEdit);
-        this.AlertsToastr.Notice(`Categoria, ${toSave.name}`, 1, 'success');
+        this._ValidatorsSrv.cleanAfters(['contact', 'address'], this._formCategoryEdit);
+        this._AlertsToastr.Notice(`Categoria, ${toSave.name}`, 1, 'success');
 
-        this.Navigation.navigateByUrl('catlist').then((item) => {
+        this._Navigation.navigateByUrl('catlist').then((item) => {
           if (!item) {
-            this.Navigation.navigateByUrl('catUpd');
+            this._Navigation.navigateByUrl('catUpd');
 
           }
         });
       }
     }), (error: any) => {
-      this.AlertsToastr.Notice(`Categoria, ${toSave.name}`, null, error, 'error');
+      this._AlertsToastr.Notice(`Categoria, ${toSave.name}`, null, error, 'error');
     }
   }
-
-
-  // save() {
-
-  //   let toSave: CategoryDto = this.formCategoryEdit.value
-  //   console.log(toSave);
-  //   this.update<CategoryDto>(toSave).subscribe(() => {
-  //     // this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formCategoryEdit);
-  //     // this.formCategoryEdit.value.subCategories = [];
-  //     this.RetSubCatArrays?.clear();
-  //     this.addSubCatArrays();
-  //     this.formCategoryEdit.clearValidators();
-  //     this.formCategoryEdit.reset();
-  //     this.AlertsToastr.Notice(`Categoria,  ${toSave.name}`, 0, 'success');
-  //   }, (error) => {
-  //     this.AlertsToastr.Notice(`Categoria,  ${toSave.name}`, null, error, 'error');
-  //   });
-  // }
-
 
 }
