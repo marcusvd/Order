@@ -9,7 +9,6 @@ import { SharedModule } from '../../shared/module/shared.module';
 import { NgxBootStrapModule } from 'src/app/company/shared/module/ngx-bootstrap.module';
 import { ProductInsertService } from '../services/product-insert.service';
 import { ProductListService } from '../services/product-list.service';
-import { ProductEditService } from '../services/product-edit.service';
 import { ProductInfoComponent } from '../product-info/product-info.component';
 import { DateTimeFormatPipe } from '../../shared/helpers/pipes/date-time-format.pipe';
 import { ProductResolver } from '../resolvers/products.resolver';
@@ -31,8 +30,7 @@ import { ProductInfoService } from '../services/product-info.service';
     RouterModule,
   ],
   exports: [
-    NgxBootStrapModule,
-    ProductPagelistComponent
+
   ],
   providers: [ ProductInsertService,ProductListService, ProductResolver, ProductInfoService]
 })

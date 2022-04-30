@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+
 import { AuthenticationService } from "../shared/services/authentication.service";
 
 @Injectable()
@@ -13,7 +14,6 @@ export class Auth0Guard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const currentUser = this.authenticationService.currentUserValue
     if (currentUser) {
-      // this.router.navigate(['/welcome']);
       return true;
     }
     this.router.navigate(['/login']);

@@ -27,7 +27,9 @@
             </div>
         </div>
     </div>
-    <div class="mt-3"></div>
+    <div class="mt-3">
+        <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+    </div>
     <div class="row">
         <section *ngFor="let prod of products">
             <ul class="list-group">
@@ -44,7 +46,7 @@
                             </div>
 
                             <section class="col-3 pt-2 pb-2 align-self-center">
-                                <button tooltip="Deletar {{prod.name}}" class="btn btn-outline-dark bi bi-trash" (click)="toDelete(prod)"></button>
+                                <button tooltip="Deletar {{prod.name}}" class="btn btn-outline-dark bi bi-cart4" (click)="toSell(prod)"></button>
                                 <button tooltip="Editar {{prod.name}}" class="btn btn-outline-dark bi bi-pen " [routerLink]="['/product', prod.id, 'edit']"></button>
                                 <button tooltip="Detalhes {{prod.name}}" class="btn btn-outline-dark bi bi-info-square" (click)="toInfo(prod)"></button>
                             </section>

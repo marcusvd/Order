@@ -13,6 +13,9 @@ import { WelcomeComponent } from 'src/app/company/welcome/welcome.component';
 
 import { NotFoundComponent } from 'src/app/not-found/not-found.component';
 import { Auth0Guard } from '../../guards/auth-0.guard';
+import { SellComponent } from '../components/sell/sell.component';
+import { SellService } from '../components/sell/services/sell.service';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -20,6 +23,7 @@ import { Auth0Guard } from '../../guards/auth-0.guard';
     SideNavComponent,
     ToNumberPipe,
     DeleteComponent,
+    SellComponent,
     WelcomeComponent,
     NotFoundComponent,
 
@@ -27,10 +31,11 @@ import { Auth0Guard } from '../../guards/auth-0.guard';
   imports: [
     CommonModule,
     NgxBootStrapModule,
-
     SharedRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule,
+
 
 
 
@@ -42,8 +47,9 @@ import { Auth0Guard } from '../../guards/auth-0.guard';
     DeleteComponent,
     WelcomeComponent,
     NotFoundComponent,
+    SellComponent,
 
   ],
-  providers: [DeleteService, Auth0Guard],
+  providers: [DeleteService, Auth0Guard, SellService],
 })
 export class SharedModule { }

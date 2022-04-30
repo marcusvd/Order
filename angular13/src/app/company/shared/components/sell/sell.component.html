@@ -1,0 +1,79 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Venda...</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="doHide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+    <div class="container" [formGroup]="form">
+        <div class="row">
+            <div class="col-6">
+                <label>Quantidade</label>
+                <input class="form-control" type="number" formControlName="quantity" maxlength={{getRecord.quantity}} [ngClass]="{'is-invalid': touchedErrors('quantity', form)}">
+
+                <div class="invalid-feedback">
+                    {{required(form, 'quantity', 'Quantidade', 1, null)}}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="col-1">
+                    <label>Preço</label>
+                    <!-- <input type="text" class="form-control" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" ngModel> -->
+                </div>
+                <div class="col-4">
+
+                    <div class="align-items" style="font-size:25px;">
+                        <!-- {{'R$ '}}{{ getRecord.price | currency:'.':'':'':'br'}} -->
+                        {{getRecord.price | currency:'BRL':true:'1.2-2'}}
+                    </div>
+                    <input type="text" class="form-control" formControlName="price" style="display: none;">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label>Data</label>
+                <input bsDatepicker class="form-control" type="text" formControlName="dateSell">
+            </div>
+            <div class="col-6">
+                <label>Desconto</label>
+                <input type="text" class="form-control" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" ngModel formControlName="price">
+            </div>
+
+            <div class="p-2"></div>
+
+            <section>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <!-- <label class="btn btn-outline-success"><input type="radio" name="btn" >{{p}}</label> -->
+                    <label class="btn btn-outline-success"><input type="radio" value="a" name="payment"
+              formControlName="payment">Dinheiro</label>
+                    <label class="btn btn-outline-success"><input type="radio" value="b" name="payment"
+              formControlName="payment">Pix</label>
+                    <label class="btn btn-outline-success"><input type="radio" value="c" name="payment"
+              formControlName="payment">Débito</label>
+                    <label class="btn btn-outline-success"><input type="radio" value="d" name="payment"
+              formControlName="payment">Crédito</label>
+                    <label class="btn btn-outline-success"><input type="radio" value="e" name="payment"
+              formControlName="payment">Transferência</label>
+                </div>
+                <input type="text" style="display: none;">
+            </section>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <!-- <button type="button" class="btn btn-default" (click)="doHide()">Fechar</button> -->
+    <div class="row">
+        <div class="col-6">
+            <button class="btn btn-warning" (click)="doHide()">Cancelar</button>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-danger">Vender</button>
+        </div>
+    </div>
+</div>
+
+{{form.value|json}}

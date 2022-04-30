@@ -11,7 +11,9 @@
                         </td>
                         <td>
                             <div style="font-size: 60px;">
-                                <h1 style="color: black;">{{prodInfo?.name | uppercase}}</h1>
+                                <section>
+                                    <h1 style="color: black;">{{prodInfo?.name | uppercase}}</h1>
+                                </section>
                             </div>
                         </td>
                     </tr>
@@ -133,7 +135,8 @@
                                                 <td>
                                                     <h6>Medido:</h6>
                                                 </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.weight + ' '}}{{prodInfo?.unitOfMeasure?.description}}</span></td>
+                                                <td><span class="badge bg-success ">{{prodInfo?.weight + '
+                            '}}{{prodInfo?.unitOfMeasure?.description}}</span></td>
                                             </tr>
 
                                             <div class="row pb-4"></div>
@@ -182,7 +185,8 @@
                         <button tooltip="Editar {{prodInfo.name}}" class="btn btn-outline-dark bi bi-pen " (click)="ModalRef.hide()" [routerLink]="['/product', prodInfo.id, 'edit']"></button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-dark bi-door-open-fill" (click)="ModalRef.hide()">  Fechar</button>
+                        <button type="button" class="btn btn-outline-dark bi-door-open-fill" (click)="ModalRef.hide()">
+              Fechar</button>
                     </td>
                 </tr>
             </table>

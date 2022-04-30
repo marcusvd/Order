@@ -9,13 +9,16 @@ import { ProductDto } from "../dto/product-dto";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap/modal";
 import { DeleteComponent } from "../../shared/components/delete/delete.component";
 import { ProductInfoComponent } from "../product-info/product-info.component";
+import { NgxSpinnerService } from "ngx-spinner";
+import { SellComponent } from "../../shared/components/sell/sell.component";
 @Injectable({ providedIn: 'root' })
 export class ProductListService extends CrudService<ProductDto, number> {
 
   constructor(
     override Http: HttpClient,
-    private _BsModalService: BsModalService
-  ) {
+    private _BsModalService: BsModalService,
+    private _Spinner: NgxSpinnerService
+      ) {
     super(Http, Url._PRODUCTS);
   }
 
@@ -29,6 +32,11 @@ export class ProductListService extends CrudService<ProductDto, number> {
     this.loadProductsToView();
   }
 
+sppinerStar(){
+  this._Spinner.show();
+}
+
+
   loadProductsToView() {
     this.loadProductsPagination(this.pagination.currentPg, this.pagination.itemsPerPg, '')
       .subscribe({
@@ -40,8 +48,11 @@ export class ProductListService extends CrudService<ProductDto, number> {
         error: (error) => {
           console.log(error)
         },
-        // complete:(comp)=>
-      })
+        complete:()=>{
+          this._Spinner.hide();
+        }
+      }
+      )
   }
 
   loadProductByIdAsync(id: number): Observable<ProductDto> {
@@ -87,20 +98,33 @@ export class ProductListService extends CrudService<ProductDto, number> {
       );
   }
 
-  toDelete(record: any) {
-    record.who = 'product'
+  toSell(record: ProductDto) {
     const initState: ModalOptions = {
       initialState: {
         list: { record },
-        title: 'Exclusão definitiva de registro.',
+        title: 'Venda...',
       },
 
     };
-    this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
+    this.bsModalRef = this._BsModalService.show(SellComponent, initState);
     this.bsModalRef.content.closeBtnName = 'Close';
 
 
   }
+  // toDelete(record: any) {
+  //   record.who = 'product'
+  //   const initState: ModalOptions = {
+  //     initialState: {
+  //       list: { record },
+  //       title: 'Exclusão definitiva de registro.',
+  //     },
+
+  //   };
+  //   this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
+  //   this.bsModalRef.content.closeBtnName = 'Close';
+
+
+  // }
   toInfo(record: ProductDto) {
     const initState: ModalOptions = {
       initialState: {

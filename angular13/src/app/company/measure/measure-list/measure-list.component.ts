@@ -11,8 +11,8 @@ import { MeasureInsertService } from '../services/measure-insert.service';
 export class MeasureListComponent implements OnInit {
   public Measures: MeasureDto[];
   constructor(
-    public _MeasureServices: MeasureInsertService,
-    public _MeasureEditServices: MeasureEditService
+    private _MeasureServices: MeasureInsertService,
+    private _MeasureEditServices: MeasureEditService
     ) { }
 
     toDelete(record: any) {
@@ -24,11 +24,11 @@ export class MeasureListComponent implements OnInit {
       this._MeasureEditServices.toEdit(record);
     }
 
-    measureInsertShow(){
-      this._MeasureServices.measureInsertShow;
+  get  measureInsertShow(){
+      return this._MeasureServices.measureInsertShow;
     }
     measureShowHide(){
-      this._MeasureServices.measureShowHide;
+      this._MeasureServices.measureShowHide();
     }
 
   ngOnInit(): void {

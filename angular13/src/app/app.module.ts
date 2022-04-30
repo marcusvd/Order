@@ -14,15 +14,9 @@ import { JwtInterceptor } from 'src/app/company/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from 'src/app/company/interceptors/error.interceptor';
 import { RecordsModule } from './company/records/modules/records.module';
 import { AuthenticationService } from './company/shared/services/authentication.service';
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
-
-
   ],
   imports: [
     HttpClientModule,
@@ -35,12 +29,12 @@ import { AuthenticationService } from './company/shared/services/authentication.
     SharedModule,
     LoginModule,
     RecordsModule,
-    // BsDatepickerModule.forRoot(),
-
   ],
-  providers: [AuthenticationService,
+  providers: [
+    AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
   ],
   bootstrap: [AppComponent]
 })

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from "src/app/company/shared/components/login/entrance/login.component";
 import { CategoryListComponent } from './company/category/category-list/category-list.component';
 import { CategoryInsertComponent } from './company/category/category-insert/category-insert.component';
-import { AuthGuard } from './company/guards/auth.guard';
 import { MeasureListComponent } from './company/measure/measure-list/measure-list.component';
 import { MeasureInsertComponent } from './company/measure/measure-insert/measure-insert.component';
 import { ProductInsertComponent } from './company/product/product-insert/product-insert.component';
@@ -46,7 +45,7 @@ const routes: Routes = [
 
   { path: 'prodinsert', component: ProductInsertComponent, canActivate: [Auth0Guard] },
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', redirectTo: 'notfound', pathMatch: 'full' },
 ];
 

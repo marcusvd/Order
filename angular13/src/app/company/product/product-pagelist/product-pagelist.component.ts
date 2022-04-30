@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 import { ProductDto } from '../dto/product-dto';
 import { ProductListService } from '../services/product-list.service';
@@ -20,9 +22,12 @@ export class ProductPagelistComponent implements OnInit {
   get products(): ProductDto[] {
     return this._ProductServices.products;
   }
-  toDelete(p: ProductDto) {
-    this._ProductServices.toDelete(p);
+  toSell(p: ProductDto) {
+    this._ProductServices.toSell(p);
   }
+  // toDelete(p: ProductDto) {
+  //   this._ProductServices.toDelete(p);
+  // }
   toInfo(p: ProductDto) {
     this._ProductServices.toInfo(p);
   }
@@ -44,6 +49,7 @@ export class ProductPagelistComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._ProductServices.sppinerStar();
     this._ProductServices.loadProductsToView();
   }
 

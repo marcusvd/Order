@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
@@ -9,6 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxSpinnerModule } from "ngx-spinner";
 //NO NGX
 import { CurrencyMaskModule, CURRENCY_MASK_CONFIG } from "ng2-currency-mask";
 import { MASKOPTIONS } from "../helpers/simples-helpers";
@@ -29,7 +30,7 @@ import { MASKOPTIONS } from "../helpers/simples-helpers";
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
     CurrencyMaskModule,
-
+    NgxSpinnerModule,
     NgSelectModule
   ],
   exports: [
@@ -40,8 +41,10 @@ import { MASKOPTIONS } from "../helpers/simples-helpers";
     ToastrModule,
     CurrencyMaskModule,
     NgSelectModule,
-    TooltipModule
+    TooltipModule,
+    NgxSpinnerModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     { provide: CURRENCY_MASK_CONFIG, useValue: MASKOPTIONS }
   ]

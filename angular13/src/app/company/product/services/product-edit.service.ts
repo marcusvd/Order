@@ -183,37 +183,22 @@ export class ProductEditService extends CrudService<ProductDto, number> {
     mes.push(unit);
   }
   updateProduct() {
-    if (this.height === undefined) {
-      this.height = '';
-    }
-    else {
-      this.formProductEdit.value.height += ' ' + this.height
-    }
-    if (this.width === undefined) {
-      this.width = '';
-    }
-    else {
-      this.formProductEdit.value.width += ' ' + this.width
-    }
-    if (this.depth === undefined) {
-      this.depth = '';
-    }
-    else {
-      this.formProductEdit.value.depth += ' ' + this.depth
-    }
+    this.formProductEdit.value.height += ' ' + this.height
+    this.formProductEdit.value.width += ' ' + this.width
+    this.formProductEdit.value.depth += ' ' + this.depth
     if (!this.formProductEdit.value.maxstacked) {
       this.formProductEdit.value.maxstacked = 0;
     }
     const toSave: ProductDto = { ...this.formProductEdit.value }
-//if you dont chnage the date and update, will try to save as a string and it will generate some error, the code  below handler this.
-   if(typeof(this.formProductEdit.value.date) === 'string'){
-    const dateToSave: string = this.formProductEdit.value.date
-    const month: string = dateToSave.slice(3, 5);
-    const day: string = dateToSave.slice(0, 2);
-    const year: string = dateToSave.slice(6, 10);
-    const stringDate = year + '-' + month + '-' + day;
-    toSave.date = new Date(Date.parse(stringDate))
-   }
+    //if you dont chnage the date and update, will try to save as a string and it will generate some error, the code  below handler this.
+    if (typeof (this.formProductEdit.value.date) === 'string') {
+      const dateToSave: string = this.formProductEdit.value.date
+      const month: string = dateToSave.slice(3, 5);
+      const day: string = dateToSave.slice(0, 2);
+      const year: string = dateToSave.slice(6, 10);
+      const stringDate = year + '-' + month + '-' + day;
+      toSave.date = new Date(Date.parse(stringDate))
+    }
 
 
     this.update(toSave).subscribe({
