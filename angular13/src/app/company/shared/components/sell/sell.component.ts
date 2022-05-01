@@ -7,8 +7,9 @@ import { SellService } from './services/sell.service';
 
 import { registerLocaleData } from '@angular/common';
 import localeBr from '@angular/common/locales/br';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ValidatorsService } from '../../services/validators.service';
+import { AlertsToastr } from '../../services/alerts-toastr';
 
 @Component({
   selector: 'sell',
@@ -17,27 +18,38 @@ import { ValidatorsService } from '../../services/validators.service';
 })
 export class SellComponent implements OnInit {
 
+  FORM: FormGroup;
+  warning: string;
 
   constructor(
     private _sellService: SellService,
     private _modalRef: BsModalRef,
     private _ValidatorsSrv: ValidatorsService,
-  ) {registerLocaleData(localeBr, 'br'); }
+    private _AlertsToastr: AlertsToastr,
+    private _Navigation: Router,
+
+
+
+  ) { registerLocaleData(localeBr, 'br'); }
 
   doHide() {
     this._modalRef.hide();
   }
 
-  get getRecord(){
+  get getRecord() {
     return this._sellService.getRecord;
   }
 
+  get limitsBool(): boolean {
+    return this._sellService.limitsBool;
+  }
 
-  get form(): FormGroup{
+
+  get form(): FormGroup {
     return this._sellService.formGet;
   }
 
-  get pay(): string[]{
+  get pay(): string[] {
     return this._sellService.paymentArray;
   }
 
@@ -56,11 +68,36 @@ export class SellComponent implements OnInit {
     )
   }
 
+  selling() {
+    return this._sellService.selling();
+  }
+
+
+  // .subscribe({
+  //   next: (p: ProductDto) => {
+
+  //     this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.form);
+  //     this.form.value.subCategories = [];
+  //     this._AlertsToastr.Notice(`Produto,  ${p.name}`, 0, 'success');
+  //     this._Navigation.navigateByUrl('prodpagelist');
+  //   },
+  //   error: (error) => {
+  //     alert('deu ruim')
+  //     this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.form);
+  //   },
+  // });
+
+
+
+
   ngOnInit(): void {
-    this._sellService.record = this._sellService.ModalService.config.initialState['list']['record'] as ProductDto;
+
+    const tries = this._sellService.ModalService.config.initialState['list']['record'] as ProductDto
+    sessionStorage.setItem('qts', tries.quantity.toString());
     this._sellService.formLoad();
+    this._sellService.record = this._sellService.ModalService.config.initialState['list']['record'] as ProductDto;
 
 
-    }
+  }
 
 }

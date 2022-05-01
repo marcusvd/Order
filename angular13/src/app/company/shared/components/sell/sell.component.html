@@ -6,74 +6,79 @@
 </div>
 <div class="modal-body">
 
-    <div class="container" [formGroup]="form">
+    <div class="container" [formGroup]="this.form">
         <div class="row">
             <div class="col-6">
                 <label>Quantidade</label>
-                <input class="form-control" type="number" formControlName="quantity" maxlength={{getRecord.quantity}} [ngClass]="{'is-invalid': touchedErrors('quantity', form)}">
+                <input class="form-control" type="number" formControlName="quantity" [ngClass]="{'is-invalid':  touchedErrors('quantity', this.form) }">
 
-                <div class="invalid-feedback">
-                    {{required(form, 'quantity', 'Quantidade', 1, null)}}
+                <div class=" invalid-feedback ">
+                    {{required(this.form, 'quantity', 'Quantidade', 1, null)}}
                 </div>
+                <!-- <div *ngIf="this.limitsBool" style="color:red;">
+                    {{this.warning}}
+
+                </div> -->
+                <div class="p-3"></div>
             </div>
-            <div class="col-6">
-                <div class="col-1">
+            <div class="col-6 ">
+                <div class="col-1 ">
                     <label>Preço</label>
-                    <!-- <input type="text" class="form-control" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" ngModel> -->
+                    <!-- <input type="text " class="form-control " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false } " ngModel> -->
                 </div>
-                <div class="col-4">
+                <div class="col-4 ">
 
-                    <div class="align-items" style="font-size:25px;">
+                    <div class="align-items " style="font-size:25px; ">
                         <!-- {{'R$ '}}{{ getRecord.price | currency:'.':'':'':'br'}} -->
                         {{getRecord.price | currency:'BRL':true:'1.2-2'}}
                     </div>
-                    <input type="text" class="form-control" formControlName="price" style="display: none;">
+                    <!-- <input type="text " class="form-control " formControlName="price" style="display: none; "> -->
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-6">
+        <div class="row ">
+            <div class="col-6 ">
                 <label>Data</label>
-                <input bsDatepicker class="form-control" type="text" formControlName="dateSell">
+                <input bsDatepicker class="form-control " type="text " formControlName="dateSell">
             </div>
-            <div class="col-6">
+            <div class="col-6 ">
                 <label>Desconto</label>
-                <input type="text" class="form-control" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" ngModel formControlName="price">
+                <input type="text " class="form-control " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false } " ngModel formControlName="discount">
             </div>
 
-            <div class="p-2"></div>
+            <div class="p-2 "></div>
 
             <section>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <!-- <label class="btn btn-outline-success"><input type="radio" name="btn" >{{p}}</label> -->
-                    <label class="btn btn-outline-success"><input type="radio" value="a" name="payment"
+                <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                    <!-- <label class="btn btn-outline-success "><input type="radio " name="btn " >{{p}}</label> -->
+                    <label class="btn btn-outline-success "><input type="radio" value="Dinheiro" name="payment"
               formControlName="payment">Dinheiro</label>
-                    <label class="btn btn-outline-success"><input type="radio" value="b" name="payment"
+                    <label class="btn btn-outline-success "><input type="radio" value="Pix" name="payment"
               formControlName="payment">Pix</label>
-                    <label class="btn btn-outline-success"><input type="radio" value="c" name="payment"
+                    <label class="btn btn-outline-success "><input type="radio" value="Débito" name="payment"
               formControlName="payment">Débito</label>
-                    <label class="btn btn-outline-success"><input type="radio" value="d" name="payment"
+                    <label class="btn btn-outline-success "><input type="radio" value="Crédito" name="payment"
               formControlName="payment">Crédito</label>
-                    <label class="btn btn-outline-success"><input type="radio" value="e" name="payment"
+                    <label class="btn btn-outline-success "><input type="radio" value="Transferência" name="payment"
               formControlName="payment">Transferência</label>
                 </div>
-                <input type="text" style="display: none;">
+                <input type="text " style="display: none; ">
             </section>
         </div>
     </div>
 
 </div>
 
-<div class="modal-footer">
-    <!-- <button type="button" class="btn btn-default" (click)="doHide()">Fechar</button> -->
-    <div class="row">
-        <div class="col-6">
-            <button class="btn btn-warning" (click)="doHide()">Cancelar</button>
+<div class="modal-footer ">
+    <!-- <button type="button " class="btn btn-default " (click)="doHide() ">Fechar</button> -->
+    <div class="row ">
+        <div class="col-6 ">
+            <button class="btn btn-warning " (click)="doHide()">Cancelar</button>
         </div>
-        <div class="col-6">
-            <button class="btn btn-danger">Vender</button>
+        <div class="col-6 ">
+            <button [disabled]="!form.valid" class="btn btn-danger" (click)="selling()" (click)="doHide()">Vender</button>
         </div>
     </div>
 </div>
 
-{{form.value|json}}
+{{this.form.value|json}}

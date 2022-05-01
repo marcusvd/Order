@@ -8,21 +8,26 @@ import { ProductDto } from "src/app/company/product/dto/product-dto";
 import { Router } from "@angular/router";
 import { AlertsToastr } from 'src/app/company/shared/services/alerts-toastr';
 import { MeasureDto } from "src/app/company/measure/dto/measure-dto";
-import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Injectable()
-export class SellService extends CrudService<any, number>{
+export class SellService extends CrudService<ProductDto, number>{
 
   record: ProductDto = new ProductDto();
   private form: FormGroup;
+  private limits: boolean = false;
+
+
+
 
   constructor(
     override Http: HttpClient,
     public ModalService: BsModalService,
-    private Navigation: Router,
-    private AlertsToastr: AlertsToastr,
+    private _Navigation: Router,
+    private _AlertsToastr: AlertsToastr,
     private _Fb: FormBuilder
-  ) { super(Http, '') }
+  ) { super(Http, Url._PRODUCTS) }
   //Category
   toDeleteCat(id: number) {
     return this.Http.delete<CategoryDto>(`${Url._CATEGORIES}/${id}`)
@@ -38,42 +43,94 @@ export class SellService extends CrudService<any, number>{
 
 
   get paymentArray(): string[] {
-  const payments: string[] = ['Dinheiro', 'Pix', 'Débito', 'Crédito', 'Transferência'];
-  return payments;
-}
+    const payments: string[] = ['Dinheiro', 'Pix', 'Débito', 'Crédito', 'Transferência'];
+    return payments;
+  }
   get formGet(): FormGroup {
-   return this.form;
-}
+    return this.form;
+  }
+  get limitsBool(): boolean {
+    return this.limits;
+  }
+  //custom validators
+
+  ValidateQts(control?: AbstractControl) {
+
+    if (control.value > parseInt(sessionStorage.getItem('qts'))) {
+      return { empty: true };
+    }
+    return null;
+  }
+
+  formLoad(): FormGroup {
+    return this.form = this._Fb.group({
+      quantity: ['', [Validators.required, this.ValidateQts]],
+      discount: ['', [Validators.required]],
+      dateSell: ['', [Validators.required]],
+      payment: ['', [Validators.required]],
+    })
+  };
+
+  selling() {
+    if (this.record.quantity && this.formGet.get('quantity').value) {
+
+      if (this.record.quantity === this.formGet.get('quantity').value) {
+        this.delete(this.record).subscribe({
+          next: ((prod: ProductDto) => {
+            this._AlertsToastr.Notice(`Produto,  ${prod.name}`, 2, 'success');
+            this._Navigation.navigateByUrl('prodpagelist').then((item) => {
+              if (!item) {
+                this._Navigation.navigateByUrl('prodpagelistUpd');
+              }
+            });
+          }),
+          error: (error) => {
+            alert('deu ruim')
+          },
+        });
+        return null;
+      }
+      else {
+        this.record.quantity = this.record.quantity - this.formGet.get('quantity').value;
+      }
 
 
-formLoad() {
-console.log(this.getRecord.quantity)
-  return this.form = this._Fb.group({
-    quantity: ['', [Validators.required, this.qtsValidators]],
-    price: ['', []],
-    dateSell: ['', []],
-    payment: ['', []],
-  })
-}
+
+      this.update(this.record).subscribe({
+        next: ((prod: ProductDto) => {
+          this._AlertsToastr.Notice(`Produto,  ${prod.name}`, 1, 'success');
+          this._Navigation.navigateByUrl('prodpagelist').then((item) => {
+            if (!item) {
+              this._Navigation.navigateByUrl('prodpagelistUpd');
+            }
+          });
+        }),
+        error: (error) => {
+          alert('deu ruim')
+
+        },
+      });
+
+
+    }
+
+
+
+  }
+
+
+
+  //   if (this.record.quantity && this.formGet.get('quantity').value) {
+  //     this.record.quantity - this.formGet.get('quantity').value;
+  //     return this.update(this.record);
+  //   }
+  //   return null;
+  // }
 
 
   get getRecord() {
-  return this.record;
-}
-
-
-
-
-
-qtsValidators(control: AbstractControl): {[key: string]: any} | null{
-  if (control.value && control.value.length > this.record.quantity) {
-    return { 'Venda excedendo o número de produtos em estoque.': this.record.quantity };
+    return this.record;
   }
-  return null;
-}
-
 
 
 }
-
-

@@ -8,15 +8,24 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 })
 export class ValidatorsService {
 
-  public _contactForm: FormGroup;
-  public _addressForm: FormGroup;
-  public _characters: string = ' caracteres.';
+  private _contactForm: FormGroup;
+  private _addressForm: FormGroup;
+  private _characters: string = ' caracteres.';
   //length of min or max
-  public _length: number;
-  public _controlName: string;
-  public _minLen: string = 'Preenchimento, mínimo de pelo menos ';
-  public _maxLen: string = 'Preenchimento não pode ultrapassar ';
-  public _req: string = ' é de preenchimento obrigatório.';
+  private _length: number;
+  private _controlName: string;
+  private _minLen: string = 'Preenchimento, mínimo de pelo menos ';
+  private _maxLen: string = 'Preenchimento não pode ultrapassar ';
+  private _req: string = ' é de preenchimento obrigatório.';
+
+
+
+  //custom Validators
+  //quantity items to sell
+  private _quantity: string = 'O número de vendas excede o número em estoque.';
+
+
+
 
   constructor() { }
 
@@ -36,8 +45,18 @@ export class ValidatorsService {
       : form.get(ctrl).hasError('maxlength')
         ? `${this._maxLen}${lengthMax}${this._characters}`
         : form.get(ctrl).hasError('required')
-          ? `${ctrlToShow + ' '}${this._req}` : '';
+          ? `${ctrlToShow + ' '}${this._req}` :
+          form.get(ctrl).hasError('empty')
+        ? this._quantity :'';
   }
+  // required2(form: FormGroup, ctrl: string, ctrlToShow: string, lengthMin?: number, lengthMax?: number) {
+  //   return form.get(ctrl).hasError('minlength')
+  //     ? `${this._minLen}${lengthMin}${this._characters}`
+  //     : form.get(ctrl).hasError('maxlength')
+  //       ? `${this._maxLen}${lengthMax}${this._characters}`
+  //       : form.get(ctrl).hasError('required')
+  //         ? `${ctrlToShow + ' '}${this._req}` : '';
+  // }
   mailField(ctrl: string, msgEmail: string, msgMax: string, msgReq: string, form: FormGroup) {
     return form.get(ctrl).hasError('email')
       ? msgEmail
