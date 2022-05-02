@@ -15,8 +15,7 @@
 
                             <span id="searchbadge" class="badge bg-warning">
 
-                              <input  id="searchinput" class="form-control"
-                  (input)="filterProducts($event)">
+                <input id="searchinput" class="form-control" (input)="filterProducts($event)">
               </span>
                         </td>
                         <td class="col-6 ">
@@ -41,12 +40,19 @@
                     <div class="list-group-item-warning">
                         <div class="row">
                             <div class="pt-2 col-9 align-self-end">
-                                <h6>Quantidade: <span class="badge bg-success ">{{prod.quantity}}</span></h6>
+                                <div *ngIf="!toCheckQts(prod.quantity)">
+                                    <h6>Quantidade: <span class="badge bg-success">{{prod.quantity}}</span></h6>
+                                </div>
+                                <div *ngIf="toCheckQts(prod.quantity)">
+                                    <h6>Quantidade: <span class="badge bg-danger">{{prod.quantity}}</span></h6>
+                                </div>
+
                                 <h6>Preço: <span class="badge bg-success ">{{prod.price | currency:'R$ ':true}}</span></h6>
                             </div>
 
                             <section class="col-3 pt-2 pb-2 align-self-center">
-                                <button tooltip="Deletar {{prod.name}}" class="btn btn-outline-dark bi bi-cart4" (click)="toSell(prod)"></button>
+                                <button tooltip="Deletar {{prod.name}}" class="btn btn-outline-dark bi bi-trash" (click)="toDelete(prod)"></button>
+                                <button [disabled]="toCheckQts(prod.quantity)" tooltip="Vender {{prod.name}}" class="btn btn-outline-dark bi bi-cart4" (click)="toSell(prod)"></button>
                                 <button tooltip="Editar {{prod.name}}" class="btn btn-outline-dark bi bi-pen " [routerLink]="['/product', prod.id, 'edit']"></button>
                                 <button tooltip="Detalhes {{prod.name}}" class="btn btn-outline-dark bi bi-info-square" (click)="toInfo(prod)"></button>
                             </section>

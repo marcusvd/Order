@@ -19,8 +19,6 @@ export class SellService extends CrudService<ProductDto, number>{
   private limits: boolean = false;
 
 
-
-
   constructor(
     override Http: HttpClient,
     public ModalService: BsModalService,
@@ -64,8 +62,8 @@ export class SellService extends CrudService<ProductDto, number>{
 
   formLoad(): FormGroup {
     return this.form = this._Fb.group({
-      quantity: ['', [Validators.required, this.ValidateQts]],
-      discount: ['', [Validators.required]],
+      quantity: ['', [Validators.required, this.ValidateQts, Validators.min(0)]],
+      discount: ['', []],
       dateSell: ['', [Validators.required]],
       payment: ['', [Validators.required]],
     })
@@ -74,10 +72,23 @@ export class SellService extends CrudService<ProductDto, number>{
   selling() {
     if (this.record.quantity && this.formGet.get('quantity').value) {
 
-      if (this.record.quantity === this.formGet.get('quantity').value) {
-        this.delete(this.record).subscribe({
+      if (this.formGet.get('quantity').value <= this.record.quantity) {
+
+
+        ///const result = this.record.quantity - this.formGet.get('quantity').value;
+        this.record.quantity = this.record.quantity - this.formGet.get('quantity').value;
+
+
+        // if (result === 0) {
+        //   this.record.quantity = 0;
+        // }
+        // else {
+        //   this.record.quantity = result;
+        // }
+        console.log(this.record)
+        this.update(this.record).subscribe({
           next: ((prod: ProductDto) => {
-            this._AlertsToastr.Notice(`Produto,  ${prod.name}`, 2, 'success');
+            this._AlertsToastr.Notice(`Produto,  ${prod.name}`, 1, 'success');
             this._Navigation.navigateByUrl('prodpagelist').then((item) => {
               if (!item) {
                 this._Navigation.navigateByUrl('prodpagelistUpd');
@@ -85,31 +96,20 @@ export class SellService extends CrudService<ProductDto, number>{
             });
           }),
           error: (error) => {
-            alert('deu ruim')
+            alert(error)
+
           },
         });
+
         return null;
       }
       else {
-        this.record.quantity = this.record.quantity - this.formGet.get('quantity').value;
+        alert('deu ruim')
       }
 
 
 
-      this.update(this.record).subscribe({
-        next: ((prod: ProductDto) => {
-          this._AlertsToastr.Notice(`Produto,  ${prod.name}`, 1, 'success');
-          this._Navigation.navigateByUrl('prodpagelist').then((item) => {
-            if (!item) {
-              this._Navigation.navigateByUrl('prodpagelistUpd');
-            }
-          });
-        }),
-        error: (error) => {
-          alert('deu ruim')
 
-        },
-      });
 
 
     }

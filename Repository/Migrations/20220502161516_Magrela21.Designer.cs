@@ -9,7 +9,7 @@ using Repository.Data;
 namespace Repository.Migrations
 {
     [DbContext(typeof(OSDbContext))]
-    [Migration("20220423214548_Magrela21")]
+    [Migration("20220502161516_Magrela21")]
     partial class Magrela21
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

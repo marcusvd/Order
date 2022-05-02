@@ -10,7 +10,8 @@ import localeBr from '@angular/common/locales/br';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ValidatorsService } from '../../services/validators.service';
 import { AlertsToastr } from '../../services/alerts-toastr';
-
+import { defineLocale, ptBrLocale } from 'ngx-bootstrap/chronos';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 @Component({
   selector: 'sell',
   templateUrl: './sell.component.html',
@@ -18,8 +19,11 @@ import { AlertsToastr } from '../../services/alerts-toastr';
 })
 export class SellComponent implements OnInit {
 
-  FORM: FormGroup;
+
   warning: string;
+  //indexNamed: string;
+  myRegion: string = 'pt-br';
+  quantity: number;
 
   constructor(
     private _sellService: SellService,
@@ -27,10 +31,14 @@ export class SellComponent implements OnInit {
     private _ValidatorsSrv: ValidatorsService,
     private _AlertsToastr: AlertsToastr,
     private _Navigation: Router,
+    private _LocaleService: BsLocaleService,
+  ) {
+    registerLocaleData(localeBr, 'br');
+    this._LocaleService.use(this.myRegion);
+    defineLocale('pt-br', ptBrLocale);
+   }
 
 
-
-  ) { registerLocaleData(localeBr, 'br'); }
 
   doHide() {
     this._modalRef.hide();
@@ -44,13 +52,12 @@ export class SellComponent implements OnInit {
     return this._sellService.limitsBool;
   }
 
-
   get form(): FormGroup {
     return this._sellService.formGet;
   }
 
   get pay(): string[] {
-    return this._sellService.paymentArray;
+    return this._sellService.paymentArray.sort();
   }
 
 
@@ -71,6 +78,7 @@ export class SellComponent implements OnInit {
   selling() {
     return this._sellService.selling();
   }
+
 
 
   // .subscribe({
@@ -94,10 +102,12 @@ export class SellComponent implements OnInit {
 
     const tries = this._sellService.ModalService.config.initialState['list']['record'] as ProductDto
     sessionStorage.setItem('qts', tries.quantity.toString());
-    this._sellService.formLoad();
+
+    this.quantity = parseInt( sessionStorage.getItem('qts'));
+
     this._sellService.record = this._sellService.ModalService.config.initialState['list']['record'] as ProductDto;
 
-
+    this._sellService.formLoad();
   }
 
 }

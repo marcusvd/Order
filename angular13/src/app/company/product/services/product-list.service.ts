@@ -111,20 +111,20 @@ sppinerStar(){
 
 
   }
-  // toDelete(record: any) {
-  //   record.who = 'product'
-  //   const initState: ModalOptions = {
-  //     initialState: {
-  //       list: { record },
-  //       title: 'Exclusão definitiva de registro.',
-  //     },
+  toDelete(record: any) {
+    record.who = 'product'
+    const initState: ModalOptions = {
+      initialState: {
+        list: { record },
+        title: 'Exclusão definitiva de registro.',
+      },
 
-  //   };
-  //   this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
-  //   this.bsModalRef.content.closeBtnName = 'Close';
+    };
+    this.bsModalRef = this._BsModalService.show(DeleteComponent, initState);
+    this.bsModalRef.content.closeBtnName = 'Close';
 
 
-  // }
+  }
   toInfo(record: ProductDto) {
     const initState: ModalOptions = {
       initialState: {

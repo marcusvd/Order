@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -14,6 +15,7 @@ import { ProductListService } from '../services/product-list.service';
 })
 export class ProductPagelistComponent implements OnInit {
 
+  ebableDisableSell: boolean;
 
   constructor(
     private _ProductServices: ProductListService
@@ -25,9 +27,17 @@ export class ProductPagelistComponent implements OnInit {
   toSell(p: ProductDto) {
     this._ProductServices.toSell(p);
   }
-  // toDelete(p: ProductDto) {
-  //   this._ProductServices.toDelete(p);
-  // }
+  toDelete(p: ProductDto) {
+    this._ProductServices.toDelete(p);
+  }
+  toCheckQts(p: number) {
+    if (p === 0) {
+      return this.ebableDisableSell = true;
+    }
+    else {
+      return this.ebableDisableSell = false;
+    }
+  }
   toInfo(p: ProductDto) {
     this._ProductServices.toInfo(p);
   }
@@ -51,6 +61,7 @@ export class ProductPagelistComponent implements OnInit {
   ngOnInit(): void {
     this._ProductServices.sppinerStar();
     this._ProductServices.loadProductsToView();
+
   }
 
 }

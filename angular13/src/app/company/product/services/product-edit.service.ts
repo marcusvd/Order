@@ -183,9 +183,9 @@ export class ProductEditService extends CrudService<ProductDto, number> {
     mes.push(unit);
   }
   updateProduct() {
-    this.formProductEdit.value.height += ' ' + this.height
-    this.formProductEdit.value.width += ' ' + this.width
-    this.formProductEdit.value.depth += ' ' + this.depth
+    this.formProductEdit.value.height = ' ' + this.height
+    this.formProductEdit.value.width = ' ' + this.width
+    this.formProductEdit.value.depth = ' ' + this.depth
     if (!this.formProductEdit.value.maxstacked) {
       this.formProductEdit.value.maxstacked = 0;
     }

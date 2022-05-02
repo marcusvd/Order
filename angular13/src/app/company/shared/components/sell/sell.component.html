@@ -1,8 +1,7 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">Venda...</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="doHide()">
+<div class="modal-header justify-content-center">
+    <h4 class="modal-title">{{getRecord.name}}</h4>
+
     <span aria-hidden="true" class="visually-hidden">&times;</span>
-  </button>
 </div>
 <div class="modal-body">
 
@@ -10,7 +9,8 @@
         <div class="row">
             <div class="col-6">
                 <label>Quantidade</label>
-                <input class="form-control" type="number" formControlName="quantity" [ngClass]="{'is-invalid':  touchedErrors('quantity', this.form) }">
+                <input class="form-control" type="number" formControlName="quantity" [ngClass]="{'is-invalid':  touchedErrors('quantity', this.form) }" min="0">
+                <!-- min="0" -->
 
                 <div class=" invalid-feedback ">
                     {{required(this.form, 'quantity', 'Quantidade', 1, null)}}
@@ -19,50 +19,47 @@
                     {{this.warning}}
 
                 </div> -->
-                <div class="p-3"></div>
-            </div>
-            <div class="col-6 ">
-                <div class="col-1 ">
-                    <label>Preço</label>
-                    <!-- <input type="text " class="form-control " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false } " ngModel> -->
-                </div>
-                <div class="col-4 ">
 
-                    <div class="align-items " style="font-size:25px; ">
-                        <!-- {{'R$ '}}{{ getRecord.price | currency:'.':'':'':'br'}} -->
-                        {{getRecord.price | currency:'BRL':true:'1.2-2'}}
-                    </div>
-                    <!-- <input type="text " class="form-control " formControlName="price" style="display: none; "> -->
-                </div>
             </div>
+            <table class="col-6">
+                <tr>
+                    <td>
+                        <!-- <input type="text " class="form-control " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false } " ngModel> -->
+                    </td>
+
+                    <td style="text-align: center; font-size:25px">
+                        {{getRecord.price | currency:'BRL':true:'1.2-2'}}
+                        <!-- <label>Preço</label> -->
+                        <!-- <div class="align-items " style="font-size:25px; "> -->
+                        <!-- {{'R$ '}}{{ getRecord.price | currency:'.':'':'':'br'}} -->
+                        <!-- </div> -->
+                        <!-- <input type="text " class="form-control " formControlName="price" style="display: none; "> -->
+                    </td>
+                </tr>
+            </table>
         </div>
-        <div class="row ">
-            <div class="col-6 ">
+        <div class="row">
+            <div class="col-6">
                 <label>Data</label>
-                <input bsDatepicker class="form-control " type="text " formControlName="dateSell">
+                <input bsDatepicker class="justify-content-center form-control" type="text " formControlName="dateSell">
             </div>
             <div class="col-6 ">
                 <label>Desconto</label>
                 <input type="text " class="form-control " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false } " ngModel formControlName="discount">
             </div>
 
-            <div class="p-2 "></div>
+            <div class="p-2"></div>
 
-            <section>
-                <div class="btn-group btn-group-toggle " data-toggle="buttons ">
-                    <!-- <label class="btn btn-outline-success "><input type="radio " name="btn " >{{p}}</label> -->
-                    <label class="btn btn-outline-success "><input type="radio" value="Dinheiro" name="payment"
-              formControlName="payment">Dinheiro</label>
-                    <label class="btn btn-outline-success "><input type="radio" value="Pix" name="payment"
-              formControlName="payment">Pix</label>
-                    <label class="btn btn-outline-success "><input type="radio" value="Débito" name="payment"
-              formControlName="payment">Débito</label>
-                    <label class="btn btn-outline-success "><input type="radio" value="Crédito" name="payment"
-              formControlName="payment">Crédito</label>
-                    <label class="btn btn-outline-success "><input type="radio" value="Transferência" name="payment"
-              formControlName="payment">Transferência</label>
+            <section class="col d-flex bd-highlight">
+                <div class="d-flex bd-highlight" *ngFor="let p of pay; let i = index;">
+                    <div class="d-flex bd-highlight btn-group btn-group-toggle" data-toggle="buttons">
+                        <label id="radio" id="pay" class="btn btn-outline-success">
+                          <input class="radio" id="pay" type="radio" [value]="i" name="payment" formControlName="payment">
+                          {{p}}
+                          </label>
+                    </div>
+
                 </div>
-                <input type="text " style="display: none; ">
             </section>
         </div>
     </div>
@@ -71,14 +68,24 @@
 
 <div class="modal-footer ">
     <!-- <button type="button " class="btn btn-default " (click)="doHide() ">Fechar</button> -->
-    <div class="row ">
-        <div class="col-6 ">
-            <button class="btn btn-warning " (click)="doHide()">Cancelar</button>
-        </div>
-        <div class="col-6 ">
-            <button [disabled]="!form.valid" class="btn btn-danger" (click)="selling()" (click)="doHide()">Vender</button>
-        </div>
-    </div>
+
+
+    <table class="col">
+        <tr>
+            <td class="col-2">
+                <span>{{'ESTOQUE'}}</span>
+            </td>
+            <td>
+                <span style="color: green;">{{this.quantity}}</span>
+            </td>
+            <td class="col-4" style="float: right;">
+                <button [disabled]="!form.valid" class="btn btn-warning" (click)="selling()" (click)="doHide()" style="float: right;">Vender</button>
+            </td>
+            <td class="col-6" style="float: right;">
+                <button style="float: right;" class="btn btn-danger" (click)="doHide()">Cancelar</button>
+            </td>
+        </tr>
+    </table>
 </div>
 
-{{this.form.value|json}}
+<!-- {{this.form.value|json}} -->

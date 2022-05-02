@@ -15,6 +15,7 @@ export class ValidatorsService {
   private _length: number;
   private _controlName: string;
   private _minLen: string = 'Preenchimento, mínimo de pelo menos ';
+  private _minLe: string = 'Preenchimento, mínimo de pelo menos ';
   private _maxLen: string = 'Preenchimento não pode ultrapassar ';
   private _req: string = ' é de preenchimento obrigatório.';
 
@@ -42,12 +43,14 @@ export class ValidatorsService {
   required2(form: FormGroup, ctrl: string, ctrlToShow: string, lengthMin?: number, lengthMax?: number) {
     return form.get(ctrl).hasError('minlength')
       ? `${this._minLen}${lengthMin}${this._characters}`
-      : form.get(ctrl).hasError('maxlength')
-        ? `${this._maxLen}${lengthMax}${this._characters}`
-        : form.get(ctrl).hasError('required')
-          ? `${ctrlToShow + ' '}${this._req}` :
-          form.get(ctrl).hasError('empty')
-        ? this._quantity :'';
+      : form.get(ctrl).hasError('min')
+        ? `${this._minLe}${lengthMin}${this._characters}`
+        : form.get(ctrl).hasError('maxlength')
+          ? `${this._maxLen}${lengthMax}${this._characters}`
+          : form.get(ctrl).hasError('required')
+            ? `${ctrlToShow + ' '}${this._req}` :
+            form.get(ctrl).hasError('empty')
+              ? this._quantity : '';
   }
   // required2(form: FormGroup, ctrl: string, ctrlToShow: string, lengthMin?: number, lengthMax?: number) {
   //   return form.get(ctrl).hasError('minlength')

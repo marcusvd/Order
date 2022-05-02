@@ -8,6 +8,7 @@ namespace Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Manufacturer { get; set; }
+        [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
         public DateTime Date { get; set; }
         public int SubCategoryId { get; set; }

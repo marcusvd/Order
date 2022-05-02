@@ -9,21 +9,28 @@ namespace Application.Dtos
         [Required(ErrorMessage = "{0}, precisa ser preenchido.")]
         [StringLength(150, MinimumLength = 3, ErrorMessage = "{0} deve conter no mínimo 3 e o máximo de 150 carácteres.")]
         public string Name { get; set; }
+
+
         [StringLength(150, ErrorMessage = ("{0} deve conter o máximo de 1000 carácteres."))]
         public string Manufacturer { get; set; }
-        [Required(ErrorMessage = "{0}, precisa ser preenchido.")]
-        [Range(1, 100000)]
+
+
+        [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
+
         [Required(ErrorMessage = "{0}, precisa ser preenchido.")]
         public DateTime Date { get; set; }
         public int CategoryId { get; set; }
         public CategoryDto Category { get; set; }
         public int SubCategoryId { get; set; }
-        public SubCategoryDto SubCategory { get; set; }        // [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999999.99)]
+        public SubCategoryDto SubCategory { get; set; }
+
+
+        [Range(0, int.MaxValue)]
         public decimal Price { get; set; }
         // [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999999.99)]
+
+        [Range(0, int.MaxValue)]
         public decimal Cost { get; set; }
         //dimensions
         [StringLength(25, ErrorMessage = ("{0} deve conter o máximo de 25 carácteres."))]
@@ -42,7 +49,7 @@ namespace Application.Dtos
         public string Format { get; set; }
 
         public int Maxstacked { get; set; }
-        
+
         public int Weight { get; set; }
 
         public int UnitOfMeasureId { get; set; }

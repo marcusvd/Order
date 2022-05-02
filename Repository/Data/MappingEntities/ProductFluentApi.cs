@@ -27,6 +27,7 @@ namespace Repository.Data.MappingEntities
             builder.Property(_d => _d.Depth).HasMaxLength(25);
             builder.Property(_s => _s.Format).HasMaxLength(150);
             builder.Property(_s => _s.State).HasMaxLength(30);
+            // builder.Property(_s => _s.State).
             builder.Property(_s => _s.Storage).HasMaxLength(30);
             builder.Property(_m => _m.Manufacturer).HasMaxLength(150);
             builder.Property(_d => _d.Description).HasMaxLength(1000);
