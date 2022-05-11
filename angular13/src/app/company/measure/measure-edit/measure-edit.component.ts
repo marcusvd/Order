@@ -49,8 +49,8 @@ export class MeasureEditComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this._MeaServices.UnitOfMeasureDto = this._MeaServices.record;
-    this._MeaServices.formLoad(this._MeaServices.UnitOfMeasureDto);
+    this._MeaServices.MeasureDto = this._MeaServices.record;
+    this._MeaServices.formLoad(this._MeaServices.MeasureDto);
   }
 
 }

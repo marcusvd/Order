@@ -1,6 +1,4 @@
-﻿using System;
-using Domain.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,21 +15,14 @@ namespace Repository.Data.MappingEntities
             .HasOne<SubCategory>(_sub => _sub.SubCategory)
             .WithMany(_product => _product.Products).HasForeignKey(_f => _f.SubCategoryId).OnDelete(DeleteBehavior.Restrict);
             builder
-            .HasOne<UnitOfMeasure>(_um => _um.UnitOfMeasure)
+            .HasOne<Measure>(_um => _um.Measure)
             .WithMany(_product => _product.Products)
-            .HasForeignKey(_f => _f.UnitOfMeasureId).OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(_f => _f.MeasureId).OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(_n => _n.Name).HasMaxLength(150).IsRequired();
-            builder.Property(_h => _h.Height).HasMaxLength(25);
-            builder.Property(_w => _w.Width).HasMaxLength(25);
-            builder.Property(_d => _d.Depth).HasMaxLength(25);
-            builder.Property(_s => _s.Format).HasMaxLength(150);
-            builder.Property(_s => _s.State).HasMaxLength(30);
-            // builder.Property(_s => _s.State).
-            builder.Property(_s => _s.Storage).HasMaxLength(30);
             builder.Property(_m => _m.Manufacturer).HasMaxLength(150);
             builder.Property(_d => _d.Description).HasMaxLength(1000);
-            builder.Property(_c => _c.Comments).HasMaxLength(1000);
+            builder.Property(_b => _b.BarCode).HasMaxLength(1000);
 
         }
     }

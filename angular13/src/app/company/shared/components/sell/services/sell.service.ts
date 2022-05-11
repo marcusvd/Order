@@ -64,7 +64,7 @@ export class SellService extends CrudService<ProductDto, number>{
     return this.form = this._Fb.group({
       quantity: ['', [Validators.required, this.ValidateQts, Validators.min(0)]],
       discount: ['', []],
-      dateSell: ['', [Validators.required]],
+      dateSell: ['', []],
       payment: ['', [Validators.required]],
     })
   };
@@ -74,17 +74,9 @@ export class SellService extends CrudService<ProductDto, number>{
 
       if (this.formGet.get('quantity').value <= this.record.quantity) {
 
-
-        ///const result = this.record.quantity - this.formGet.get('quantity').value;
         this.record.quantity = this.record.quantity - this.formGet.get('quantity').value;
 
-
-        // if (result === 0) {
-        //   this.record.quantity = 0;
-        // }
-        // else {
-        //   this.record.quantity = result;
-        // }
+        this.record.date = new Date();
         console.log(this.record)
         this.update(this.record).subscribe({
           next: ((prod: ProductDto) => {

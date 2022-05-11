@@ -8,7 +8,7 @@ import { CategoryDto } from "src/app/company/category/dto/category-dto";
 import { ProductDto } from "../dto/product-dto";
 import { SubCategoryDto } from "src/app/company/category/dto/sub-category-dto";
 import { ProductEditDto } from "../dto/product-edit-dto";
-import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
+import { MeasureDto } from "../../measure/dto/measure-dto";
 import { CrudService } from "../../shared/services/crud.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 
@@ -23,27 +23,14 @@ export class ProductEditService extends CrudService<ProductDto, number> {
     super(Http, Url._PRODUCTS);
   }
 
-  measureArray: string[];
-  storageArray: string[];
-  storage: string;
-  formatArray: string[];
-  format: string;
-  stateArray: string[];
-  state: string;
   categories: CategoryDto[] = [];
   subCat: SubCategoryDto[] = [];
-  uOfMeasures: UnitOfMeasureDto[] = [];
+  measures: MeasureDto[];
   prod: ProductEditDto = new ProductEditDto();
   formProductEdit: FormGroup;
-  height: string;
-  width: string;
-  depth: string;
-  strHeightCompare: string;
-  strWidthCompare: string;
-  strDepthCompare: string;
-  CategoryIdCompare: number;
-  SubCategoryIdCompare: number;
-  MeasureIdCompare: number;
+  categoryIdCompare: number;
+ subCategoryIdCompare: number;
+  measureIdCompare: number;
   prodToLoad: ProductEditDto = new ProductEditDto();
 
   formEdit() {
@@ -59,39 +46,18 @@ export class ProductEditService extends CrudService<ProductDto, number> {
       price: ['', [Validators.required]],
       cost: ['', [Validators.required]],
 
-      height: ['', [Validators.maxLength(25)]],
-      width: ['', [Validators.maxLength(25)]],
-      depth: ['', [Validators.maxLength(25)]],
-      format: ['', [Validators.maxLength(150)]],
-
-      state: ['', [Validators.maxLength(30)]],
-      storage: ['', [Validators.maxLength(30)]],
-      maxstacked: ['', [Validators.maxLength(100000)]],
-
-      unitOfMeasureId: ['', [Validators.required]],
+      measureId: ['', [Validators.required]],
       weight: ['', [Validators.maxLength(100000)]],
       description: ['', [Validators.maxLength(1000)]],
-      comments: ['', [Validators.maxLength(1000)]]
+      barCode: ['', [Validators.maxLength(1000)]]
     })
   }
-  loadSelects() {
-    this.measureArray = [];
-    this.measureArray.push('(MM) - Milímetro(s)', '(CM) - Centímetro(s)', '(M) - Metro(s)');
 
-    this.storageArray = [];
-    this.storageArray.push('Empilhado(s)', 'Lado a lado', 'Empilhado(s) e lado a lado', 'Selecione');
-
-    this.formatArray = [];
-    this.formatArray.push('Quadrada', 'Retangular', 'Cilindrica', 'Triangular', 'Linear', 'Hìbrido', 'Selecione');
-
-    this.stateArray = [];
-    this.stateArray.push('Sólido', 'Líquido', 'Gasoso', 'Selecione');
-    // this.OnLoadCategory();
-  }
   loadCategories(cat: CategoryDto[]) {
     this.categories = cat
     cat.forEach(_CatItem => {
       this.subCat = _CatItem.subCategories;
+      console.log(this.subCat)
     })
   }
   OnChangeCategory($event: any) {
@@ -101,41 +67,15 @@ export class ProductEditService extends CrudService<ProductDto, number> {
       }
     })
   }
-  OnChangeHeigth($event: any) {
-    this.height = $event.target.value;
-  }
-  OnChangeWidth($event: any) {
-    this.width = $event.target.value;
-  }
-  OnChangeDepth($event: any) {
-    this.depth = $event.target.value;
-  }
+
   loadCatById(id: number): Observable<CategoryDto> {
     return this.Http.get<CategoryDto>(`${Url._CATEGORIES}/${id}`).pipe(take(1));
   }
-  productEditing(item: ProductEditDto, cat: CategoryDto[], mes: UnitOfMeasureDto[]) {
+  productEditing(item: ProductEditDto, cat: CategoryDto[], mes: MeasureDto[]) {
+
 
     this.loadCategories(cat);
 
-    this.state = item.state
-    this.storage = item.storage;
-    this.format = item.format;
-
-    this.measureArray.forEach((itemFor: string) => {
-      if (itemFor.split('-')[1] === item.height.split('-')[1]) {
-        this.strHeightCompare = itemFor
-      }
-    })
-    this.measureArray.forEach((itemFor: string) => {
-      if (itemFor.split('-')[1] === item.width.split('-')[1]) {
-        this.strWidthCompare = itemFor
-      }
-    })
-    this.measureArray.forEach((itemFor: string) => {
-      if (itemFor.split('-')[1] === item.depth.split('-')[1]) {
-        this.strDepthCompare = itemFor
-      }
-    })
     this.formProductEdit.patchValue({
       id: item.id,
       name: item.name,
@@ -149,46 +89,39 @@ export class ProductEditService extends CrudService<ProductDto, number> {
       price: item.price,
       cost: item.cost,
       //dimensions
-      height: item.height.split('(')[0].trim(),
-      width: item.width.split('(')[0].trim(),
-      depth: item.depth.split('(')[0].trim(),
-      format: item.format,
-      //state material
-      state: item.state,
-      storage: item.storage,
-      maxstacked: item.maxstacked,
-      unitOfMeasure: item.unitOfMeasure,
-      unitOfMeasureId: item.unitOfMeasureId,
+
+      measure: item.measure,
+      measureId: item.measureId,
       weight: item.weight,
       description: item.description,
-      comments: item.comments,
+      barCode: item.barCode,
     });
+
     this.prodToLoad = { ...item }
-    this.CategoryIdCompare = item.categoryId;
-    this.SubCategoryIdCompare = item.subCategoryId;
+    this.categoryIdCompare = item.categoryId;
+    this.subCategoryIdCompare = item.subCategoryId;
     cat.find((singleCat: CategoryDto) => {
       if (singleCat.id === item.categoryId) {
         this.subCat = singleCat.subCategories;
       }
     })
-    this.uOfMeasures = mes;
-    mes.forEach((_unit: UnitOfMeasureDto) => {
-      if (_unit.id === item.unitOfMeasureId) {
-        this.MeasureIdCompare = _unit.id;
+
+    this.measures = [];
+    this.measures = mes;
+
+console.log(item.measureId)
+    mes.forEach((_unit: MeasureDto) => {
+      if (_unit.id === item.measureId) {
+        this.measureIdCompare = _unit.id;
       }
     })
-    const unit: UnitOfMeasureDto = new UnitOfMeasureDto();
-    unit.name = 'Selecione';
-    unit.description = 'Selecione';
-    mes.push(unit);
+    // const unit: MeasureDto = new MeasureDto();
+    // unit.name = 'Selecione';
+    // unit.description = 'Selecione';
+    // mes.push(unit);
   }
   updateProduct() {
-    this.formProductEdit.value.height = ' ' + this.height
-    this.formProductEdit.value.width = ' ' + this.width
-    this.formProductEdit.value.depth = ' ' + this.depth
-    if (!this.formProductEdit.value.maxstacked) {
-      this.formProductEdit.value.maxstacked = 0;
-    }
+
     const toSave: ProductDto = { ...this.formProductEdit.value }
     //if you dont chnage the date and update, will try to save as a string and it will generate some error, the code  below handler this.
     if (typeof (this.formProductEdit.value.date) === 'string') {

@@ -9,7 +9,7 @@ import * as moment from 'moment';
 
 
 import { CategoryDto } from 'src/app/company/category/dto/category-dto';
-import { UnitOfMeasureDto } from '../../measure/dto/unit-of-measure';
+
 import { ProductDto } from '../dto/product-dto';
 import { ProductEditService } from '../services/product-edit.service';
 import { ProductEditDto } from '../dto/product-edit-dto';
@@ -54,8 +54,8 @@ export class ProductEditComponent implements OnInit {
   get SubCategories(): SubCategoryDto[] {
     return this._ProductService.subCat;
   }
-  get Measures(): MeasureDto[] {
-    return this._ProductService.uOfMeasures;
+  get measures(): MeasureDto[] {
+    return this._ProductService.measures;
   }
   Required(form: FormGroup, ctrl: string, ctrlToShow: string, lengthMin?: number, lengthMax?: number) {
     return this._ValidatorsSrv.required2(form,
@@ -70,15 +70,6 @@ export class ProductEditComponent implements OnInit {
       formGroup,
     )
   }
-  OnChangeHeigth($event: any) {
-    this._ProductService.height = $event.target.value;
-  }
-  OnChangeWidth($event: any) {
-    this._ProductService.width = $event.target.value;
-  }
-  OnChangeDepth($event: any) {
-    this._ProductService.depth = $event.target.value;
-  }
 
   onChangeCategory($event): void {
     this._ProductService.OnChangeCategory($event)
@@ -87,43 +78,14 @@ export class ProductEditComponent implements OnInit {
     this._ProductService.updateProduct();
   }
   get compareCat(): number {
-    return this._ProductService.CategoryIdCompare;
+    return this._ProductService.categoryIdCompare;
   }
   get compareSub(): number {
-    return this._ProductService.SubCategoryIdCompare;
+    return this._ProductService.subCategoryIdCompare;
   }
-  get formatStrArray(): string[] {
-    return this._ProductService.formatArray;
-  }
-  get measureStrArray(): string[] {
-    return this._ProductService.measureArray;
-  }
-  get stateStrArray(): string[] {
-    return this._ProductService.stateArray;
-  }
-  get storageStrArray(): string[] {
-    return this._ProductService.storageArray;
-  }
-  get formatStr(): string {
-    return this._ProductService.format;
-  }
-  get storageStr(): string {
-    return this._ProductService.storage;
-  }
-  get stateStr(): string {
-    return this._ProductService.state;
-  }
-  get strHeightCompare(): string {
-    return this._ProductService.strHeightCompare;
-  }
-  get strWidthCompare(): string {
-    return this._ProductService.strWidthCompare;
-  }
-  get strDepthCompare(): string {
-    return this._ProductService.strDepthCompare;
-  }
+
   get compareMes(): number {
-    return this._ProductService.MeasureIdCompare;
+    return this._ProductService.measureIdCompare;
   }
   callToEdit() {
     let p: ProductEditDto;
@@ -133,17 +95,11 @@ export class ProductEditComponent implements OnInit {
         p = item.loaded['prod'] as ProductEditDto
         let datePtBr = moment(p.date).format("DD-MM-YYYY");
         p.date = datePtBr;
-        this._ProductService.productEditing
-          (
-            p,
-            item.loaded['cat'] as CategoryDto[],
-            item.loaded['mse'] as UnitOfMeasureDto[]
-          );
+        this._ProductService.productEditing(p, item.loaded['cat'] as CategoryDto[], item.loaded['mes'] as MeasureDto[]);
       }
     })
   }
   ngOnInit(): void {
-    this._ProductService.loadSelects();
     this._ProductService.formEdit();
     this.callToEdit();
   }

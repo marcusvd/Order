@@ -5,7 +5,7 @@ import { map, take } from "rxjs";
 import { Router } from "@angular/router";
 
 import { CrudService } from "../../shared/services/crud.service";
-import { UnitOfMeasureDto } from "../dto/unit-of-measure";
+import { MeasureDto } from "../dto/measure-dto";
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { Url } from "../../back-end/back-end";
@@ -14,7 +14,7 @@ import { DeleteComponent } from "../../shared/components/delete/delete.component
 
 
 @Injectable()
-export class MeasureInsertService extends CrudService<UnitOfMeasureDto, number>{
+export class MeasureInsertService extends CrudService<MeasureDto, number>{
 
 
   formInsert: FormGroup;
@@ -34,7 +34,7 @@ export class MeasureInsertService extends CrudService<UnitOfMeasureDto, number>{
   //tokenHeader = new HttpHeaders({ 'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('usr')).token}` })
   //,{headers:this.tokenHeader}
   loadMeasures() {
-    return this.Http.get<UnitOfMeasureDto[]>(Url._UNITOFMEASURES).pipe(map((cat) => cat), take(1));
+    return this.Http.get<MeasureDto[]>(Url._UNITOFMEASURES).pipe(map((cat) => cat), take(1));
   }
 
   public measureInsertShow: boolean = false;
@@ -60,7 +60,7 @@ export class MeasureInsertService extends CrudService<UnitOfMeasureDto, number>{
 
   save() {
 
-    const toSave: UnitOfMeasureDto = { ...this.formInsert.value }
+    const toSave: MeasureDto = { ...this.formInsert.value }
     this.add(toSave).subscribe(() => {
       this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formInsert);
       this._AlertsToastr.Notice(`Unidade de medida, ${toSave.description}`, 0, 'success');

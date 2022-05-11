@@ -1,340 +1,151 @@
 <div class="container-fluid;" id="general_container">
     <div class="row">
-        <div class="col" style="margin: 20px; color: transparent;" id="myForm">
-            <div>
-                <h1 style="text-align: center; margin-top: 20px;">PRODUTO</h1>
-            </div>
-            <div>
-                <div>
-                    <form [formGroup]="formProductInsert" class="form-group" class="col-12">
-                        <div class="p-2"></div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="pt-3">
-                                    <h6 style="color: black;">Identificação</h6>
-                                </div>
-                                <div class="col-4">
-                                    <label>Nome</label>
-                                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': touchedErrors('name', formProductInsert)}">
-                                    <div class="invalid-feedback">
-                                        {{required(formProductInsert, 'name', 'Nome', 3, 150)}}
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <label>Fabricante</label>
-                                    <input type="text" class="form-control" formControlName="manufacturer" [ngClass]="{'is-invalid': touchedErrors('manufacturer', formProductInsert)}">
-                                    <div class="invalid-feedback">
-                                        {{required(formProductInsert, 'manufacturer', 'Fabricante', 3, 150)}}
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <label>Compra</label>
-                                    <input bsDatepicker [bsConfig]={} type="text" class="form-control" formControlName="date" [ngClass]="{'is-invalid': touchedErrors('date', formProductInsert)}">
-                                    <div class="invalid-feedback">
-                                        {{required(formProductInsert, 'date', 'date', null, null)}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="pt-3">
-                                    <h6 style="color: black;">Classificação</h6>
-                                </div>
-                                <div class="col-6">
-                                    <label>Categorias</label>
-                                    <select class="form-select btn btn-warning" formControlName="CategoryId" (change)="onChangeCategory($event)">
-
-                    <!-- <div class="invalid-feedback">
-                                            {{required(formProductInsert,
-                                            'categoryId',
-                                            'Categoria', null, null)}}
-                                        </div> -->
-
-                    <option class="btn btn-warning" *ngFor="let cat of categories" [value]="cat.id" [selected]="cat">
-                      {{cat.name}}
-                    </option>
-                  </select>
-                                </div>
-
-                                <div class="col-6">
-                                    <label>Subcategorias</label>
-                                    <select class="form-select btn btn-warning " formControlName="subCategoryId" [ngClass]="{'is-invalid': touchedErrors('subCategoryId', formProductInsert)}">
-
-                    <div class="invalid-feedback">
-                      {{required(formProductInsert,
-                      'subCategoryId',
-                      'Categoria', null, null)}}
-                    </div>
-                    <option class="btn btn-warning">
-                      {{'Selecione'}}
-                    </option>
-                    <option class="btn btn-warning" *ngFor="let sub of subCategories" [value]="sub.id">
-                      {{sub.name}}
-                    </option>
-                  </select>
-                                </div>
-                            </div>
-                            <div class="row">
-
-
-                                <div class="container">
-
-                                    <div class="pt-3">
-                                        <h6 style="color: black;">Valores</h6>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col">
-                                            <label>Custo</label>
-                                            <input type="text" currencyMask class="form-control" formControlName="cost" [ngClass]="{'is-invalid': touchedErrors('cost', formProductInsert)}">
-                                            <div class="invalid-feedback">
-                                                {{required(formProductInsert, 'cost', 'Custo', 1, null)}}
-                                            </div>
-                                        </div>
-
-                                        <div class="col">
-                                            <label>Preço</label>
-                                            <input currencyMask type="text" class="form-control" formControlName="price" [ngClass]="{'is-invalid': touchedErrors('price', formProductInsert)}">
-                                            <!-- [(ngModel)]="value"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" -->
-                                            <div class="invalid-feedback">
-                                                {{required(formProductInsert, 'price', 'Preço', 1, null)}}
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col">
-                                            <label>Quantidade</label>
-                                            <input type="number" class="form-control" formControlName="quantity" [ngClass]="{'is-invalid': touchedErrors('quantity', formProductInsert)}">
-                                            <div class="invalid-feedback">
-                                                {{required(formProductInsert, 'quantity', 'Quantidade', null, null)}}
-                                            </div>
-
-                                        </div>
-
-
-
-
-                                    </div>
-                                </div>
-
-                                <div class="container">
-                                    <div class="pt-3">
-                                        <h6 style="color: black;">Dimensões</h6>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <label>Altura</label>
-                                            <input type="number" class="form-control" formControlName="height" [ngClass]="{'is-invalid': touchedErrors('height', formProductInsert)}">
-                                            <div class="invalid-feedback">
-                                                {{required(formProductInsert, 'height', 'Altura', 1, null)}}
-                                            </div>
-
-                                            <div>
-                                                <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="OnChangeHeigth($event)">
-                          <!-- <div class="invalid-feedback">
-                                                        {{required(formProductInsert,
-                                                        'unitofmeasureid', 'Unidade de medida', 1, null)}}
-                                                    </div> -->
-                          <option class="btn btn-warning">
-                            {{'Selecione'}}
-                          </option>
-                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
-                            [value]="measure">
-                            {{measure}}
-
-                          </option>
-                        </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-4">
-                                            <label>Largura</label>
-                                            <input type="number" class="form-control" formControlName="width" [ngClass]="{'is-invalid': touchedErrors('width', formProductInsert)}">
-                                            <div class="invalid-feedback">
-                                                {{required(formProductInsert, 'width', 'Custo', 1, null)}}
-                                            </div>
-
-                                            <div>
-                                                <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="OnChangeWidth($event)">
-                          <!-- <div class="invalid-feedback">
-                                                        {{required(formProductInsert,
-                                                        'unitofmeasureid', 'Unidade de medida', 1, null)}}
-                                                    </div> -->
-                          <option class="btn btn-warning">
-                            {{'Selecione'}}
-                          </option>
-                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
-                            [value]="measure">
-                            {{measure}}
-                          </option>
-                        </select>
-                                            </div>
-
-
-                                        </div>
-
-                                        <div class="col-4">
-                                            <label>Profundidade</label>
-                                            <input type="number" class="form-control" formControlName="depth" [ngClass]="{'is-invalid': touchedErrors('depth', formProductInsert)}">
-                                            <div class="invalid-feedback">
-                                                {{required(formProductInsert, 'depth', 'Profundidade', 1, null)}}
-                                            </div>
-
-                                            <div>
-                                                <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="OnChangeDepth($event)">
-                          <!-- <div class="invalid-feedback">
-                                                        {{required(formProductInsert,
-                                                        'unitofmeasureid', 'Unidade de medida', 1, null)}}
-                                                    </div> -->
-                          <option class="btn btn-warning">
-                            {{'Selecione'}}
-                          </option>
-                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
-                            [value]="measure">
-                            {{measure}}
-                          </option>
-                        </select>
-                                            </div>
-
-
-                                        </div>
-
-
-                                        <div class="container">
-
-                                            <div class="pt-3">
-                                                <h6 style="color: black;">Organização</h6>
-                                            </div>
-
-                                            <div class="row">
-
-                                                <div class="col">
-                                                    <label>Estado</label>
-                                                    <select class="form-select btn btn-warning" formControlName="state">
-                            <!-- <div class="invalid-feedback">
-                                                      {{required(formProductInsert,
-                                                      'unitofmeasureid', 'Unidade de medida', 1, null)}}
-                                                  </div> -->
-
-                            <option class="btn btn-warning" *ngFor="let state of stateStrArray"
-                              [value]="state" [selected]="state">
-                              {{state}}
-                            </option>
-                          </select>
-                                                </div>
-
-
-                                                <div class="col">
-                                                    <label>Armazenamento</label>
-                                                    <select class="form-select btn btn-warning" formControlName="storage">
-                            <!-- <div class="invalid-feedback">
-                                                    {{required(formProductInsert,
-                                                    'unitofmeasureid', 'Unidade de medida', 1, null)}}
-                                                </div> -->
-                            <option class="btn btn-warning" *ngFor="let storage of storageStrArray"
-                              [value]="storage" [selected]="storage">
-
-                              {{storage}}
-                            </option>
-                          </select>
-                                                </div>
-                                                <div class="col">
-                                                    <label>Empilhamento Máximo</label>
-                                                    <input type="number" class="form-control" formControlName="maxstacked" [ngClass]="{'is-invalid': touchedErrors('maxstacked', formProductInsert)}">
-                                                    <div class="invalid-feedback">
-                                                        {{required(formProductInsert, 'maxstacked', 'maxstacked', null, null)}}
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col">
-                                                    <label>Formato:</label>
-                                                    <select class="form-select btn btn-warning" formControlName="format">
-                            <!-- <div class="invalid-feedback">
-                                                          {{required(formProductInsert,
-                                                          'unitofmeasureid', 'Unidade de medida', 1, null)}}
-                                                      </div> -->
-                            <option class="btn btn-warning" *ngFor="let format of formatStrArray"
-                              [value]="format" [selected]="format">
-                              {{format}}
-                            </option>
-                          </select>
-                                                </div>
-
-
-
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <label>Medido em:</label>
-                                            <input type="number" class="form-control" formControlName="weight" [ngClass]="{'is-invalid': touchedErrors('weight', formProductInsert)}">
-                                            <div class="invalid-feedback">
-                                                {{required(formProductInsert, 'weight', 'Peso', 1, null)}}
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <label>Medida</label>
-                                            <select class="form-select btn btn-warning" formControlName="unitofmeasureId" [ngClass]="{'is-invalid': touchedErrors('unitofmeasureId', formProductInsert)}">
-                        <div class="invalid-feedback">
-                          {{required(formProductInsert,
-                          'unitofmeasureId', 'Unidade de medida', 1, null)}}
-                        </div>
-                        <option class="btn btn-warning" *ngFor="let measure of Measures"
-                          [value]="measure.id" [selected]="measure">
-                          {{measure.name}}
-                        </option>
-                      </select>
-                                        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    </div>
-                                </div>
-                                <div class="p-1"></div>
-                                <div>
-
-                                    <div class="pt-3">
-                                        <h6 style="color: black;">Detalhamento peculiaridade</h6>
-                                    </div>
-                                    <label>Descrição</label>
-                                    <input type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': touchedErrors('description', formProductInsert)}">
-                                    <label>Observações</label>
-                                    <input type="text" class="form-control" formControlName="comments" [ngClass]="{'is-invalid': touchedErrors('comments', formProductInsert)}">
-                                    <div class="invalid-feedback">
-                                        {{required(formProductInsert, 'description', 'Descrição', 3, 500)}}
-                                    </div>
-                                    <div class="p-3">
-                                        <button [disabled]="!formProductInsert.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="save()">Cadastrar</button>
-                                        <br>
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <div class="p-1"></div>
-
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
 
         <div>
-            {{formProductInsert.value | json}}
+            <h1 style="text-align: center; margin-top: 20px;">PRODUTO</h1>
         </div>
+        <div>
+            <div>
+                <form [formGroup]="formProductInsert" class="form-group" class="col-12">
+                    <div class="p-2"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="pt-3">
+                                <h6 style="color: black;">Identificação</h6>
+                            </div>
+                            <div class="col-4">
+                                <label>Nome</label>
+                                <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': touchedErrors('name', formProductInsert)}">
+                                <div class="invalid-feedback">
+                                    {{required(formProductInsert, 'name', 'Nome', 3, 150)}}
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label>Fabricante</label>
+                                <input type="text" class="form-control" formControlName="manufacturer" [ngClass]="{'is-invalid': touchedErrors('manufacturer', formProductInsert)}">
+                                <div class="invalid-feedback">
+                                    {{required(formProductInsert, 'manufacturer', 'Fabricante', 3, 150)}}
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label>Compra</label>
+                                <input bsDatepicker [bsConfig]={} type="text" class="form-control" formControlName="date" [ngClass]="{'is-invalid': touchedErrors('date', formProductInsert)}">
+                                <div class="invalid-feedback">
+                                    {{required(formProductInsert, 'date', 'date', null, null)}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="pt-3">
+                                <h6 style="color: black;">Classificação</h6>
+                            </div>
+                            <div class="col-6">
+                                <label>Categorias</label>
+                                <select class="form-select btn btn-warning" formControlName="categoryId" (change)="onChangeCategory($event)">
+
+                  <option class="btn btn-warning" *ngFor="let cat of categories" [value]="cat.id" [selected]="cat">
+                    {{cat.name}}
+                  </option>
+                </select>
+                            </div>
+
+                            <div class="col-6">
+                                <label>Subcategorias</label>
+                                <select class="form-select btn btn-warning " formControlName="subCategoryId" [ngClass]="{'is-invalid': touchedErrors('subCategoryId', formProductInsert)}">
+
+                  <div class="invalid-feedback">
+                    {{required(formProductInsert,
+                    'subCategoryId',
+                    'Categoria', null, null)}}
+                  </div>
+                  <option class="btn btn-warning">
+                    {{'Selecione'}}
+                  </option>
+                  <option class="btn btn-warning" *ngFor="let sub of subCategories" [value]="sub.id">
+                    {{sub.name}}
+                  </option>
+                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="container">
+
+                                <div class="pt-3">
+                                    <h6 style="color: black;">Valores</h6>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Custo</label>
+                                        <input type="text" currencyMask class="form-control" formControlName="cost" [ngClass]="{'is-invalid': touchedErrors('cost', formProductInsert)}">
+                                        <div class="invalid-feedback">
+                                            {{required(formProductInsert, 'cost', 'Custo', 1, null)}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <label>Preço</label>
+                                        <input currencyMask type="text" class="form-control" formControlName="price" [ngClass]="{'is-invalid': touchedErrors('price', formProductInsert)}">
+                                        <!-- [(ngModel)]="value"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" -->
+                                        <div class="invalid-feedback">
+                                            {{required(formProductInsert, 'price', 'Preço', 1, null)}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <label>Quantidade</label>
+                                        <input type="number" class="form-control" formControlName="quantity" [ngClass]="{'is-invalid': touchedErrors('quantity', formProductInsert)}">
+                                        <div class="invalid-feedback">
+                                            {{required(formProductInsert, 'quantity', 'Quantidade', null, null)}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label>Medido em:</label>
+                                <input type="number" class="form-control" formControlName="weight" [ngClass]="{'is-invalid': touchedErrors('weight', formProductInsert)}">
+                                <div class="invalid-feedback">
+                                    {{required(formProductInsert, 'weight', 'Peso', 1, null)}}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>Medida</label>
+                                <select class="form-select btn btn-warning" formControlName="measureId" [ngClass]="{'is-invalid': touchedErrors('measureId', formProductInsert)}">
+                  <div class="invalid-feedback">
+                    {{required(formProductInsert,
+                    'measureId', 'Unidade de medida', 1, null)}}
+                  </div>
+                  <option class="btn btn-warning" *ngFor="let measure of Measures" [value]="measure.id"
+                    [selected]="measure">
+                    {{measure.name}}
+                  </option>
+                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Descrição</label>
+                            <input type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': touchedErrors('description', formProductInsert)}">
+                            <div class="invalid-feedback">
+                                {{required(formProductInsert, 'description', 'Descrição', 3, 500)}}
+                            </div>
+                            <label>Código de barras</label>
+                            <input type="text" class="form-control" formControlName="barCode" [ngClass]="{'is-invalid': touchedErrors('description', formProductInsert)}">
+                            <div class="invalid-feedback">
+                                {{required(formProductInsert, 'description', 'Descrição', 3, 500)}}
+                            </div>
+                            <div class="p-3">
+                                <button [disabled]="!formProductInsert.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="save()">Cadastrar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <!-- <div>
+            {{formProductInsert.value | json}}
+        </div> -->
+    </div>
+</div>

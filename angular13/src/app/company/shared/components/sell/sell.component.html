@@ -7,6 +7,15 @@
 
     <div class="container" [formGroup]="this.form">
         <div class="row">
+
+            <table>
+                <tr class="d-flex justify-content-center" style="text-align: center; font-size:45px; color: green;">
+                    {{getRecord.price | currency:'BRL':true:'1.2-2'}}
+                </tr>
+            </table>
+            <div class="pb-3"></div>
+        </div>
+        <div class="row">
             <div class="col-6">
                 <label>Quantidade</label>
                 <input class="form-control" type="number" formControlName="quantity" [ngClass]="{'is-invalid':  touchedErrors('quantity', this.form) }" min="0">
@@ -16,31 +25,13 @@
                     {{required(this.form, 'quantity', 'Quantidade', 1, null)}}
                 </div>
                 <!-- <div *ngIf="this.limitsBool" style="color:red;">
-                    {{this.warning}}
+                {{this.warning}}
 
-                </div> -->
+            </div> -->
 
             </div>
-            <table class="col-6">
-                <tr>
-                    <td>
-                        <!-- <input type="text " class="form-control " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false } " ngModel> -->
-                    </td>
-
-                    <td style="text-align: center; font-size:25px">
-                        {{getRecord.price | currency:'BRL':true:'1.2-2'}}
-                        <!-- <label>Preço</label> -->
-                        <!-- <div class="align-items " style="font-size:25px; "> -->
-                        <!-- {{'R$ '}}{{ getRecord.price | currency:'.':'':'':'br'}} -->
-                        <!-- </div> -->
-                        <!-- <input type="text " class="form-control " formControlName="price" style="display: none; "> -->
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <label>Data</label>
+            <div class="col-6" style="display:none;">
+                <!-- <label>Data</label> -->
                 <input bsDatepicker class="justify-content-center form-control" type="text " formControlName="dateSell">
             </div>
             <div class="col-6 ">

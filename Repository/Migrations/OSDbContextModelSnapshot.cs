@@ -33,18 +33,39 @@ namespace Repository.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Measure", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Measures");
+                });
+
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Comments")
+                    b.Property<string>("BarCode")
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(65,30)");
@@ -52,27 +73,18 @@ namespace Repository.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Depth")
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
-
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<string>("Format")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<string>("Height")
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                    b.Property<decimal>("LastPrice")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("Manufacturer")
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int?>("Maxstacked")
+                    b.Property<int>("MeasureId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -86,34 +98,19 @@ namespace Repository.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("State")
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
-
-                    b.Property<string>("Storage")
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
-
                     b.Property<int>("SubCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UnitOfMeasureId")
                         .HasColumnType("int");
 
                     b.Property<int>("Weight")
                         .HasColumnType("int");
 
-                    b.Property<string>("Width")
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SubCategoryId");
+                    b.HasIndex("MeasureId");
 
-                    b.HasIndex("UnitOfMeasureId");
+                    b.HasIndex("SubCategoryId");
 
                     b.ToTable("Products");
                 });
@@ -137,27 +134,6 @@ namespace Repository.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategories");
-                });
-
-            modelBuilder.Entity("Domain.Entities.UnitOfMeasure", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UnitsOfMeasures");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -360,23 +336,23 @@ namespace Repository.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Measure", "Measure")
+                        .WithMany("Products")
+                        .HasForeignKey("MeasureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.SubCategory", "SubCategory")
                         .WithMany("Products")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.UnitOfMeasure", "UnitOfMeasure")
-                        .WithMany("Products")
-                        .HasForeignKey("UnitOfMeasureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Category");
 
-                    b.Navigation("SubCategory");
+                    b.Navigation("Measure");
 
-                    b.Navigation("UnitOfMeasure");
+                    b.Navigation("SubCategory");
                 });
 
             modelBuilder.Entity("Domain.Entities.SubCategory", b =>
@@ -448,12 +424,12 @@ namespace Repository.Migrations
                     b.Navigation("SubCategories");
                 });
 
-            modelBuilder.Entity("Domain.Entities.SubCategory", b =>
+            modelBuilder.Entity("Domain.Entities.Measure", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Domain.Entities.UnitOfMeasure", b =>
+            modelBuilder.Entity("Domain.Entities.SubCategory", b =>
                 {
                     b.Navigation("Products");
                 });

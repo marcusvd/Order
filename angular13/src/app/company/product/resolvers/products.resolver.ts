@@ -7,12 +7,11 @@ import { Observable } from "rxjs/internal/Observable";
 import { Url } from "../../back-end/back-end";
 import { CategoryDto } from "src/app/company/category/dto/category-dto";
 import { MeasureDto } from "../../measure/dto/measure-dto";
-import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
 import { CrudService } from "../../shared/services/crud.service";
 import { ProductDto } from "../dto/product-dto";
 
 @Injectable()
-export class ProductResolver extends CrudService<ProductDto, number> implements Resolve<{ cat: CategoryDto[], mse: MeasureDto[], prod: ProductDto }>{
+export class ProductResolver extends CrudService<ProductDto, number> implements Resolve<{ cat: CategoryDto[], mes: MeasureDto[], prod: ProductDto }>{
   constructor(
     override Http: HttpClient,
     public _ActRoute: ActivatedRoute
@@ -23,12 +22,12 @@ export class ProductResolver extends CrudService<ProductDto, number> implements 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<{ cat: CategoryDto[], mse: UnitOfMeasureDto[], prod: ProductDto }> {
+  ): Observable<{ cat: CategoryDto[], mes: MeasureDto[], prod: ProductDto }> {
     const id: number = route.params['id'];
     var prod$ = this.getByIdAsync<ProductDto>(id);
     var cat$ = this.Http.get<CategoryDto[]>(Url._CATEGORIES);
-    var mse$ = this.Http.get<UnitOfMeasureDto[]>(Url._UNITOFMEASURES);
-    var Return = zip(cat$, mse$, prod$).pipe(map(([cat, mse, prod]) => ({ cat, mse, prod })))
+    var mes$ = this.Http.get<MeasureDto[]>(Url._UNITOFMEASURES);
+    var Return = zip(cat$, mes$, prod$).pipe(map(([cat, mes, prod]) => ({ cat, mes, prod })))
     return Return;
 
   }

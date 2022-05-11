@@ -15,10 +15,10 @@ namespace Api.Controllers
     //[AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
-    public class UnitOfMeasuresController : ControllerBase
+    public class MeasuresController : ControllerBase
     {
-        private readonly IUnitOfMeasureApplication _UNITMEASURE_APPLICATION;
-        public UnitOfMeasuresController(IUnitOfMeasureApplication UNITMEASURE_APPLICATION)
+        private readonly IMeasureApplication _UNITMEASURE_APPLICATION;
+        public MeasuresController(IMeasureApplication UNITMEASURE_APPLICATION)
         {
             _UNITMEASURE_APPLICATION = UNITMEASURE_APPLICATION;
         }
@@ -39,12 +39,12 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UnitOfMeasureDto ViewDto)
+        public async Task<IActionResult> Post([FromBody] MeasureDto ViewDto)
         {
             try
             {
                 if (ViewDto == null) return NoContent();
-                UnitOfMeasureDto returnFromDb = await _UNITMEASURE_APPLICATION.AddAsync(ViewDto);
+                MeasureDto returnFromDb = await _UNITMEASURE_APPLICATION.AddAsync(ViewDto);
                 return Ok(returnFromDb);
             }
             catch (Exception ex)
@@ -54,7 +54,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id,[FromBody] UnitOfMeasureDto ViewDto)
+        public async Task<IActionResult> Update(int id,[FromBody] MeasureDto ViewDto)
         {
             try
             {

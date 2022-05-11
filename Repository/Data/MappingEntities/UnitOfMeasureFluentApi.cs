@@ -6,15 +6,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Repository.Data.MappingEntities
 {
-    public class UnitOfMeasureFluentApi : IEntityTypeConfiguration<UnitOfMeasure>
+    public class MeasureFluentApi : IEntityTypeConfiguration<Measure>
     {
-        public void Configure(EntityTypeBuilder<UnitOfMeasure> builder)
+        public void Configure(EntityTypeBuilder<Measure> builder)
         {
             builder.HasKey(_id => _id.Id);
-
-
-
-
         }
     }
 }

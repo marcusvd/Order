@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dtos
@@ -24,39 +25,21 @@ namespace Application.Dtos
         public CategoryDto Category { get; set; }
         public int SubCategoryId { get; set; }
         public SubCategoryDto SubCategory { get; set; }
-
-
         [Range(0, int.MaxValue)]
         public decimal Price { get; set; }
-        // [RegularExpression(@"^\d+\.\d{0,2}$")]
+        [Range(0, int.MaxValue)]
+        public decimal LastPrice { get; set; }
 
         [Range(0, int.MaxValue)]
         public decimal Cost { get; set; }
-        //dimensions
-        [StringLength(25, ErrorMessage = ("{0} deve conter o máximo de 25 carácteres."))]
-        public string Height { get; set; }
-        [StringLength(25, ErrorMessage = ("{0} deve conter o máximo de 25 carácteres."))]
-        public string Width { get; set; }
-        [StringLength(25, ErrorMessage = ("{0} deve conter o máximo de 25 carácteres."))]
-        public string Depth { get; set; }
-        //state material
-        [StringLength(25, ErrorMessage = ("{0} deve conter o máximo de 25 carácteres."))]
-        public string State { get; set; }
-        [StringLength(30)]
-        public string Storage { get; set; }
 
-        [StringLength(25, ErrorMessage = ("{0} deve conter o máximo de 25 carácteres."))]
-        public string Format { get; set; }
-
-        public int Maxstacked { get; set; }
-
+        [Range(0, int.MaxValue)]
         public int Weight { get; set; }
-
-        public int UnitOfMeasureId { get; set; }
-        public UnitOfMeasureDto UnitOfMeasure { get; set; }
+        public int MeasureId { get; set; }
+        public MeasureDto Measure { get; set; }
         [StringLength(1000, ErrorMessage = ("{0} deve o máximo de 1000 carácteres."))]
         public string Description { get; set; }
-        [StringLength(1000, ErrorMessage = ("{0} deve conter o máximo de 1000 carácteres."))]
-        public string Comments { get; set; }
+        public string BarCode { get; set; }
+
     }
 }

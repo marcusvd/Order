@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { CrudService } from "../../shared/services/crud.service";
-import { UnitOfMeasureDto } from "../dto/unit-of-measure";
+
 import { ValidatorsService } from "../../shared/services/validators.service";
 import { AlertsToastr } from "../../shared/services/alerts-toastr";
 import { Url } from "../../back-end/back-end";
@@ -15,9 +15,9 @@ import { MeasureEditComponent } from "../measure-edit/measure-edit.component";
 
 
 @Injectable()
-export class MeasureEditService extends CrudService<UnitOfMeasureDto, number>{
+export class MeasureEditService extends CrudService<MeasureDto, number>{
 
-  UnitOfMeasureDto: UnitOfMeasureDto = new UnitOfMeasureDto();
+  MeasureDto: MeasureDto = new MeasureDto();
 
   formInsert: FormGroup;
 
@@ -40,7 +40,7 @@ export class MeasureEditService extends CrudService<UnitOfMeasureDto, number>{
     return this._ModalRef;
   }
   get name(): string {
-    return this.UnitOfMeasureDto.name;
+    return this.MeasureDto.name;
   }
 
 
@@ -58,9 +58,9 @@ export class MeasureEditService extends CrudService<UnitOfMeasureDto, number>{
 
 
   updateAsync() {
-    const toSave: UnitOfMeasureDto = { ...this.formInsert.value }
-    this.update<UnitOfMeasureDto>(toSave).subscribe({
-      next: (unit: UnitOfMeasureDto) => {
+    const toSave: MeasureDto = { ...this.formInsert.value }
+    this.update<MeasureDto>(toSave).subscribe({
+      next: (unit: MeasureDto) => {
         this._ValidatorsSrv.cleanAfters(['contact', 'address'], this.formInsert);
         this._AlertsToastr.Notice(`Unidade de medida, ${toSave.description}`, 1, 'success');
         this._Navigation.navigateByUrl('measureadm').then((item) => {
@@ -75,7 +75,7 @@ export class MeasureEditService extends CrudService<UnitOfMeasureDto, number>{
     }
   }
 
-  formLoad(u: UnitOfMeasureDto) {
+  formLoad(u: MeasureDto) {
     this.formInsert = this._Fb.group({
       id: [u.id, [Validators.required]],
       name: [u.name, [Validators.required, Validators.maxLength(50)]],

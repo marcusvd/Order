@@ -12,9 +12,9 @@ namespace Application.Operations
 {
     public class AccountApplication : IAccountApplication
     {
-        private readonly IUnitOfWork _WORKER;
-        private readonly IMapper _MAP;
-        private readonly IConfiguration _IConfiguration;
+        // private readonly IUnitOfWork _WORKER;
+        // private readonly IMapper _MAP;
+        // private readonly IConfiguration _IConfiguration;
 
         private readonly UserManager<IdentityUser> _usrMgr;
         private readonly SignInManager<IdentityUser> _signInManager;

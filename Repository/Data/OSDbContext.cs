@@ -11,7 +11,7 @@ namespace Repository.Data
         public DbSet<Product> Products {get;set;}
         public DbSet<Category> Categories {get;set;}
         public DbSet<SubCategory> SubCategories {get;set;}
-        public DbSet<UnitOfMeasure> UnitsOfMeasures {get;set;}
+        public DbSet<Measure> Measures {get;set;}
         public OSDbContext(DbContextOptions<OSDbContext> opt) : base(opt)
         {  }
 
@@ -20,7 +20,7 @@ namespace Repository.Data
             builder.ApplyConfiguration(new ProductFluentApi());
             builder.ApplyConfiguration(new CategoryFluentApi());
             builder.ApplyConfiguration(new SubCategoryFluentApi());
-            builder.ApplyConfiguration(new UnitOfMeasureFluentApi());
+            builder.ApplyConfiguration(new MeasureFluentApi());
             base.OnModelCreating(builder);
         }
 

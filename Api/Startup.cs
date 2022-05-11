@@ -76,7 +76,7 @@ namespace OStorage
             services.AddTransient<ITokenApplication, TokenApplication>();
             services.AddTransient<IAccountApplication, AccountApplication>();
             services.AddScoped<ICategoryApplication, CategoryApplication>();
-            services.AddScoped<IUnitOfMeasureApplication, UnitOfMeasureApplication>();
+            services.AddScoped<IMeasureApplication, MeasureApplication>();
             services.AddScoped<IUnitOfWork, Worker>();
             //CONTEXT
             string strConnect = Configuration.GetConnectionString("OsDb");

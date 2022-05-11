@@ -34,7 +34,7 @@ namespace Repository.Operations
                 Product productIncluded = await _CONTEXT.Products.AsNoTracking()
                 .Include(_sub => _sub.SubCategory)
                 .Include(_cat => _cat.Category)
-                .Include(_unit => _unit.UnitOfMeasure).SingleOrDefaultAsync(_id => _id.Id == id);
+                .Include(_unit => _unit.Measure).SingleOrDefaultAsync(_id => _id.Id == id);
                 return productIncluded;
             }
             return product;

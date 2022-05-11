@@ -9,30 +9,30 @@ using Domain.Entities;
 
 namespace Application.Operations
 {
-    public class UnitOfMeasureApplication : IUnitOfMeasureApplication
+    public class MeasureApplication : IMeasureApplication
     {
         private readonly IUnitOfWork _WORKER;
         private readonly IMapper _MAP;
         public PageListDto PgDto { get; set; }
 
-        public UnitOfMeasureApplication(IUnitOfWork WORKER, IMapper MAP)
+        public MeasureApplication(IUnitOfWork WORKER, IMapper MAP)
         {
             _WORKER = WORKER;
             _MAP = MAP;
         }
-        public async Task<UnitOfMeasureDto> AddAsync(UnitOfMeasureDto DtoView)
+        public async Task<MeasureDto> AddAsync(MeasureDto DtoView)
         {
             try
             {
                 if (DtoView == null) return null;
 
-                UnitOfMeasure ViewToRecord = _MAP.Map<UnitOfMeasure>(DtoView);
+                Measure ViewToRecord = _MAP.Map<Measure>(DtoView);
                 _WORKER.UNITOFMEASURE_REPO.Add(ViewToRecord);
 
                 if (await _WORKER.CAT_REPO.Save())
                 {
-                    UnitOfMeasure RecordFromDb = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == ViewToRecord.Id);
-                    UnitOfMeasureDto ViewDtoToReturn = _MAP.Map<UnitOfMeasureDto>(RecordFromDb);
+                    Measure RecordFromDb = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == ViewToRecord.Id);
+                    MeasureDto ViewDtoToReturn = _MAP.Map<MeasureDto>(RecordFromDb);
                     return ViewDtoToReturn;
                 }
                 return DtoView;
@@ -44,14 +44,14 @@ namespace Application.Operations
         }
 
 
-        public async Task<List<UnitOfMeasureDto>> GetAllAsync()
+        public async Task<List<MeasureDto>> GetAllAsync()
         {
             try
             {
-                List<UnitOfMeasure> fromDb = await _WORKER.UNITOFMEASURE_REPO.GeAllCategories();
+                List<Measure> fromDb = await _WORKER.UNITOFMEASURE_REPO.GeAllCategories();
                 if (fromDb == null) return null;
 
-                List<UnitOfMeasureDto> CatList = _MAP.Map<List<UnitOfMeasureDto>>(fromDb);
+                List<MeasureDto> CatList = _MAP.Map<List<MeasureDto>>(fromDb);
 
                 if (fromDb == null) return null;
 
@@ -69,7 +69,7 @@ namespace Application.Operations
             {
                 if (id == 0) return false;
 
-                UnitOfMeasure fromDb = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == id);
+                Measure fromDb = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == id);
 
                 if (fromDb == null) return false;
 
@@ -88,16 +88,16 @@ namespace Application.Operations
         }
 
 
-        public async Task<UnitOfMeasureDto> GetByIdAsync(int id)
+        public async Task<MeasureDto> GetByIdAsync(int id)
         {
             try
             {
-                UnitOfMeasure fromDb = await _WORKER.UNITOFMEASURE_REPO.GetByIdAsync(id);
+                Measure fromDb = await _WORKER.UNITOFMEASURE_REPO.GetByIdAsync(id);
                 if (fromDb == null) return null;
 
-                UnitOfMeasureDto unitOfMeasure = _MAP.Map<UnitOfMeasureDto>(fromDb);
+                MeasureDto Measure = _MAP.Map<MeasureDto>(fromDb);
 
-                return unitOfMeasure;
+                return Measure;
             }
             catch (Exception ex)
             {
@@ -105,14 +105,14 @@ namespace Application.Operations
             }
         }
 
-        public async Task<UnitOfMeasureDto> UpdateAsync(UnitOfMeasureDto DtoView)
+        public async Task<MeasureDto> UpdateAsync(MeasureDto DtoView)
         {
             try
             {
                 var fromDb = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == DtoView.Id);
                 if (fromDb == null) return null;
 
-                var DtoToDomainToUpdate = _MAP.Map<UnitOfMeasure>(DtoView);
+                var DtoToDomainToUpdate = _MAP.Map<Measure>(DtoView);
                 _WORKER.UNITOFMEASURE_REPO.Update(DtoToDomainToUpdate);
 
                 var result = await _WORKER.UNITOFMEASURE_REPO.Save();
@@ -120,7 +120,7 @@ namespace Application.Operations
                 if (result)
                 {
                     var ReturnUpdated = await _WORKER.UNITOFMEASURE_REPO.GetAById(_id => _id.Id == DtoView.Id);
-                    var DomainToDtoUpdated = _MAP.Map<UnitOfMeasureDto>(ReturnUpdated);
+                    var DomainToDtoUpdated = _MAP.Map<MeasureDto>(ReturnUpdated);
                     return DomainToDtoUpdated;
                 }
                 throw new Exception($"Error update update layer");

@@ -10,23 +10,23 @@ using Domain.Entities;
 
 namespace Repository.Operations
 {
-    public class UnitOfMeasureRepository : Repository<UnitOfMeasure>, IUnitOfMeasureRepository
+    public class MeasureRepository : Repository<Measure>, IMeasureRepository
     {
         private readonly OSDbContext _CONTEXT;
-        public UnitOfMeasureRepository(OSDbContext CONTEXT) : base(CONTEXT)
+        public MeasureRepository(OSDbContext CONTEXT) : base(CONTEXT)
         {
             _CONTEXT = CONTEXT;
         }
 
-        public async Task<List<UnitOfMeasure>> GeAllCategories()
+        public async Task<List<Measure>> GeAllCategories()
         {
-            return await _CONTEXT.UnitsOfMeasures.AsNoTracking().ToListAsync();
+            return await _CONTEXT.Measures.AsNoTracking().ToListAsync();
         }
     
 
-        public Task<UnitOfMeasure> GetByIdAsync(int id)
+        public Task<Measure> GetByIdAsync(int id)
         {
-            return _CONTEXT.UnitsOfMeasures.SingleOrDefaultAsync(_id => _id.Id == id);
+            return _CONTEXT.Measures.SingleOrDefaultAsync(_id => _id.Id == id);
         }
 
 

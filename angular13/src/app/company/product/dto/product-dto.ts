@@ -1,33 +1,23 @@
 import { CategoryDto } from "src/app/company/category/dto/category-dto";
 import { SubCategoryDto } from "src/app/company/category/dto/sub-category-dto";
-import { UnitOfMeasureDto } from "../../measure/dto/unit-of-measure";
-
+import { MeasureDto } from "../../measure/dto/measure-dto";
 export class ProductDto {
   id: number;
   name: string;
   manufacturer: string;
   quantity: number;
   date: Date;
-  category: CategoryDto;
   categoryId: number;
-  subCategory: SubCategoryDto;
+  category: CategoryDto;
   subCategoryId: number;
+  subCategory: SubCategoryDto;
   price: number;
   cost: number;
-  //dimensions
-  height: string;
-  width: string;
-  depth: string;
-  format: string;
-  //state material
-  state: string;
-  storage: string;
-
-  maxstacked: number;
-  unitOfMeasure: UnitOfMeasureDto;
-  unitOfMeasureId: number;
+  measure: MeasureDto;
+  measureId: number;
   weight: number;
   description: string;
-  comments: string;
-}
+  barCode: string;
+  lastPrice: number;
 
+}

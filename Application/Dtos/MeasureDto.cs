@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dtos
 {
-    public class UnitOfMeasureDto
+    public class MeasureDto
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "{0}, precisa ser preenchido.")]

@@ -88,55 +88,13 @@
                                                 </td>
                                                 <td><span class="badge bg-success ">{{prodInfo?.cost}}</span></td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6>Altura:</h6>
-                                                </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.height}}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6>Largura:</h6>
-                                                </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.width}}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6>Profundidade:</h6>
-                                                </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.depth}}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6>Formato:</h6>
-                                                </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.format}}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6>Estado Material:</h6>
-                                                </td>
-                                                <td> <span class="badge bg-success ">{{prodInfo?.state}}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h6>Armaazenamento:</h6>
-                                                </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.storage}}</span></td>
-                                            </tr>
 
-                                            <tr>
-                                                <td>
-                                                    <h6>Máximo empilhados:</h6>
-                                                </td>
-                                                <td><span class="badge bg-success ">{{prodInfo?.maxstacked}}</span></td>
-                                            </tr>
                                             <tr>
                                                 <td>
                                                     <h6>Medido:</h6>
                                                 </td>
                                                 <td><span class="badge bg-success ">{{prodInfo?.weight + '
-                            '}}{{prodInfo?.unitOfMeasure?.description}}</span></td>
+                            '}}{{prodInfo?.measure?.description}}</span></td>
                                             </tr>
 
                                             <div class="row pb-4"></div>
@@ -149,19 +107,6 @@
                                                 </td>
 
                                             </tr>
-
-
-                                            <tr>
-                                                <td>
-                                                    <h6>Comentários:</h6>
-                                                </td>
-
-                                                <td>
-                                                    <textarea rows="4" cols="35" type="text">{{prodInfo?.comments}}</textarea>
-                                                </td>
-                                            </tr>
-
-
                                         </tbody>
                                         <td>
 

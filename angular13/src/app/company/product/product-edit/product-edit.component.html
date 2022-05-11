@@ -102,183 +102,52 @@
                                     </div>
                                 </div>
 
-                                <div class="container">
-                                    <div class="pt-3">
-                                        <h6 style="color: black;">Dimensões</h6>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label>Medido em:</label>
+                                        <input type="number" class="form-control" formControlName="weight" [ngClass]="{'is-invalid': touchedErrors('weight', form)}">
+                                        <div class="invalid-feedback">
+                                            {{Required(form, 'weight', 'Peso', 1, null)}}
+                                        </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <label>Altura</label>
-                                            <input type="number" class="form-control" formControlName="height" [ngClass]="{'is-invalid': touchedErrors('height', form)}">
-                                            <div class="invalid-feedback">
-                                                {{Required(form, 'height', 'Altura', 1, null)}}
-                                            </div>
-
-                                            <div>
-                                                <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="OnChangeHeigth($event)">
-
-                          <option class="btn btn-warning">
-                            {{'Selecione'}}
-                          </option>
-                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
-                            [value]="measure" [selected]="measure === strHeightCompare">
-                            {{measure}}
-
-                          </option>
-                        </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-4">
-                                            <label>Largura</label>
-                                            <input type="number" class="form-control" formControlName="width" [ngClass]="{'is-invalid': touchedErrors('width', form)}">
-                                            <div class="invalid-feedback">
-                                                {{Required(form, 'width', 'Custo', 1, null)}}
-                                            </div>
-
-                                            <div>
-                                                <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="OnChangeWidth($event)">
-
-                          <option class="btn btn-warning">
-                            {{'Selecione'}}
-                          </option>
-                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
-                            [value]="measure" [selected]="measure ===   strWidthCompare">
-                            {{measure}}
-                          </option>
-                        </select>
-                                            </div>
-
-
-                                        </div>
-
-                                        <div class="col-4">
-                                            <label>Profundidade</label>
-                                            <input type="number" class="form-control" formControlName="depth" [ngClass]="{'is-invalid': touchedErrors('depth', form)}">
-                                            <div class="invalid-feedback">
-                                                {{Required(form, 'depth', 'Profundidade', 1, null)}}
-                                            </div>
-
-                                            <div>
-                                                <label>Em:</label>
-                                                <select class="form-select btn btn-warning" (change)="OnChangeDepth($event)">
-
-                          <option class="btn btn-warning">
-                            {{'Selecione'}}
-                          </option>
-                          <option class="btn btn-warning" *ngFor="let measure of measureStrArray"
-                            [value]="measure" [selected]="measure === strDepthCompare">
-                            {{measure}}
-                          </option>
-                        </select>
-                                            </div>
-
-
-                                        </div>
-
-
-                                        <div class="container">
-
-                                            <div class="pt-3">
-                                                <h6 style="color: black;">Organização</h6>
-                                            </div>
-
-                                            <div class="row">
-
-                                                <div class="col">
-                                                    <label>Estado</label>
-                                                    <select class="form-select btn btn-warning" formControlName="state">
-
-
-                            <option class="btn btn-warning" *ngFor="let state of stateStrArray"
-                              [value]="state" [selected]="state === stateStr">
-                              {{state}}
-                            </option>
-                          </select>
-                                                </div>
-
-
-                                                <div class="col">
-                                                    <label>Armazenamento</label>
-                                                    <select class="form-select btn btn-warning" formControlName="storage">
-
-                            <option class="btn btn-warning" *ngFor="let storage of storageStrArray"
-                              [value]="storage" [selected]="storage === this.storageStr">
-
-                              {{storage}}
-                            </option>
-                          </select>
-                                                </div>
-                                                <div class="col">
-                                                    <label>Empilhamento Máximo</label>
-                                                    <input type="number" class="form-control" formControlName="maxstacked" [ngClass]="{'is-invalid': touchedErrors('maxstacked', form)}">
-                                                    <div class="invalid-feedback">
-                                                        {{Required(form, 'maxstacked', 'maxstacked', null, null)}}
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col">
-                                                    <label>Formato:</label>
-                                                    <select class="form-select btn btn-warning" formControlName="format">
-
-                            <option class="btn btn-warning" *ngFor="let format of formatStrArray"
-                              [value]="format" [selected]="format  === formatStr">
-                              {{format}}
-                            </option>
-                          </select>
-                                                </div>
-
-
-
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <label>Medido em:</label>
-                                            <input type="number" class="form-control" formControlName="weight" [ngClass]="{'is-invalid': touchedErrors('weight', form)}">
-                                            <div class="invalid-feedback">
-                                                {{Required(form, 'weight', 'Peso', 1, null)}}
-                                            </div>
-                                        </div>
-                                        <div class="col-6" *ngIf="compareMes">
-                                            <label>Medida</label>
-                                            <select class="form-select btn btn-warning" formControlName="unitOfMeasureId" [ngClass]="{'is-invalid': touchedErrors('unitOfMeasureId', form)}">
+                                    <div class="col-6">
+                                        <label>Medida</label>
+                                        <select class="form-select btn btn-warning" formControlName="measureId" [ngClass]="{'is-invalid': touchedErrors('measureId', form)}">
                         <div class="invalid-feedback">
                           {{Required(form,
-                          'unitOfMeasureId', 'Unidade de medida', 1, null)}}
+                          'measureId', 'Unidade de medida', 1, null)}}
                         </div>
-                        <option class="btn btn-warning" *ngFor="let measure of Measures"
-                          [value]="measure.id" [selected]="measure.id === compareMes">
-                          {{measure.name}}
+                        <option class="btn btn-warning" *ngFor="let mea of measures"
+                          [value]="mea.id">
+                          <!-- [selected]="measure.id === compareMes" -->
+                          {{mea.name}}
                         </option>
                       </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-1"></div>
-                                <div>
-
-                                    <div class="pt-3">
-                                        <h6 style="color: black;">Detalhamento peculiaridade</h6>
-                                    </div>
-                                    <label>Descrição</label>
-                                    <textarea type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': touchedErrors('description', form)}"></textarea>
-                                    <label>Observações</label>
-                                    <textarea type="text" class="form-control" formControlName="comments" [ngClass]="{'is-invalid': touchedErrors('comments', form)}"></textarea>
-                                    <div class="invalid-feedback">
-                                        {{Required(form, 'description', 'Descrição', 3, 500)}}
-                                    </div>
-                                    <div class="p-3">
-                                        <button [disabled]="!form.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="update()">Atualizar</button>
-                                        <br>
-                                        <br>
                                     </div>
                                 </div>
                             </div>
                             <div class="p-1"></div>
+                            <div>
+
+                                <div class="pt-3">
+                                    <h6 style="color: black;">Detalhamento peculiaridade</h6>
+                                </div>
+                                <label>Descrição</label>
+                                <textarea type="text" class="form-control" formControlName="description" [ngClass]="{'is-invalid': touchedErrors('description', form)}"></textarea>
+                                <label>Observações</label>
+                                <textarea type="text" class="form-control" formControlName="comments" [ngClass]="{'is-invalid': touchedErrors('comments', form)}"></textarea>
+                                <div class="invalid-feedback">
+                                    {{Required(form, 'description', 'Descrição', 3, 500)}}
+                                </div>
+                                <div class="p-3">
+                                    <button [disabled]="!form.valid" id="label" class="btn btn-warning btn-lg" style="color:rgb(0, 0, 0); float: right;" (click)="update()">Atualizar</button>
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
                         </div>
+                        <div class="p-1"></div>
+
                     </form>
                 </div>
 
@@ -289,4 +158,3 @@
             {{form.value | json}}
         </div> -->
     </div>
-</div>

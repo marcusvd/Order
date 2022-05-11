@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
-    public class UnitOfMeasure
+    public class Measure
     {
         public int Id { get; set; }
         public List<Product> Products { get; set; }

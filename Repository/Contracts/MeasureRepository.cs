@@ -8,10 +8,10 @@ using Repository.Data;
 
 namespace Repository.Contracts
 {
-    public interface IUnitOfMeasureRepository : IRepository<UnitOfMeasure>
+    public interface IMeasureRepository : IRepository<Measure>
     {
-        Task<List<UnitOfMeasure>> GeAllCategories();
-        Task<UnitOfMeasure> GetByIdAsync(int id);
+        Task<List<Measure>> GeAllCategories();
+        Task<Measure> GetByIdAsync(int id);
      
     }
 

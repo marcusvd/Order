@@ -27,15 +27,7 @@ export class ProductInsertComponent implements OnInit {
     this._LocaleService.use(this.myRegion);
   }
 
-  OnChangeHeigth($event: any) {
-    this._ProductService.height = $event.target.value;
-  }
-  OnChangeWidth($event: any) {
-    this._ProductService.width = $event.target.value;
-  }
-  OnChangeDepth($event: any) {
-    this._ProductService.depth = $event.target.value;
-  }
+
   onChangeCategory($event): void {
     this._ProductService.OnChangeCategory($event)
   }
@@ -51,18 +43,18 @@ export class ProductInsertComponent implements OnInit {
   get Measures(): MeasureDto[] {
     return this._ProductService.uOfMeasures;
   }
-  get measureStrArray(): string[] {
-    return this._ProductService.measureArray;
-  }
-  get stateStrArray(): string[] {
-    return this._ProductService.stateArray;
-  }
-  get storageStrArray(): string[] {
-    return this._ProductService.storageArray;
-  }
-  get formatStrArray(): string[] {
-    return this._ProductService.formatArray;
-  }
+  // get measureStrArray(): string[] {
+  //   return this._ProductService.measureArray;
+  // }
+  // get stateStrArray(): string[] {
+  //   return this._ProductService.stateArray;
+  // }
+  // get storageStrArray(): string[] {
+  //   return this._ProductService.storageArray;
+  // }
+  // get formatStrArray(): string[] {
+  //   return this._ProductService.formatArray;
+  // }
 
   required(form: FormGroup, ctrl: string, ctrlToShow: string, lengthMin?: number, lengthMax?: number) {
     return this._ValidatorsSrv.required2(form,
